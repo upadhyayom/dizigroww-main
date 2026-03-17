@@ -71,7 +71,7 @@ const Footer = () => (
           <ul className="space-y-2.5 text-sm text-charcoal-foreground/60">
             <li className="flex items-start gap-2">
               <span className="font-semibold w-20 flex-shrink-0">Email:</span>
-              <a href="mailto:hello@dizigroww.in" className="hover:text-primary transition-colors word-break-all">hello@dizigroww.in</a>
+              <a href="mailto:dizigrowwofficial@gmail.com" className="hover:text-primary transition-colors word-break-all">dizigrowwofficial@gmail.com</a>
             </li>
             <li className="flex items-start gap-2">
               <span className="font-semibold w-20 flex-shrink-0">WhatsApp:</span>
