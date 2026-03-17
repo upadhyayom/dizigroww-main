@@ -42,7 +42,7 @@ const GoogleReviews = () => {
             <h2 className="text-3xl md:text-4xl mb-3">Trusted by Brands</h2>
             <p className="text-muted-foreground text-sm max-w-lg">
               See what our clients have to say about our performance-driven approach. 
-              We currently hold a 4.5-star rating across 11 reviews on Google.
+              We currently hold a 4.5-star rating on Google.
             </p>
           </motion.div>
           

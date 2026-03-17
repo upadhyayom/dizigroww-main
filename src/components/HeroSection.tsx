@@ -34,7 +34,7 @@ const HeroSection = () => {
                 <Star size={16} className="fill-current" />
                 <StarHalf size={16} className="fill-current" />
               </div>
-              <span>4.5 Google Rating (11 Reviews)</span>
+              <span>4.5 Google Rating</span>
             </a>
           </div>
 
