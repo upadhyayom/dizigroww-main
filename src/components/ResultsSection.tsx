@@ -4,7 +4,7 @@ import { TrendingUp, DollarSign, MousePointerClick, ShoppingCart } from "lucide-
 const results = [
   {
     client: "National Toy Brand",
-    tagline: "Scaled Meta from 5.0x to 15.0x ROAS",
+    tagline: "Scaled Meta to 15x ROAS & reduced CPR from ₹250 to ₹200",
     rows: [
       { name: "Meta Ads (Scaling Phase)", spend: "₹3,20,000", revenue: "₹48,00,000", roas: "15.0x" },
       { name: "Google Ads (Performance Max)", spend: "₹1,15,000", revenue: "₹11,50,000", roas: "10.0x" }
