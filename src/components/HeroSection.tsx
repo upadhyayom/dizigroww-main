@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Star, StarHalf } from "lucide-react";
 
 const HeroSection = () => {
   return (
@@ -23,6 +23,20 @@ const HeroSection = () => {
           <p className="text-muted-foreground text-base sm:text-lg mb-6 max-w-xl">
             We build high-converting presences for ambitious brands. From landing pages to full-scale e-commerce and omnichannel ad campaigns, our strategies turn clicks into loyal customers.
           </p>
+
+          {/* Trust Badge */}
+          <div className="mb-6">
+            <a href="https://share.google/5lOHRfK7veGba5vBe" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-medium bg-secondary/50 border border-border px-3 py-1.5 rounded-full hover:border-[#FBBC05]/50 transition-colors">
+              <div className="flex text-[#FBBC05]">
+                <Star size={16} className="fill-current" />
+                <Star size={16} className="fill-current" />
+                <Star size={16} className="fill-current" />
+                <Star size={16} className="fill-current" />
+                <StarHalf size={16} className="fill-current" />
+              </div>
+              <span>4.5 Google Rating (11 Reviews)</span>
+            </a>
+          </div>
 
           {/* Value props */}
           <ul className="space-y-2.5 mb-8">

@@ -7,6 +7,7 @@ import Process from "@/components/Process";
 import Pricing from "@/components/Pricing";
 import LeadForm from "@/components/LeadForm";
 import FAQ from "@/components/FAQ";
+import GoogleReviews from "@/components/GoogleReviews";
 
 const Index = () => (
   <>
@@ -14,6 +15,7 @@ const Index = () => (
     <main>
       <HeroSection />
       <ServicesGrid />
+      <GoogleReviews />
       <WhyChooseUs />
       <Process />
       <Pricing />
