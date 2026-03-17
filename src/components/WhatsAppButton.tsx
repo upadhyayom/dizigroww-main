@@ -25,7 +25,7 @@ const WhatsAppButton = () => {
           animate={{ opacity: 1, scale: 1, x: 0 }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="fixed bottom-6 left-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:shadow-xl transition-shadow group"
+          className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-lg hover:shadow-xl transition-shadow group"
           aria-label="Chat on WhatsApp"
         >
           {/* WhatsApp SVG Icon */}
@@ -39,7 +39,7 @@ const WhatsAppButton = () => {
           </svg>
           
           {/* Tooltip on hover */}
-          <span className="absolute left-16 bg-card text-foreground text-xs font-semibold px-3 py-1.5 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-border">
+          <span className="absolute right-16 bg-card text-foreground text-xs font-semibold px-3 py-1.5 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none border border-border">
             Chat with us
           </span>
         </motion.a>
