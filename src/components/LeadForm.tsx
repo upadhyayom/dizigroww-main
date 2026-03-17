@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const LeadForm = () => {
   const [form, setForm] = useState({ name: "", email: "", phone: "", business: "", service: "" });
   const [submitted, setSubmitted] = useState(false);
-
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,24 +46,13 @@ const LeadForm = () => {
     } finally {
       setIsSubmitting(false);
       setSubmitted(true);
+      // Navigate to the full thank you page
+      navigate("/thank-you");
       
       // Always open WhatsApp after attempt, even if Webhook fails (e.g., 403 Forbidden)
       window.open(whatsappUrl, "_blank");
     }
   };
-
-  if (submitted) {
-    return (
-      <section className="section-padding" id="audit-form">
-        <div className="container-main max-w-2xl text-center">
-          <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="bg-card rounded-2xl p-12 shadow-card">
-            <h2 className="text-3xl mb-4 text-primary">Thank You! 🎉</h2>
-            <p className="text-muted-foreground">We've received your request. Our team will reach out within 24 hours.</p>
-          </motion.div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="section-padding" id="audit-form">
