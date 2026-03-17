@@ -107,6 +107,9 @@ const Navbar = () => {
               )}
             </div>
           ))}
+          <Link to="/starter-plan" className="text-sm font-bold text-primary hover:text-primary-deep transition-colors mr-2">
+            ₹999 Starter Plan
+          </Link>
           <a href="/#audit-form">
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -190,7 +193,14 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-              <a href="/#audit-form" onClick={() => setOpen(false)} className="mt-3 block">
+              <Link
+                to="/starter-plan"
+                onClick={() => setOpen(false)}
+                className="mt-2 block text-center text-primary font-bold py-2 bg-primary/10 rounded-full"
+              >
+                ₹999 Starter Plan
+              </Link>
+              <a href="/#audit-form" onClick={() => setOpen(false)} className="mt-2 block">
                 <button className="w-full bg-gradient-to-r from-primary to-primary-deep text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold">
                   Get Free Audit
                 </button>

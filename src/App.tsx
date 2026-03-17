@@ -8,6 +8,7 @@ import Services from "./pages/Services.tsx";
 import Contact from "./pages/Contact.tsx";
 import Careers from "./pages/Careers.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import StarterPlan from "./pages/StarterPlan.tsx";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/starter-plan" element={<StarterPlan />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="*" element={<NotFound />} />
