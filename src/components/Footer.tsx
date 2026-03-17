@@ -6,19 +6,14 @@ const Footer = () => (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Brand */}
         <div>
-          <Link to="/" className="inline-block">
-            <span className="text-2xl font-display font-extrabold">
-              <span className="text-primary">DIZI</span>GROWW
-            </span>
-            <p className="text-[10px] text-charcoal-foreground/50 uppercase tracking-wider mt-0.5">
-              Performance Marketing Agency
-            </p>
+          <Link to="/" className="inline-block mb-4">
+            <img src="/logo.png" alt="DiziGroww Logo" className="h-12 w-auto bg-white/90 p-2 rounded" />
           </Link>
-          <p className="mt-4 text-sm text-charcoal-foreground/60 leading-relaxed">
+          <p className="text-sm text-charcoal-foreground/60 leading-relaxed">
             Leading India-based performance marketing agency. We deliver high ROI through Meta Ads, Google Ads, eCommerce store development, and CRO for global brands.
           </p>
-          <p className="mt-3 text-xs text-charcoal-foreground/40">
-            Google Certified · Meta Certified
+          <p className="mt-3 text-xs text-charcoal-foreground/40 font-semibold uppercase tracking-wider">
+            Registered Business
           </p>
         </div>
 
@@ -47,18 +42,31 @@ const Footer = () => (
           </ul>
         </div>
 
-        {/* Contact */}
+        {/* Contact & Legal */}
         <div>
           <h4 className="font-display text-sm font-bold mb-4 uppercase tracking-wider text-charcoal-foreground/80">Get In Touch</h4>
-          <ul className="space-y-2 text-sm text-charcoal-foreground/60">
-            <li>hello@dizigroww.com</li>
-            <li>India-Based · Serving Global Clients</li>
+          <ul className="space-y-2.5 text-sm text-charcoal-foreground/60">
+            <li className="flex items-start gap-2">
+              <span className="font-semibold w-20 flex-shrink-0">Email:</span>
+              <a href="mailto:dizigrowwofficial@gmail.com" className="hover:text-primary transition-colors word-break-all">dizigrowwofficial@gmail.com</a>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="font-semibold w-20 flex-shrink-0">WhatsApp:</span>
+              <a href="https://wa.me/919450010826" target="_blank" rel="noreferrer" className="hover:text-primary transition-colors">+91 9450010826</a>
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="font-semibold w-20 flex-shrink-0">Call:</span>
+              <a href="tel:+919477440662" className="hover:text-primary transition-colors">+91 9477440662</a>
+            </li>
+            <li className="flex items-start gap-2 pt-2 border-t border-charcoal-foreground/10 mt-2">
+              <span className="font-semibold w-20 flex-shrink-0">Address:</span>
+              <span>Plot 19, KP, Greater Noida, Uttar Pradesh</span>
+            </li>
+            <li className="flex items-start gap-2 pt-1">
+              <span className="font-semibold w-20 flex-shrink-0">GSTIN:</span>
+              <span className="uppercase tracking-wider font-mono text-xs mt-0.5">09AMVPU5948E1Z4</span>
+            </li>
           </ul>
-          <a href="/#audit-form" className="inline-block mt-4">
-            <button className="bg-gradient-to-r from-primary to-primary-deep text-primary-foreground px-5 py-2.5 rounded-full text-xs font-semibold">
-              Get Free Audit
-            </button>
-          </a>
         </div>
       </div>
 

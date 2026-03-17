@@ -49,14 +49,8 @@ const Navbar = () => {
 
       <div className="container-main flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link to="/" className="flex flex-col items-start">
-          <span className="text-xl sm:text-2xl font-display font-extrabold tracking-tight leading-none">
-            <span className="text-primary">DIZI</span>
-            <span className="text-foreground">GROWW</span>
-          </span>
-          <span className="text-[8px] sm:text-[9px] text-muted-foreground font-medium tracking-wider uppercase leading-none mt-0.5">
-            Performance Marketing Agency
-          </span>
+        <Link to="/" className="flex items-center">
+          <img src="/logo.png" alt="DiziGroww Logo" className="h-12 w-auto" />
         </Link>
 
         {/* Desktop Nav */}
