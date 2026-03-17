@@ -10,12 +10,7 @@ const StarterPlan = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const paymentLink = "https://payments.cashfree.com/forms/dizigroww-growth-starter-plan-99";
 
   return (
     <div className="min-h-screen bg-background">
@@ -53,15 +48,16 @@ const StarterPlan = () => {
                 </p>
               </div>
 
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection("lead-form-section")}
-                className="w-full sm:w-auto px-8 py-5 bg-primary text-white text-lg font-bold rounded-full shadow-lg hover:shadow-primary/50 transition-all flex items-center justify-center gap-2 mx-auto mb-6"
-              >
-                Start My 30-Day Growth Plan <ArrowRight className="w-5 h-5" />
-              </motion.button>
-              <p className="text-xs text-muted-foreground">Takes 2 minutes to apply. We review within 24 hours.</p>
+              <a href={paymentLink} target="_blank" rel="noopener noreferrer" className="block w-full sm:w-auto mx-auto mb-6">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-full sm:w-auto px-8 py-5 bg-primary text-white text-lg font-bold rounded-full shadow-lg hover:shadow-primary/50 transition-all flex items-center justify-center gap-2"
+                >
+                  Start My 30-Day Growth Plan <ArrowRight className="w-5 h-5" />
+                </motion.button>
+              </a>
+              <p className="text-xs text-muted-foreground">Secure payment via Cashfree.</p>
             </motion.div>
           </div>
         </section>
@@ -225,15 +221,26 @@ const StarterPlan = () => {
           </div>
         </section>
 
-        {/* 7. FINAL CTA / FORM */}
+        {/* 7. FINAL CTA */}
         <div id="lead-form-section" className="bg-primary/5 border-t border-primary/10">
-          <div className="py-12 pb-0">
-             <h2 className="text-3xl md:text-4xl px-4 font-bold text-center mb-4">Start Your 30-Day Growth Plan</h2>
-            <p className="text-center text-muted-foreground max-w-xl mx-auto px-4">
-              We only accept <span className="font-bold text-foreground">5 starter clients per week</span> to ensure high quality execution. Fill out the form below to claim your spot for ₹999. We will contact you regarding payment.
+          <div className="py-20 text-center">
+             <h2 className="text-3xl md:text-4xl px-4 font-bold mb-6">Start Your 30-Day Growth Plan</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto px-4 mb-10 text-lg">
+              We only accept <span className="font-bold text-foreground">5 starter clients per week</span> to ensure high quality execution. Secure your spot today for ₹999.
             </p>
+            <a href={paymentLink} target="_blank" rel="noopener noreferrer">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="px-10 py-5 bg-primary text-white text-xl font-bold rounded-full shadow-lg hover:shadow-primary/50 transition-all inline-flex items-center gap-2"
+                >
+                  Pay ₹999 Now <ArrowRight className="w-6 h-6" />
+                </motion.button>
+            </a>
+            <div className="mt-6 flex items-center justify-center gap-4 text-sm text-muted-foreground">
+               <span className="flex items-center gap-1"><CheckCircle2 className="w-4 h-4 text-green-500"/> Secured checkout</span>
+            </div>
           </div>
-          <LeadForm />
         </div>
       </main>
 
