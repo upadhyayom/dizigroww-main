@@ -49,6 +49,18 @@ const StarterPlan = () => {
                   One-time payment. Zero long-term commitment.
                 </p>
               </div>
+               <div className="mb-6">
+            <a href="https://share.google/5lOHRfK7veGba5vBe" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-medium bg-secondary/50 border border-border px-3 py-1.5 rounded-full hover:border-[#FBBC05]/50 transition-colors">
+              <div className="flex text-[#FBBC05]">
+                <Star size={16} className="fill-current" />
+                <Star size={16} className="fill-current" />
+                <Star size={16} className="fill-current" />
+                <Star size={16} className="fill-current" />
+                <StarHalf size={16} className="fill-current" />
+              </div>
+              <span>4.5 Google Rating</span>
+            </a>
+          </div>
 
               <div className="flex justify-center mb-6">
                 <a
@@ -94,7 +106,7 @@ const StarterPlan = () => {
         {/* 2. PROBLEM SECTION */}
         <section className="section-padding bg-white">
           <div className="container-main max-w-3xl">
-            <h2 className="text-3xl font-bold text-center mb-12">The "Agency" Trap is Bleeding Your Budget.</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">The "Agency" Trap is Wasting Your Budget.</h2>
             <div className="grid gap-6">
               {[
                 "You’re running ads but sales are stagnant, and you don’t know why.",
@@ -124,8 +136,8 @@ const StarterPlan = () => {
             <div className="grid sm:grid-cols-2 gap-8 mb-12">
               {[
                 { title: "Basic Meta/Google Ads Setup", desc: "We ensure your pixel, conversions, and ad accounts are structured correctly from day one." },
-                { title: "1 Initial Campaign Launch", desc: "We will build and launch one highly-targeted testing campaign to gather data and initial sales." },
-                { title: "Website Conversion Audit", desc: "We review your landing page/store and point out exactly why visitors might not be buying." },
+                { title: "Initial Campaign Launch", desc: "We will build and launch highly-targeted testing campaign to gather data and initial sales." },
+                { title: "Website Conversion Audit + Edit", desc: "We review your landing page/store and point out exactly why visitors might not be buying." },
                 { title: "Next-Step Roadmap", desc: "A clear action plan on how to improve performance after the 30 days are up." }
               ].map((item, i) => (
                 <div key={i} className="bg-charcoal-light/10 p-8 rounded-2xl border border-charcoal-foreground/10 hover:border-primary/50 transition-colors">
@@ -138,7 +150,7 @@ const StarterPlan = () => {
 
             <div className="bg-yellow-500/10 border border-yellow-500/30 p-6 rounded-2xl text-center max-w-2xl mx-auto">
               <p className="text-yellow-200 font-medium">
-                ⚠️ <span className="font-bold">IMPORTANT:</span> This is a 30-day starter pack designed for beginners to get off the ground. It is <span className="underline decoration-yellow-500">not full-scale, daily ad management</span> meant for multi-lakh budget scaling.
+                ⚠️ <span className="font-bold">IMPORTANT:</span> This is a 30-day starter pack designed for beginners to get off the ground. It is <span className="underline decoration-yellow-500">not</span> meant for multi-lakh budget scaling.
               </p>
             </div>
           </div>
@@ -161,7 +173,7 @@ const StarterPlan = () => {
                     "New D2C brands taking their first step in paid ads",
                     "Store owners testing the waters before committing to ₹20k+ retainers",
                     "Founders whose initial ad attempts failed to bring sales",
-                    "Brands spending less than ₹50,000/month on ads"
+                    "Brands spending less than ₹60,000/month on ads"
                   ].map((item, i) => (
                     <li key={i} className="flex gap-3 text-foreground font-medium">
                       <div className="w-1.5 h-1.5 rounded-full bg-green-500 mt-2.5 flex-shrink-0"></div>
@@ -228,7 +240,7 @@ const StarterPlan = () => {
               {[
                 { 
                   q: "Why is it only ₹999 if agencies charge ₹20,000+?", 
-                  a: "Agencies charge high retainers because of daily management, unlimited revisions, and multi-lakh budget scaling. This plan provides the foundational setup and 1 launching campaign, making it cheap and safe for beginners. If things go well, you might upgrade to our advanced tracking later—but there is zero pressure to do so!" 
+                  a: "Agencies charge high retainers because of daily management, unlimited revisions, and multi-lakh budget scaling. This plan provides the foundational setup and launching initial winning campaign, making it cheap and safe for beginners. If things go well, you might upgrade to our advanced plan later—but there is zero pressure to do so!" 
                 },
                 { 
                   q: "Will this guarantee sales?", 
