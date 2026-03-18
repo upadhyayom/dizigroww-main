@@ -8,7 +8,7 @@ import Pricing from "@/components/Pricing";
 import LeadForm from "@/components/LeadForm";
 import FAQ from "@/components/FAQ";
 import GoogleReviews from "@/components/GoogleReviews";
-import ResultsSection from "@/components/ResultsSection";
+import DashboardResultsSection from "@/components/DashboardResultsSection";
 
 const Index = () => (
   <>
@@ -16,7 +16,7 @@ const Index = () => (
     <main>
       <HeroSection />
       <ServicesGrid />
-      <ResultsSection />
+      <DashboardResultsSection />
       <GoogleReviews />
       <WhyChooseUs />
       <Process />

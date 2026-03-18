@@ -2,8 +2,11 @@ import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
-import { CheckCircle2, ArrowRight, XCircle, ChevronDown } from "lucide-react";
+import { Star, StarHalf, CheckCircle2, ArrowRight, XCircle, ChevronDown } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
+import DashboardResultsSection from "@/components/DashboardResultsSection";
+
+declare const fbq: any;
 
 const StarterPlan = () => {
   useEffect(() => {
@@ -232,7 +235,10 @@ const StarterPlan = () => {
           </div>
         </section>
 
-        {/* 6. FAQ & OBJECTION HANDLING */}
+        {/* 6. DASHBOARD RESULTS */}
+        <DashboardResultsSection />
+
+        {/* 7. FAQ & OBJECTION HANDLING */}
         <section className="section-padding bg-background border-t border-border">
           <div className="container-main max-w-3xl">
             <h2 className="text-3xl font-bold text-center mb-10">Frequently Asked Questions</h2>
@@ -262,7 +268,7 @@ const StarterPlan = () => {
           </div>
         </section>
 
-        {/* 7. FINAL CTA */}
+        {/* 8. FINAL CTA */}
         <div id="lead-form-section" className="bg-primary/5 border-t border-primary/10 pb-24">
           <div className="py-20 text-center">
              <h2 className="text-3xl md:text-4xl px-4 font-bold mb-6">Start Your 30-Day Growth Plan</h2>
