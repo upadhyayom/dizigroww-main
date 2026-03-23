@@ -72,22 +72,29 @@ const CaseStudySnapshot = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6 mb-8">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">ROAS Achieved</p>
-                <p className="text-4xl font-extrabold text-primary">5.2x</p>
+            <div className="flex flex-col gap-4 mb-8">
+              <div className="rounded-lg overflow-hidden border border-border shadow-md">
+                <div className="bg-secondary/50 border-b border-border px-3 py-1.5 flex items-center gap-2">
+                  <div className="flex gap-1">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                  </div>
+                  <span className="text-[10px] text-muted-foreground font-medium ml-2">adsmanager.facebook.com</span>
+                </div>
+                <img src="/meta-r1.jpg" alt="Meta Ads Dashboard Result" className="w-full h-auto object-cover" />
               </div>
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">Timeframe</p>
-                <p className="text-4xl font-extrabold text-foreground">45 Days</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">CPA Reduction</p>
-                <p className="text-2xl font-bold text-green-500">↓ 42%</p>
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">Revenue Lift</p>
-                <p className="text-2xl font-bold text-green-500">↑ 185%</p>
+              
+              <div className="rounded-lg overflow-hidden border border-border shadow-md">
+                <div className="bg-secondary/50 border-b border-border px-3 py-1.5 flex items-center gap-2">
+                  <div className="flex gap-1">
+                    <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                    <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                  </div>
+                  <span className="text-[10px] text-muted-foreground font-medium ml-2">admin.shopify.com</span>
+                </div>
+                <img src="/shopify-r1.jpg" alt="Shopify Revenue Dashboard Result" className="w-full h-auto object-cover" />
               </div>
             </div>
 
