@@ -17,7 +17,7 @@ const CaseStudySnapshot = () => {
               Real Results. Verifiable Proof.
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              How We Scaled Toy Collectors India
+              How We Scaled a D2C Brand
             </h2>
             <p className="text-muted-foreground text-lg mb-6">
               Anyone can make a nice website. We actually deliver results. Here is the exact breakdown of how we transformed a struggling ad account into a profit machine.
@@ -64,10 +64,10 @@ const CaseStudySnapshot = () => {
 
             <div className="flex items-center gap-4 mb-8 border-b border-border pb-6">
               <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center text-xl font-bold border border-border">
-                TCI
+                D2C
               </div>
               <div>
-                <h3 className="text-xl font-bold">Toy Collectors India</h3>
+                <h3 className="text-xl font-bold">Apparel & Accessories Brand</h3>
                 <p className="text-sm text-muted-foreground">E-Commerce / D2C</p>
               </div>
             </div>

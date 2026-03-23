@@ -17,7 +17,7 @@ const Testimonial = () => {
           </h2>
           <div className="flex flex-col items-center justify-center">
             <h4 className="font-bold text-lg">Founder</h4>
-            <p className="text-muted-foreground">Toy Collectors India</p>
+            <p className="text-muted-foreground">D2C Brand</p>
           </div>
         </motion.div>
       </div>
