@@ -1,7 +1,25 @@
-import { motion } from "framer-motion";
-import { ArrowUpRight, Target, Activity, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Target, Activity, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+
+const slides = [
+  { type: "Meta Ads Dashboard", src: "/meta-r1.jpg", url: "adsmanager.facebook.com" },
+  { type: "Shopify Dashboard", src: "/shopify-r1.jpg", url: "admin.shopify.com" },
+  { type: "Meta Ads Dashboard", src: "/meta-r2.jpg", url: "adsmanager.facebook.com" },
+  { type: "Shopify Dashboard", src: "/shopify-r2.jpg", url: "admin.shopify.com" }
+];
 
 const CaseStudySnapshot = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
   return (
     <section className="py-16 bg-muted/30 border-y border-border" id="case-studies">
       <div className="container-main">
@@ -62,39 +80,78 @@ const CaseStudySnapshot = () => {
              {/* Decorative Background Glow */}
              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
-            <div className="flex items-center gap-4 mb-8 border-b border-border pb-6">
-              <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center text-xl font-bold border border-border">
-                D2C
+            <div className="flex items-center justify-between mb-8 border-b border-border pb-6">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-secondary flex items-center justify-center text-xl font-bold border border-border">
+                  D2C
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold">D2C Brand</h3>
+                  <p className="text-sm text-muted-foreground">E-Commerce</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold">D2C Brand</h3>
-                <p className="text-sm text-muted-foreground">E-Commerce</p>
+              
+              {/* Carousel Controls (Arrows) */}
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={prevSlide}
+                  className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-secondary transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button 
+                  onClick={nextSlide}
+                  className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-secondary transition-colors"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
               </div>
             </div>
 
             <div className="flex flex-col gap-4 mb-8">
               <div className="rounded-lg overflow-hidden border border-border shadow-md">
-                <div className="bg-secondary/50 border-b border-border px-3 py-1.5 flex items-center gap-2">
-                  <div className="flex gap-1">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                <div className="bg-secondary/50 border-b border-border px-3 py-1.5 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
+                      <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
+                    </div>
+                    <span className="text-[10px] text-muted-foreground font-medium ml-2">{slides[currentIndex].url}</span>
                   </div>
-                  <span className="text-[10px] text-muted-foreground font-medium ml-2">adsmanager.facebook.com</span>
+                  <span className="text-[10px] font-bold text-primary px-2 py-0.5 bg-primary/10 rounded-full">
+                    {slides[currentIndex].type}
+                  </span>
                 </div>
-                <img src="/meta-r1.jpg" alt="Meta Ads Dashboard Result" className="w-full h-auto object-cover" />
+                
+                {/* Carousel Image Display */}
+                <div className="relative aspect-[4/3] w-full bg-muted/20 overflow-hidden">
+                  <AnimatePresence mode="wait">
+                    <motion.img 
+                      key={currentIndex}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.3 }}
+                      src={slides[currentIndex].src} 
+                      alt={slides[currentIndex].type} 
+                      className="absolute inset-0 w-full h-full object-cover" 
+                    />
+                  </AnimatePresence>
+                </div>
               </div>
               
-              <div className="rounded-lg overflow-hidden border border-border shadow-md">
-                <div className="bg-secondary/50 border-b border-border px-3 py-1.5 flex items-center gap-2">
-                  <div className="flex gap-1">
-                    <div className="w-2.5 h-2.5 rounded-full bg-red-400"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-400"></div>
-                    <div className="w-2.5 h-2.5 rounded-full bg-green-400"></div>
-                  </div>
-                  <span className="text-[10px] text-muted-foreground font-medium ml-2">admin.shopify.com</span>
-                </div>
-                <img src="/shopify-r1.jpg" alt="Shopify Revenue Dashboard Result" className="w-full h-auto object-cover" />
+              {/* Slick Dots */}
+              <div className="flex items-center justify-center gap-2 mt-2">
+                {slides.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentIndex(index)}
+                    className={`h-2 rounded-full transition-all ${
+                      currentIndex === index ? "w-6 bg-primary" : "w-2 bg-border hover:bg-muted-foreground/50"
+                    }`}
+                  />
+                ))}
               </div>
             </div>
 

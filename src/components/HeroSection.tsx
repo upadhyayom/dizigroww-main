@@ -35,9 +35,6 @@ const HeroSection = () => {
               </div>
               <span>4.5 Google Rating</span>
             </a>
-            <div className="inline-flex items-center gap-2 text-sm font-medium bg-primary/5 text-primary border border-primary/20 px-3 py-1.5 rounded-full">
-               <span>✓ Incubated at NIET TBI</span>
-            </div>
             <div className="inline-flex items-center gap-2 text-sm font-medium bg-secondary/50 border border-border px-3 py-1.5 rounded-full">
                <span>💰 ₹2Cr+ Ad Spend Managed</span>
             </div>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Star, StarHalf, CheckCircle2, ArrowRight, XCircle, ShieldCheck, Building2, FileText } from "lucide-react";
 import CaseStudySnapshot from "@/components/CaseStudySnapshot";
 import FounderSection from "@/components/FounderSection";
+import GoogleReviews from "@/components/GoogleReviews";
 
 declare const fbq: any;
 
@@ -39,8 +40,8 @@ const StarterPlan = () => {
                 30-day setup, launch, audit + roadmap. <span className="text-foreground font-bold">₹1,999.</span>
               </p>
               
-              <div className="bg-green-50/50 border border-green-200 text-green-800 px-6 py-3 rounded-full inline-flex font-semibold text-sm md:text-base mb-8">
-                You only pay if we accept your application. We review every submission manually.
+              <div className="bg-primary/10 border border-primary/20 text-foreground px-6 py-3 rounded-full inline-flex font-semibold text-sm md:text-base mb-8 shadow-sm">
+                Secure your spot with ₹1,999. If your brand doesn't qualify after our manual review, we refund you 100% immediately. No questions asked.
               </div>
 
               <div className="mb-10">
@@ -188,6 +189,7 @@ const StarterPlan = () => {
 
         {/* 6. PROOF & AUTHORITY */}
         <CaseStudySnapshot />
+        <GoogleReviews />
         <FounderSection />
 
         {/* 7. QUALIFICATION (IS THIS FOR YOU?) */}
