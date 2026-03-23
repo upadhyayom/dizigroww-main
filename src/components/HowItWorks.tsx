@@ -56,6 +56,19 @@ const HowItWorks = () => {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-16"
+        >
+          <a href="/#audit-form">
+            <button className="bg-foreground text-background px-8 py-4 rounded-full text-base font-bold shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+              Get Your Free Custom Strategy
+            </button>
+          </a>
+        </motion.div>
       </div>
     </section>
   );

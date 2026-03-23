@@ -91,6 +91,19 @@ const ServicesGrid = () => (
           </motion.div>
         ))}
       </div>
+
+      <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mt-16"
+      >
+        <a href="/#audit-form">
+          <button className="bg-primary text-white border-2 border-primary hover:bg-transparent hover:text-primary px-8 py-4 rounded-full text-base font-bold shadow-xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center mx-auto">
+            Let's Fix Your Growth Pillars
+          </button>
+        </a>
+      </motion.div>
     </div>
   </section>
 );

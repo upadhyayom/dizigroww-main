@@ -33,9 +33,15 @@ const FounderSection = () => {
             <p className="text-muted-foreground mb-6 leading-relaxed">
               I started DiziGroww after watching countless D2C founders burn their runway on agencies that optimized for clicks, not profit margins. My philosophy is simple: we treat your ad budget like our own money. 
             </p>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground leading-relaxed mb-8">
               We don't do hand-offs. We don't hide behind jargon. We fix what's broken in your funnel and scale what works.
             </p>
+
+            <a href="/#audit-form">
+              <button className="bg-primary hover:bg-primary-deep text-white px-8 py-3.5 rounded-full text-base font-bold shadow-lg transition-all hover:scale-105">
+                Book a Fast Consultation
+              </button>
+            </a>
           </motion.div>
         </div>
       </div>

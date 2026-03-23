@@ -67,8 +67,8 @@ const CaseStudySnapshot = () => {
                 D2C
               </div>
               <div>
-                <h3 className="text-xl font-bold">Apparel & Accessories Brand</h3>
-                <p className="text-sm text-muted-foreground">E-Commerce / D2C</p>
+                <h3 className="text-xl font-bold">D2C Brand</h3>
+                <p className="text-sm text-muted-foreground">E-Commerce</p>
               </div>
             </div>
 
