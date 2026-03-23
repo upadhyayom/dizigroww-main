@@ -85,7 +85,7 @@ const StarterPlan = () => {
               {[
                 { title: "Flawless Tracking Setup", desc: "Pixel installation, standard events setup, conversions API check, and campaign structure build — done correctly so your data is clean from day one." },
                 { title: "High-Intent Campaign Launch", desc: "We build and launch a campaign targeting people who actually buy, not just click." },
-                { title: "20-Point CRO Website Audit", desc: "We review your homepage, product page, and checkout flow. You get a scored audit + up to 3 immediate layout/copy fixes implemented." },
+                { title: "30-Point CRO Audit & Optimization", desc: "We don't just run ads—we fix the leaks. We meticulously audit your website against 30 proven conversion pillars, and we actively implement immediate layout & copy fixes so your traffic actually converts into revenue." },
                 { title: "30-Day Scaling Roadmap", desc: "A clear, actionable document detailing exactly what to do next to scale past your current plateau." }
               ].map((item, i) => (
                 <div key={i} className="bg-background p-5 md:p-8 rounded-2xl border border-border hover:border-primary/50 transition-all shadow-sm">
@@ -112,7 +112,7 @@ const StarterPlan = () => {
                 {[
                   { label: "Pixel & API Setup by a Freelancer", price: "₹2,000 – ₹5,000" },
                   { label: "Initial Campaign Launch (Agency)", price: "₹10,000 – ₹20,000" },
-                  { label: "Website CRO Audit & Fixes", price: "₹5,000 – ₹15,000" },
+                  { label: "30-Point CRO Optimization & Fixes", price: "₹5,000 – ₹15,000" },
                   { label: "30-Day Scaling Roadmap", price: "₹3,000 – ₹8,000" },
                 ].map((row, i) => (
                   <div key={i} className="grid grid-cols-2 p-3 sm:p-5 items-center">

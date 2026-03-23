@@ -56,24 +56,27 @@ const HeroSection = () => {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-3">
-            <a href="/#audit-form">
+            <a href="/#process">
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                className="bg-gradient-to-r from-primary to-primary-deep text-primary-foreground px-7 py-3.5 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2"
+                className="bg-gradient-to-r from-primary to-primary-deep text-primary-foreground px-7 py-3.5 rounded-full text-sm font-semibold shadow-lg flex items-center justify-center gap-2 w-full sm:w-auto text-center"
               >
-                Get a Free Ads Audit <ArrowRight size={16} />
+                See How We Work <ArrowRight size={16} />
               </motion.button>
             </a>
-            <Link to="/services">
+            <a href="/#case-studies">
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                className="border border-border hover:border-primary text-foreground hover:text-primary px-7 py-3.5 rounded-full text-sm font-semibold transition-colors w-full sm:w-auto text-center"
+                className="border border-border hover:border-primary text-foreground hover:text-primary px-7 py-3.5 rounded-full text-sm font-semibold transition-colors w-full sm:w-auto text-center flex items-center justify-center"
               >
-                See How We Work
+                See Our Results
               </motion.button>
-            </Link>
+            </a>
+          </div>
+          <div className="mt-6 text-sm text-muted-foreground flex items-center gap-1.5">
+             🚀 Looking for a trial run? <Link to="/starter-plan" className="text-primary font-semibold hover:underline inline-flex items-center gap-1">View our ₹1,999 Starter Plan <ArrowRight size={14} /></Link>
           </div>
         </motion.div>
 
