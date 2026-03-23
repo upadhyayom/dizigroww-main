@@ -1,7 +1,20 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { TrendingUp, ShoppingBag, ArrowRight } from "lucide-react";
 
+const metaImages = ["/meta-r1.jpg", "/meta-r2.jpg", "/meta-r3.jpg", "/meta-r4.jpg"];
+const shopifyImages = ["/shopify-r1.jpg", "/shopify-r2.jpg", "/shopify-r3.jpg", "/shopify-r4.jpg"];
+
 const DashboardResultsSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % metaImages.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="section-padding overflow-hidden bg-background">
       <div className="container-main">
@@ -56,12 +69,18 @@ const DashboardResultsSection = () => {
               
               {/* Image Container */}
               <div className="relative aspect-[4/3] w-full bg-muted/30 overflow-hidden flex items-center justify-center">
-                {/* Replace src with actual Meta dashboard screenshot */}
-                <img 
-                  src="/meta-r1.jpg" 
-                  alt="Meta Ads Dashboard Result" 
-                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
-                />
+                <AnimatePresence>
+                  <motion.img 
+                    key={currentIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8 }}
+                    src={metaImages[currentIndex]} 
+                    alt={`Meta Ads Dashboard Result ${currentIndex + 1}`} 
+                    className="absolute inset-0 object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+                  />
+                </AnimatePresence>
                 
                 {/* Fallback Text if image is missing/placeholder */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground/50 pointer-events-none opacity-50 group-hover:opacity-0 transition-opacity">
@@ -115,12 +134,18 @@ const DashboardResultsSection = () => {
               
               {/* Image Container */}
               <div className="relative aspect-[4/3] w-full bg-muted/30 overflow-hidden flex items-center justify-center">
-                {/* Replace src with actual Shopify dashboard screenshot */}
-                <img 
-                  src="/shopify-r1.jpg" 
-                  alt="Shopify Revenue Dashboard" 
-                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
-                />
+                <AnimatePresence>
+                  <motion.img 
+                    key={currentIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8 }}
+                    src={shopifyImages[currentIndex]} 
+                    alt={`Shopify Revenue Dashboard ${currentIndex + 1}`} 
+                    className="absolute inset-0 object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+                  />
+                </AnimatePresence>
 
                  {/* Fallback Text if image is missing/placeholder */}
                  <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground/50 pointer-events-none opacity-50 group-hover:opacity-0 transition-opacity">
