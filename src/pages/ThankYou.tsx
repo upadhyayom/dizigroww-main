@@ -11,7 +11,7 @@ const ThankYou = () => {
     // Fire Purchase event when page loads
     if (typeof window !== "undefined" && window.fbq) {
       window.fbq('track', 'Purchase', {
-        value: 999,
+        value: 1999,
         currency: 'INR'
       });
     }
