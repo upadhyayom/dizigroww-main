@@ -40,7 +40,7 @@ const StarterPlan = () => {
                 30-day setup, launch, audit + roadmap. <span className="text-foreground font-bold">₹1,999.</span>
               </p>
               
-              <div className="bg-primary/10 border border-primary/20 text-foreground px-6 py-3 rounded-full inline-flex font-semibold text-sm md:text-base mb-8 shadow-sm">
+              <div className="bg-primary/10 border border-primary/20 text-foreground px-4 py-3 md:px-6 md:py-3 rounded-2xl md:rounded-full inline-flex flex-col sm:flex-row items-center font-semibold text-sm md:text-base mb-8 shadow-sm">
                 Secure your spot with ₹1,999. If your brand doesn't qualify after our manual review, we refund you 100% immediately. No questions asked.
               </div>
 
@@ -89,10 +89,10 @@ const StarterPlan = () => {
                 { title: "20-Point CRO Website Audit", desc: "We review your homepage, product page, and checkout flow. You get a scored audit + up to 3 immediate layout/copy fixes implemented." },
                 { title: "30-Day Scaling Roadmap", desc: "A clear, actionable document detailing exactly what to do next to scale past your current plateau." }
               ].map((item, i) => (
-                <div key={i} className="bg-background p-8 rounded-2xl border border-border hover:border-primary/50 transition-all shadow-sm">
+                <div key={i} className="bg-background p-5 md:p-8 rounded-2xl border border-border hover:border-primary/50 transition-all shadow-sm">
                   <CheckCircle2 className="w-8 h-8 text-primary mb-4" />
-                  <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+                  <h3 className="text-lg md:text-xl font-bold mb-2">{item.title}</h3>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -106,9 +106,9 @@ const StarterPlan = () => {
             
             <div className="bg-card rounded-3xl border border-border overflow-hidden shadow-lg mb-10">
               <div className="divide-y divide-border">
-                <div className="grid grid-cols-2 p-5 bg-muted/50">
-                  <div className="font-semibold text-sm uppercase text-muted-foreground">Service</div>
-                  <div className="font-semibold text-sm uppercase text-right text-muted-foreground">Market Rate</div>
+                <div className="grid grid-cols-2 p-3 sm:p-5 bg-muted/50">
+                  <div className="font-semibold text-xs sm:text-sm uppercase text-muted-foreground">Service</div>
+                  <div className="font-semibold text-xs sm:text-sm uppercase text-right text-muted-foreground">Market Rate</div>
                 </div>
                 {[
                   { label: "Pixel & API Setup by a Freelancer", price: "₹2,000 – ₹5,000" },
@@ -116,18 +116,18 @@ const StarterPlan = () => {
                   { label: "Website CRO Audit & Fixes", price: "₹5,000 – ₹15,000" },
                   { label: "30-Day Scaling Roadmap", price: "₹3,000 – ₹8,000" },
                 ].map((row, i) => (
-                  <div key={i} className="grid grid-cols-2 p-5 items-center">
-                    <div className="font-medium">{row.label}</div>
-                    <div className="text-right text-muted-foreground">{row.price}</div>
+                  <div key={i} className="grid grid-cols-2 p-3 sm:p-5 items-center">
+                    <div className="font-medium text-sm sm:text-base">{row.label}</div>
+                    <div className="text-right text-sm sm:text-base text-muted-foreground">{row.price}</div>
                   </div>
                 ))}
-                <div className="grid grid-cols-2 p-5 bg-red-50/50">
-                  <div className="font-bold text-lg text-red-800">Total Market Value</div>
-                  <div className="font-bold text-lg text-right text-red-800 line-through">₹20,000 – ₹48,000</div>
+                <div className="grid grid-cols-2 p-4 sm:p-5 bg-red-50/50">
+                  <div className="font-bold text-base sm:text-lg text-red-800">Total Market Value</div>
+                  <div className="font-bold text-base sm:text-lg text-right text-red-800 line-through">₹20,000+</div>
                 </div>
-                <div className="grid grid-cols-2 p-6 bg-primary/10 border-t-2 border-primary">
-                  <div className="font-extrabold text-2xl text-primary">DiziGroww Starter Plan</div>
-                  <div className="font-extrabold text-3xl text-right text-primary">₹1,999</div>
+                <div className="grid grid-cols-2 p-4 sm:p-6 bg-primary/10 border-t-2 border-primary">
+                  <div className="font-extrabold text-xl sm:text-2xl text-primary">DiziGroww Starter Plan</div>
+                  <div className="font-extrabold text-2xl sm:text-3xl text-right text-primary">₹1,999</div>
                 </div>
               </div>
             </div>
@@ -146,9 +146,9 @@ const StarterPlan = () => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-full sm:w-auto px-10 py-5 bg-primary text-white text-xl font-bold rounded-full shadow-xl hover:shadow-primary/50 transition-all inline-flex items-center justify-center gap-2 mb-6"
+                  className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-primary text-white text-base md:text-xl font-bold rounded-2xl md:rounded-full shadow-xl hover:shadow-primary/50 transition-all inline-flex items-center justify-center gap-2 mb-6"
                 >
-                  Apply for the Starter Plan — ₹1,999 <ArrowRight className="w-6 h-6" />
+                  <span className="truncate">Apply for the Starter Plan — ₹1,999</span> <ArrowRight className="w-5 h-5 flex-shrink-0" />
                 </motion.button>
               </a>
 
@@ -262,9 +262,9 @@ const StarterPlan = () => {
                   a: "If we don't believe we can genuinely help you based on your product/site, we'll refund you immediately and point you toward free resources that will help instead." 
                 }
               ].map((faq, i) => (
-                <div key={i} className="bg-card p-6 rounded-2xl border border-border shadow-sm">
-                  <h3 className="font-bold text-lg mb-2">{faq.q}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{faq.a}</p>
+                <div key={i} className="bg-card p-5 md:p-6 rounded-2xl border border-border shadow-sm">
+                  <h3 className="font-bold text-base md:text-lg mb-2">{faq.q}</h3>
+                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -291,9 +291,9 @@ const StarterPlan = () => {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-10 py-5 bg-primary text-white text-xl font-bold rounded-full shadow-xl hover:shadow-primary/50 transition-all inline-flex items-center gap-2 mb-8"
+                className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-primary text-white text-base md:text-xl font-bold rounded-2xl md:rounded-full shadow-xl hover:shadow-primary/50 transition-all inline-flex items-center justify-center gap-2 mb-8"
               >
-                Apply Now <ArrowRight className="w-6 h-6" />
+                Apply Now <ArrowRight className="w-5 h-5 flex-shrink-0" />
               </motion.button>
             </a>
 
