@@ -35,7 +35,7 @@ const WhyChooseUs = () => (
       >
         <h2 className="text-3xl md:text-4xl mb-3">Why We're Not Like Other Agencies</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
-          We don't hide behind complicated dashboards. We focus on real business outcomes.
+          Most agencies run ads. We run ads AND fix your landing pages. Same team. No hand-offs. No excuses.
         </p>
       </motion.div>
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">

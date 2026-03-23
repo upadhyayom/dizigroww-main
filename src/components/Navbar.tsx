@@ -16,7 +16,8 @@ const serviceLinks = [
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "Services", to: "/services", dropdown: serviceLinks },
-  { label: "About", to: "/#why-us" },
+  { label: "Case Studies", to: "/#case-studies" },
+  { label: "About Us", to: "/about" },
   { label: "Contact", to: "/#audit-form" },
 ];
 
@@ -107,10 +108,7 @@ const Navbar = () => {
               )}
             </div>
           ))}
-          <Link to="/starter-plan" className="text-sm font-bold text-primary hover:text-primary-deep transition-colors mr-2">
-            ₹999 Starter Plan
-          </Link>
-          <a href="/#audit-form">
+          <Link to="/#audit-form">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
@@ -118,7 +116,7 @@ const Navbar = () => {
             >
               Get Free Audit
             </motion.button>
-          </a>
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -193,13 +191,6 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-              <Link
-                to="/starter-plan"
-                onClick={() => setOpen(false)}
-                className="mt-2 block text-center text-primary font-bold py-2 bg-primary/10 rounded-full"
-              >
-                ₹999 Starter Plan
-              </Link>
               <a href="/#audit-form" onClick={() => setOpen(false)} className="mt-2 block">
                 <button className="w-full bg-gradient-to-r from-primary to-primary-deep text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold">
                   Get Free Audit

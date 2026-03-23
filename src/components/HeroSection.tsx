@@ -14,17 +14,17 @@ const HeroSection = () => {
           className="lg:col-span-3"
         >
           <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-4 py-1.5 rounded-full mb-5 uppercase tracking-wider">
-            Not Your Typical Ads Agency
+            For Ambitious D2C Brands
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.4rem] leading-[1.1] mb-5">
-            More Sales Doesn't Mean <span className="text-primary">More Profit</span>
+            Stop burning ad budget. <span className="text-primary">Start scaling revenue.</span>
           </h1>
           <p className="text-muted-foreground text-base sm:text-lg mb-6 max-w-xl">
-            Most brands lose money even after getting good ROAS. We fix your ads, website, and offers so you actually make profit.
+            Most agencies run ads. We run ads AND fix your landing pages. Same team. No hand-offs. No excuses. We engineer the exact funnels that turn clicks into profitable customers.
           </p>
 
-          {/* Trust Badge */}
-          <div className="mb-6">
+          {/* Trust Badges */}
+          <div className="mb-6 flex flex-wrap gap-3 items-center">
             <a href="https://share.google/5lOHRfK7veGba5vBe" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-medium bg-secondary/50 border border-border px-3 py-1.5 rounded-full hover:border-[#FBBC05]/50 transition-colors">
               <div className="flex text-[#FBBC05]">
                 <Star size={16} className="fill-current" />
@@ -35,6 +35,12 @@ const HeroSection = () => {
               </div>
               <span>4.5 Google Rating</span>
             </a>
+            <div className="inline-flex items-center gap-2 text-sm font-medium bg-primary/5 text-primary border border-primary/20 px-3 py-1.5 rounded-full">
+               <span>✓ Incubated at NIET TBI</span>
+            </div>
+            <div className="inline-flex items-center gap-2 text-sm font-medium bg-secondary/50 border border-border px-3 py-1.5 rounded-full">
+               <span>💰 ₹2Cr+ Ad Spend Managed</span>
+            </div>
           </div>
 
           {/* Value props */}
@@ -59,16 +65,16 @@ const HeroSection = () => {
                 whileTap={{ scale: 0.97 }}
                 className="bg-gradient-to-r from-primary to-primary-deep text-primary-foreground px-7 py-3.5 rounded-full text-sm font-semibold shadow-lg flex items-center gap-2"
               >
-                See How We Grow Profit <ArrowRight size={16} />
+                Get a Free Ads Audit <ArrowRight size={16} />
               </motion.button>
             </a>
             <Link to="/services">
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
-                className="border border-border hover:border-primary text-foreground hover:text-primary px-7 py-3.5 rounded-full text-sm font-semibold transition-colors"
+                className="border border-border hover:border-primary text-foreground hover:text-primary px-7 py-3.5 rounded-full text-sm font-semibold transition-colors w-full sm:w-auto text-center"
               >
-                Explore Our Services
+                See How We Work
               </motion.button>
             </Link>
           </div>

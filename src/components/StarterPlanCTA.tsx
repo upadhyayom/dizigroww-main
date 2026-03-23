@@ -25,22 +25,22 @@ const StarterPlanCTA = () => {
           </div>
           
           <h2 className="text-3xl md:text-5xl font-extrabold mb-4 tracking-tight">
-            If you want more profit, not just more sales — let's talk.
+            Ready to stop guessing and start scaling?
           </h2>
           
           <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-            Stop guessing with your ad budget. Our <span className="font-semibold text-foreground">30-Day Starter Growth Plan</span> audits your entire setup and launches a proven Meta campaign to get your first profitable sales.
+            Stop guessing with your ad budget. Book a <span className="font-semibold text-foreground">Free 30-Min Ads Audit</span> and let us find exactly where you are bleeding money. No pitch. No obligations.
           </p>
           
-          <Link to="/starter-plan">
+          <a href="/#audit-form">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-primary text-white text-lg font-bold rounded-full shadow-[0_0_20px_rgba(var(--primary),0.4)] hover:shadow-[0_0_30px_rgba(var(--primary),0.6)] transition-all flex items-center justify-center gap-2 mx-auto"
             >
-              Explore the Starter Plan <ArrowRight className="w-5 h-5" />
+              Book Your Free Ads Audit <ArrowRight className="w-5 h-5" />
             </motion.button>
-          </Link>
+          </a>
           
           <p className="text-xs text-muted-foreground mt-4">One-time payment. Zero long-term retainers.</p>
         </motion.div>

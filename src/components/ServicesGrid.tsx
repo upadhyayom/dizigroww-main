@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const services = [
   {
     icon: Search,
-    title: "Ads → Bring the right people",
-    desc: "We run high-intent campaigns across Meta and Google to bring in people who are actually ready to buy.",
+    title: "Meta & Google Ads",
+    desc: "Bleeding money on ads with no ROAS? We rebuild your entire campaign structure — creatives, audiences, funnel — to make every rupee work harder.",
     deliverables: ["Targeting high-intent buyers", "Stopping wasteful ad spend"],
     useCase: "The Engine",
     color: "border-l-primary",
@@ -14,8 +14,8 @@ const services = [
   },
   {
     icon: Layout,
-    title: "Website → Make them buy",
-    desc: "We fix your landing page speed, layout, and copy so your traffic actually converts into paying customers.",
+    title: "Landing Page Optimization",
+    desc: "Traffic bouncing instead of buying? We fix your landing page speed, layout, and copy so your hard-earned clicks actually convert.",
     deliverables: ["Conversion rate optimization", "Frictionless checkout"],
     useCase: "The Foundation",
     color: "border-l-[hsl(210,80%,50%)]",
@@ -23,16 +23,16 @@ const services = [
   },
   {
     icon: ShoppingBag,
-    title: "Offers → Increase order value",
-    desc: "We construct irresistible bundles, upsells, and pricing strategies so each buyer spends more money.",
+    title: "Offer & AOV Strategy",
+    desc: "Getting sales but no margins? We construct irresistible bundles, upsells, and pricing strategies so each buyer spends more money.",
     deliverables: ["Strategic bundling", "Smart upsell mapping"],
     useCase: "The Multiplier",
     color: "border-l-[hsl(145,60%,40%)]",
   },
   {
     icon: BarChart3,
-    title: "Retention → Bring them back",
-    desc: "We build remarketing and loyalty flows to ensure your customers keep returning to buy more.",
+    title: "Retention & Reactivation",
+    desc: "Customers buying once and vanishing? We build remarketing and loyalty flows to ensure they keep returning to buy more.",
     deliverables: ["Email & SMS flows", "Loyalty loops"],
     useCase: "The Profit Center",
     color: "border-l-[hsl(35,90%,50%)]",

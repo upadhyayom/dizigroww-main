@@ -10,17 +10,24 @@ import FAQ from "@/components/FAQ";
 import GoogleReviews from "@/components/GoogleReviews";
 import DashboardResultsSection from "@/components/DashboardResultsSection";
 import StarterPlanCTA from "@/components/StarterPlanCTA";
+import CaseStudySnapshot from "@/components/CaseStudySnapshot";
+import HowItWorks from "@/components/HowItWorks";
+import FounderSection from "@/components/FounderSection";
+import Testimonial from "@/components/Testimonial";
 
 const Index = () => (
   <>
     <Navbar />
     <main>
       <HeroSection />
+      <CaseStudySnapshot />
+      <HowItWorks />
       <ServicesGrid />
       <DashboardResultsSection />
-      <StarterPlanCTA />
-      <GoogleReviews />
       <WhyChooseUs />
+      <FounderSection />
+      <Testimonial />
+      <StarterPlanCTA />
       <Process />
       <Pricing />
       <LeadForm />
