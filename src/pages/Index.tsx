@@ -9,6 +9,7 @@ import LeadForm from "@/components/LeadForm";
 import FAQ from "@/components/FAQ";
 import GoogleReviews from "@/components/GoogleReviews";
 import DashboardResultsSection from "@/components/DashboardResultsSection";
+import StarterPlanCTA from "@/components/StarterPlanCTA";
 
 const Index = () => (
   <>
@@ -17,6 +18,7 @@ const Index = () => (
       <HeroSection />
       <ServicesGrid />
       <DashboardResultsSection />
+      <StarterPlanCTA />
       <GoogleReviews />
       <WhyChooseUs />
       <Process />

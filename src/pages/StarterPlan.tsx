@@ -65,7 +65,7 @@ const StarterPlan = () => {
             </a>
           </div>
 
-              <div className="flex justify-center mb-6">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
                 <a
                   href={paymentLink}
                   target="_blank"
@@ -83,6 +83,18 @@ const StarterPlan = () => {
                     className="w-full sm:w-auto px-8 py-5 bg-primary text-white text-lg font-bold rounded-full shadow-lg hover:shadow-primary/50 transition-all flex items-center justify-center gap-2"
                   >
                     Start My 30-Day Growth Plan <ArrowRight className="w-5 h-5" />
+                  </motion.button>
+                </a>
+                <a
+                  href="#dashboard-results"
+                  className="w-full sm:w-auto"
+                >
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full sm:w-auto px-8 py-5 bg-white text-foreground border-2 border-border text-lg font-bold rounded-full hover:bg-muted transition-all flex items-center justify-center gap-2"
+                  >
+                    See Real Results
                   </motion.button>
                 </a>
               </div>

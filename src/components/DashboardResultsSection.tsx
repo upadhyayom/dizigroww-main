@@ -16,7 +16,7 @@ const DashboardResultsSection = () => {
   }, []);
 
   return (
-    <section className="section-padding overflow-hidden bg-background">
+    <section id="dashboard-results" className="section-padding overflow-hidden bg-background">
       <div className="container-main">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,7 +78,9 @@ const DashboardResultsSection = () => {
                     transition={{ duration: 0.8 }}
                     src={metaImages[currentIndex]} 
                     alt={`Meta Ads Dashboard Result ${currentIndex + 1}`} 
-                    className="absolute inset-0 object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+                    className="absolute inset-0 object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 pointer-events-auto"
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
                   />
                 </AnimatePresence>
                 
@@ -143,7 +145,9 @@ const DashboardResultsSection = () => {
                     transition={{ duration: 0.8 }}
                     src={shopifyImages[currentIndex]} 
                     alt={`Shopify Revenue Dashboard ${currentIndex + 1}`} 
-                    className="absolute inset-0 object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
+                    className="absolute inset-0 object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 pointer-events-auto"
+                    onContextMenu={(e) => e.preventDefault()}
+                    onDragStart={(e) => e.preventDefault()}
                   />
                 </AnimatePresence>
 
