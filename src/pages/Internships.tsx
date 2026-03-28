@@ -16,10 +16,10 @@ const Internships = () => {
               <ShieldCheck size={16} /> Verified Placement Partner
             </motion.div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight text-charcoal">
-              Secure Your Future With <br/> Guaranteed Opportunities
+              Exclusive for Freshers: <br/> Secure Your First Career
             </motion.h1>
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-              We are a premier HR consulting firm dedicated to bridging the gap between fresh talent and reputed companies. We place students based on skills, resume strength, and raw potential.
+              We are a premier HR consulting firm dedicated to bridging the gap between freshers and reputed companies. We place college students and recent graduates based on raw skills, potential, and resume strength.
             </p>
             
             <div className="flex flex-wrap justify-center gap-6 mt-10">
@@ -110,6 +110,16 @@ const Internships = () => {
                       <div>
                         <h4 className="font-bold text-charcoal mb-1">Why is there a ₹199 processing fee?</h4>
                         <p className="text-sm text-muted-foreground">To maintain the high quality of our talent pool for our partner companies, the nominal fee ensures we only process serious candidates. It directly covers the administrative costs of our manual resume screening and profile curation.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-white p-5 rounded-xl shadow-sm border border-border">
+                    <div className="flex items-start gap-3">
+                      <HelpCircle className="text-primary mt-0.5 shrink-0" size={20} />
+                      <div>
+                        <h4 className="font-bold text-charcoal mb-1">Do I need prior experience?</h4>
+                        <p className="text-sm text-muted-foreground">Absolutely not. This entire program is specifically designed for <b>freshers</b>, college students, and recent graduates with zero practical experience.</p>
                       </div>
                     </div>
                   </div>
