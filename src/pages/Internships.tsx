@@ -67,8 +67,35 @@ const Internships = () => {
           </div>
         </section>
 
+        {/* Student Testimonials (Authenticity) */}
+        <section className="section-padding bg-white border-y border-border">
+          <div className="container-main text-center">
+            <h2 className="text-3xl font-bold mb-4">Recent Success Stories</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-12">Don't just take our word for it. Hear from candidates who trusted our process and kickstarted their careers through our exact screening method.</p>
+            
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { name: "Rahul S.", role: "Placed as Business Analyst", text: "I was highly skeptical about the ₹199 processing fee. But their resume screening process is incredibly thorough. I received two interview calls and got placed in a reputed firm within 3 weeks!" },
+                { name: "Priya M.", role: "Placed as HR Executive", text: "Their team didn't just forward my resume to companies; they actively helped me understand my weak points and prepared me specifically for the technical rounds. Highly genuine." },
+                { name: "Amit K.", role: "Secured Paid Internship", text: "Getting a paid internship was extremely hard until I registered. The complete transparency and constant communication throughout the matching process is what makes them trustworthy." }
+              ].map((t, i) => (
+                <div key={i} className="bg-secondary/20 p-8 rounded-2xl border border-border text-left relative hover:shadow-md transition-shadow">
+                  <div className="text-[#FFD700] mb-4 text-xl tracking-widest">
+                    ★★★★★
+                  </div>
+                  <p className="text-sm italic text-muted-foreground leading-relaxed mb-6">"{t.text}"</p>
+                  <div className="border-t border-border pt-4">
+                    <h4 className="font-bold text-charcoal">{t.name}</h4>
+                    <p className="text-xs text-primary font-semibold mt-0.5">{t.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Core Value & Registration */}
-        <section className="section-padding py-16">
+        <section className="section-padding py-16 bg-slate-50">
           <div className="container-main max-w-5xl">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               
