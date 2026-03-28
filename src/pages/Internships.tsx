@@ -16,10 +16,10 @@ const Internships = () => {
               Placement & Paid Internships
             </motion.div>
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl font-bold mb-6">
-              Launch Your Digital Career With Us
+              Launch Your Career With Us
             </motion.h1>
             <p className="text-lg text-muted-foreground">
-              We offer exclusive paid internship opportunities and placement assistance in reputed performance marketing and D2C companies. Top performers get a chance for full-time absorption.
+              As a dedicated HR consultancy, we offer exclusive paid internship opportunities and premium placement assistance in reputed companies, matching you perfectly based on your resume and skills.
             </p>
           </div>
         </section>
@@ -34,11 +34,11 @@ const Internships = () => {
                 <h2 className="text-2xl font-bold mb-6">Why Join Our Program?</h2>
                 <ul className="space-y-4">
                   {[
-                    "Hands-on experience with real global ad budgets.",
-                    "Live workshops on Meta Ads, Google Ads & CRO.",
-                    "Performance-based stipend & paid internships.",
-                    "Direct placement assistance in our partner network.",
-                    "Certificate of completion and letter of recommendation."
+                    "Resume-driven role matching across top reputed companies.",
+                    "Live skill assessments and expert interview preparation.",
+                    "Opportunities spanning diverse industries and disciplines.",
+                    "Guaranteed placement assistance and paid internship access.",
+                    "Valuable industry experience to kickstart your career."
                   ].map((item, index) => (
                     <li key={index} className="flex items-start gap-3">
                       <CheckCircle className="text-primary mt-1 shrink-0" size={20} />
