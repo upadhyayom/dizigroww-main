@@ -70,6 +70,21 @@ const Careers = () => {
             </div>
           </div>
         </section>
+        
+        {/* Internship Banner */}
+        <section className="section-padding pt-0 bg-secondary">
+          <div className="container-main">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-3xl p-8 sm:p-12 border border-primary/20 text-center max-w-4xl mx-auto shadow-sm">
+              <h2 className="text-3xl font-bold mb-4">Looking for an Internship or Placement?</h2>
+              <p className="text-muted-foreground mb-8 text-lg max-w-2xl mx-auto">
+                We provide hands-on paid internships and placement assistance in top D2C companies. Get real experience managing global ad budgets.
+              </p>
+              <a href="/careers/internships" className="inline-block bg-primary text-primary-foreground py-3 px-8 rounded-full font-semibold hover:scale-105 transition-transform shadow-md">
+                View Opportunities & Register
+              </a>
+            </motion.div>
+          </div>
+        </section>
 
         {/* Application Form */}
         <section className="section-padding">

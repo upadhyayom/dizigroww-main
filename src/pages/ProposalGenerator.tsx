@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 const defaultData: ProposalData = {
   clientName: "DEBMALYA",
-  clientPhone: "+91 9477440662",
+  clientPhone: "",
   clientEmail: "debmalya@example.com",
   projectOverview: "This project involves designing a modern and user-friendly Landing page for Debmalya to enhance his online presence and improve user engagement",
   pagesOverview: [
@@ -22,7 +22,7 @@ const defaultData: ProposalData = {
     "25%- After final revision",
     "50%- At the time of going live"
   ],
-  contactInfo: "+91 9477440662",
+  contactInfo: "+91 9450010826",
   references: [
     { title: "Reference 1.", url: "#" },
     { title: "Reference 2.", url: "#" }

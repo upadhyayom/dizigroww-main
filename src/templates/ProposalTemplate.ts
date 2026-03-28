@@ -98,7 +98,7 @@ export const generateProposalHtml = (data: ProposalData): string => {
         </div>
         <div class="flex items-start gap-2">
           <div class="text-[#c53a65] mt-[2px]">📞</div>
-          <div>+91-9450010826, 9477440662</div>
+          <div>+91-9450010826</div>
         </div>
         <div class="flex items-start gap-2">
           <div class="text-[#c53a65] mt-[2px]">✉️</div>
