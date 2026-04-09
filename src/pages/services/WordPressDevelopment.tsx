@@ -3,11 +3,11 @@ import Footer from "@/components/Footer";
 import TrustSection from "@/components/TrustSection";
 import Pricing from "@/components/Pricing";
 import { motion } from "framer-motion";
-import { Globe, Server, CodePOpen, Search } from "lucide-react";
+import { Globe, Server, Code, Search } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 const features = [
-  { icon: CodePOpen, title: "Custom Architecture", desc: "No bloated builders. Clean, custom WordPress themes engineered for speed." },
+  { icon: Code, title: "Custom Architecture", desc: "No bloated builders. Clean, custom WordPress themes engineered for speed." },
   { icon: Search, title: "Technical SEO", desc: "Built with the latest structured data and Core Web Vitals optimizations." },
   { icon: Server, title: "Secure & Scalable", desc: "Hardened security protocols mapping to international compliance standards." }
 ];
