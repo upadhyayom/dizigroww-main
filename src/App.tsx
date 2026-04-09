@@ -15,6 +15,11 @@ import Internships from "./pages/Internships.tsx";
 import WebDevDubai from "./pages/WebDevDubai.tsx";
 import WebDevSingapore from "./pages/WebDevSingapore.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
+import ShopifyDevelopment from "./pages/services/ShopifyDevelopment.tsx";
+import WordPressDevelopment from "./pages/services/WordPressDevelopment.tsx";
+import LandingPageDesign from "./pages/services/LandingPageDesign.tsx";
+import WebsiteRedesignCRO from "./pages/services/WebsiteRedesignCRO.tsx";
+import PerformanceMarketing from "./pages/services/PerformanceMarketing.tsx";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieBanner from "@/components/CookieBanner";
 import { Analytics } from "@vercel/analytics/react";
@@ -38,6 +43,11 @@ const App = () => (
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/web-development-dubai" element={<WebDevDubai />} />
           <Route path="/web-development-singapore" element={<WebDevSingapore />} />
+          <Route path="/services/shopify-development" element={<ShopifyDevelopment />} />
+          <Route path="/services/wordpress-development" element={<WordPressDevelopment />} />
+          <Route path="/services/landing-page-design" element={<LandingPageDesign />} />
+          <Route path="/services/website-redesign-cro" element={<WebsiteRedesignCRO />} />
+          <Route path="/services/performance-marketing" element={<PerformanceMarketing />} />
           <Route path="/careers/internships" element={<Internships />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

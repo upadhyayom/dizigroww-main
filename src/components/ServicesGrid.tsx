@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const services = [
   {
+    slug: "wordpress-development",
     icon: Globe,
     title: "Web Development",
     desc: "We build fast, secure, and scalable websites tailored for your international audience using WordPress and modern frameworks.",
@@ -13,6 +14,7 @@ const services = [
     popular: true,
   },
   {
+    slug: "shopify-development",
     icon: ShoppingBag,
     title: "E-Commerce (Shopify)",
     desc: "End-to-end Shopify development designed purely to maximize conversions and increase your Average Order Value.",
@@ -22,6 +24,7 @@ const services = [
     popular: true,
   },
   {
+    slug: "landing-page-design",
     icon: Layout,
     title: "Landing Pages & CRO",
     desc: "Traffic bouncing? We design standalone landing pages and audit your funnel to ensure every click counts.",
@@ -30,6 +33,7 @@ const services = [
     color: "border-l-[hsl(35,90%,50%)]",
   },
   {
+    slug: "performance-marketing",
     icon: Search,
     title: "Performance Marketing",
     desc: "Data-driven Meta and Google Ads campaigns that target high-intent buyers across the UAE, Singapore, and India.",
@@ -83,7 +87,7 @@ const ServicesGrid = () => (
             </ul>
             <p className="text-[10px] text-muted-foreground/70 uppercase tracking-wider mb-3">{s.useCase}</p>
             <Link
-              to="/services"
+              to={`/services/${s.slug}`}
               className="text-xs text-primary font-semibold hover:underline inline-flex items-center gap-1"
             >
               Learn more →

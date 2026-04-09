@@ -43,12 +43,12 @@ const Footer = () => (
         <div>
           <h4 className="font-display text-sm font-bold mb-4 uppercase tracking-wider text-charcoal-foreground/80">Services</h4>
           <ul className="space-y-2 text-sm text-charcoal-foreground/60">
-            <li><Link to="/services" className="hover:text-primary transition-colors">Meta Ads Management</Link></li>
-            <li><Link to="/services" className="hover:text-primary transition-colors">Google Ads Management</Link></li>
-            <li><Link to="/services" className="hover:text-primary transition-colors">Conversion Rate Optimization</Link></li>
-            <li><Link to="/services" className="hover:text-primary transition-colors">Landing Page Design</Link></li>
-            <li><Link to="/services" className="hover:text-primary transition-colors">Shopify & Ecommerce</Link></li>
-            <li><Link to="/services" className="hover:text-primary transition-colors">WordPress Development</Link></li>
+            <li><Link to="/services/performance-marketing" className="hover:text-primary transition-colors">Meta Ads Management</Link></li>
+            <li><Link to="/services/performance-marketing" className="hover:text-primary transition-colors">Google Ads Management</Link></li>
+            <li><Link to="/services/website-redesign-cro" className="hover:text-primary transition-colors">Conversion Rate Optimization</Link></li>
+            <li><Link to="/services/landing-page-design" className="hover:text-primary transition-colors">Landing Page Design</Link></li>
+            <li><Link to="/services/shopify-development" className="hover:text-primary transition-colors">Shopify & Ecommerce</Link></li>
+            <li><Link to="/services/wordpress-development" className="hover:text-primary transition-colors">WordPress Development</Link></li>
           </ul>
         </div>
 

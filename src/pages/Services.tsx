@@ -1,27 +1,33 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import Pricing from "@/components/Pricing";
 import { motion } from "framer-motion";
 import { Facebook, Search, BarChart3, Layout, Globe, ShoppingBag, Check } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const services = [
   {
+    slug: "shopify-development",
     icon: ShoppingBag, title: "Shopify Development", desc: "Enterprise-grade eCommerce stores built on Shopify, designed to sell more and scale seamlessly across borders.",
     includes: ["Store setup & configuration", "Custom theme design", "Product page optimization", "Payment & shipping setup", "Performance & speed tuning"],
   },
   {
+    slug: "wordpress-development",
     icon: Globe, title: "WordPress/WooCommerce Development", desc: "Custom WordPress websites and WooCommerce platforms that look stunning and empower B2B and retail growth.",
     includes: ["Custom theme development", "SEO-optimized architecture", "Speed & performance tuning", "Advanced security setup", "Ongoing maintenance"],
   },
   {
+    slug: "landing-page-design",
     icon: Layout, title: "Landing Page Design & Development", desc: "High-converting, standalone landing pages specifically engineered to capture leads from your paid traffic.",
     includes: ["Custom design & copywriting", "Mobile-first & responsive", "Ultra-fast load times", "A/B testing implementation", "CRM & Analytics integration"],
   },
   {
+    slug: "website-redesign-cro",
     icon: BarChart3, title: "Website Redesign & CRO", desc: "We audit and revamp your outdated site to meet modern standards, dramatically improving your conversion rates.",
     includes: ["Full UX/UI audit", "Heatmap & session analysis", "Checkout flow improvements", "Trust factor enhancement", "Multivariate testing"],
   },
   {
+    slug: "performance-marketing",
     icon: Search, title: "Performance Marketing (Meta + Google Ads)", desc: "We run data-heavy ad campaigns targeting high-intent demographics in Dubai, Singapore, and worldwide.",
     includes: ["Omnichannel campaign strategy", "Data-driven creative direction", "Audience research & targeting", "Bid strategy optimization", "Transparent ROI reporting"],
   },
@@ -34,11 +40,7 @@ const steps = [
   { step: "04", title: "Scale", desc: "We optimize, scale what works, and grow your revenue." },
 ];
 
-const pricing = [
-  { name: "Starter", price: "$499", period: "", features: ["Single Landing Page", "5 Dedicated Sections", "Mobile Responsive", "Lead Form Integration"], popular: false },
-  { name: "Growth", price: "$999", period: "", features: ["Multi-page Website (Up to 7)", "CMS Setup (WordPress)", "Basic Technical SEO", "Mobile UI Optimized"], popular: true },
-  { name: "E-Commerce", price: "$1,799", period: "", features: ["Shopify or WooCommerce", "Up to 50 Products added", "Payment Gateway Integration", "Cart Optimization"], popular: false },
-];
+
 
 const Services = () => (
   <>
@@ -76,11 +78,11 @@ const Services = () => (
                     </li>
                   ))}
                 </ul>
-                <a href="/contact" className="inline-block mt-6">
+                <Link to={`/services/${s.slug}`} className="inline-block mt-6">
                   <motion.button whileHover={{ scale: 1.05 }} className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 py-3 rounded-full text-sm font-semibold shadow-md transition-colors">
-                    Get a Quote
+                    Learn More
                   </motion.button>
-                </a>
+                </Link>
               </div>
               <div className={`bg-secondary rounded-2xl p-12 flex items-center justify-center ${i % 2 === 1 ? "lg:order-1" : ""}`}>
                 <s.icon size={120} className="text-primary/20" />
@@ -106,49 +108,7 @@ const Services = () => (
         </div>
       </section>
 
-      {/* Pricing */}
-      <section className="section-padding">
-        <div className="container-main">
-          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-3xl md:text-4xl text-center mb-4">Transparent Pricing</motion.h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">Simple, honest pricing. No hidden fees. No long-term contracts.</p>
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto xl:px-4">
-            {pricing.map((p, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className={`rounded-2xl p-8 ${p.popular ? "bg-charcoal text-charcoal-foreground shadow-xl scale-105" : "bg-card shadow-card border border-border"}`}
-              >
-                {p.popular && <span className="text-xs font-semibold text-primary uppercase tracking-wider">Most Popular</span>}
-                <h3 className={`text-xl mt-2 ${p.popular ? "text-charcoal-foreground" : ""}`}>{p.name}</h3>
-                <div className="mt-4 mb-6">
-                  <span className="text-3xl xl:text-4xl font-display font-bold">{p.price}</span>
-                  <span className={`text-sm ${p.popular ? "text-charcoal-foreground/60" : "text-muted-foreground"}`}>{p.period}</span>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {p.features.map((f, j) => (
-                    <li key={j} className={`flex items-center gap-2 text-sm ${p.popular ? "text-charcoal-foreground/80" : "text-muted-foreground"}`}>
-                      <Check size={14} className="text-primary flex-shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-                <a href="/#audit-form">
-                  <motion.button
-                    whileHover={{ scale: 1.03 }}
-                    whileTap={{ scale: 0.97 }}
-                    className={`w-full py-3 rounded-full text-sm font-semibold ${p.popular ? "bg-gradient-to-r from-primary to-[hsl(0,100%,63%)] text-primary-foreground" : "border border-border hover:border-primary hover:text-primary transition-colors"}`}
-                  >
-                    Get Started
-                  </motion.button>
-                </a>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Pricing />
     </main>
     <Footer />
   </>
