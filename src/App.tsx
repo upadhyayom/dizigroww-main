@@ -12,7 +12,7 @@ import StarterPlan from "./pages/StarterPlan.tsx";
 import ThankYou from "./pages/ThankYou.tsx";
 import ProposalGenerator from "./pages/ProposalGenerator.tsx";
 import Internships from "./pages/Internships.tsx";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/react"
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const queryClient = new QueryClient();
@@ -36,6 +36,7 @@ const App = () => (
         </Routes>
         <WhatsAppButton />
       </BrowserRouter>
+      <Analytics />
     </TooltipProvider>
   </QueryClientProvider>
 );
