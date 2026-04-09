@@ -119,6 +119,7 @@ const DashboardResultsSection = () => {
             <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">What Changed After Working With Us</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 More profit per order. Better conversion rate. Stable growth (not random spikes).
+                <span className="block mt-2 font-bold text-primary">We just don't only focus on ROAS; we focus on ROI.</span>
             </p>
             </motion.div>
 
