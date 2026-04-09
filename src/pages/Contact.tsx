@@ -53,7 +53,7 @@ const Contact = () => (
                 <h3 className="text-lg font-bold mb-2">Book a Discovery Call</h3>
                 <p className="text-xs text-muted-foreground mb-4">We work across IST, GST & SGT timezones.</p>
                 <div className="w-full bg-secondary rounded-xl border border-border overflow-hidden">
-                  <div className="calendly-inline-widget w-full min-h-[500px]" data-url="https://calendly.com/dizigrowwofficial/30min" style={{ minWidth: "320px", height: "500px" }}></div>
+                  <div className="calendly-inline-widget w-full min-h-[500px]" data-url="https://calendly.com/dizigrowwofficial/30min?background_color=cb201f&text_color=ffffff&primary_color=cb201f" style={{ minWidth: "320px", height: "500px" }}></div>
                 </div>
               </div>
             </motion.div>
