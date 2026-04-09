@@ -5,7 +5,6 @@ import Pricing from "@/components/Pricing";
 import DashboardResultsSection from "@/components/DashboardResultsSection";
 import MarketingBreakdown from "@/components/MarketingBreakdown";
 import WhatsAppTestimonials from "@/components/WhatsAppTestimonials";
-import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { ArrowRight } from "lucide-react";
 

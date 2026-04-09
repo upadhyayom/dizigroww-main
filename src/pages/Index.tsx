@@ -14,7 +14,6 @@ import WebDevelopmentGlimpse from "@/components/WebDevelopmentGlimpse";
 import MarketingBreakdown from "@/components/MarketingBreakdown";
 import HowItWorks from "@/components/HowItWorks";
 import WhatsAppTestimonials from "@/components/WhatsAppTestimonials";
-import FounderSection from "@/components/FounderSection";
 import { useMeta } from "@/hooks/useMeta";
 
 const Index = () => {
