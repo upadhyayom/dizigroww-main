@@ -1,142 +1,147 @@
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Check, ArrowRight, Star, StarHalf } from "lucide-react";
+import { useRef } from "react";
+import { ArrowRight, Star, TrendingUp, CheckCircle2, MessageCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const HeroSection = () => {
+  const containerRef = useRef<HTMLElement>(null);
+
   return (
-    <section className="min-h-[70vh] lg:min-h-[85vh] flex items-center px-4 sm:px-6 lg:px-8 py-10 md:py-20 pt-32 md:pt-36">
-      <div className="container-main grid lg:grid-cols-5 gap-10 lg:gap-16 items-center">
-        {/* Left 60% */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          className="lg:col-span-3"
-        >
-          <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-4 py-1.5 rounded-full mb-5 uppercase tracking-wider">
-            Trusted by businesses across India, UAE & Southeast Asia
-          </span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.2rem] leading-[1.15] mb-5 font-bold tracking-tight">
-            We Build High-Converting Websites & Run Ads That Actually Grow Your Business.
-          </h1>
-          <p className="text-muted-foreground text-base sm:text-lg mb-6 max-w-xl">
-            Tired of slow websites, missed deadlines, and agencies that ghost you? We deliver premium web development and data-driven performance marketing under one roof. No middlemen, no excuses.
-          </p>
-
-          {/* Trust Badges */}
-          <div className="mb-6 flex flex-wrap gap-3 items-center">
-            <a href="https://share.google/5lOHRfK7veGba5vBe" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-medium bg-secondary/50 border border-border px-3 py-1.5 rounded-full hover:border-[#FBBC05]/50 transition-colors">
-              <div className="flex text-[#FBBC05]">
-                <Star size={16} className="fill-current" />
-                <Star size={16} className="fill-current" />
-                <Star size={16} className="fill-current" />
-                <Star size={16} className="fill-current" />
-                <StarHalf size={16} className="fill-current" />
-              </div>
-              <span>4.5 Google Rating</span>
-            </a>
-            <div className="inline-flex items-center gap-2 text-sm font-medium bg-secondary/50 border border-border px-3 py-1.5 rounded-full">
-               <span>🌍 Serving UAE, SG & India</span>
-            </div>
-          </div>
-
-          {/* Value props */}
-          <ul className="space-y-2.5 mb-8">
-            {[
-              "End-to-end Web Development (Shopify, WordPress, Custom)",
-              "Bespoke Landing Pages Built for Conversion",
-              "Results-focused omnichannel approach (Meta & Google Ads)",
-            ].map((prop, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-sm text-foreground/80 font-medium">
-                <Check size={16} className="text-primary mt-0.5 flex-shrink-0" />
-                <span>{prop}</span>
-              </li>
-            ))}
-          </ul>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <a href="https://wa.me/918920150935?text=Hi%20DiziGroww,%20I'm%20interested%20in%20web%20development%20for%20my%20business." target="_blank" rel="noreferrer" className="w-full sm:w-auto">
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                className="bg-[#25D366] hover:bg-[#128C7E] text-white px-7 py-3.5 rounded-full text-sm font-semibold shadow-lg flex items-center justify-center w-full transition-colors"
-              >
-                Chat on WhatsApp
-              </motion.button>
-            </a>
-            <a href="/contact" className="w-full sm:w-auto">
-              <motion.button
-                whileHover={{ scale: 1.04 }}
-                whileTap={{ scale: 0.97 }}
-                className="bg-primary hover:bg-primary/90 text-primary-foreground px-7 py-3.5 rounded-full text-sm font-semibold shadow-lg flex items-center justify-center gap-2 w-full transition-colors"
-              >
-                Book a Free Call <ArrowRight size={16} />
-              </motion.button>
-            </a>
-          </div>
-          
-          {/* Trust Bar below Hero CTAs */}
-          <div className="mt-8 pt-6 border-t border-border flex flex-wrap gap-4 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-            <div className="flex items-center gap-1.5"><Check size={14} className="text-green-500" /> 3-6 Week Delivery</div>
-            <div className="flex items-center gap-1.5"><Check size={14} className="text-green-500" /> Fixed Pricing</div>
-            <div className="flex items-center gap-1.5"><Check size={14} className="text-green-500" /> 100% Satisfaction Guarantee</div>
-            <div className="flex items-center gap-1.5"><Check size={14} className="text-green-500" /> 20+ Projects Delivered</div>
-          </div>
-        </motion.div>
-
-        {/* Right 40% — Service highlights */}
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.2 }}
-          className="lg:col-span-2 hidden lg:block"
-        >
-          <div className="bg-card rounded-2xl shadow-card-hover p-6 border border-border space-y-4">
-            <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">How We Do It</p>
-            {[
-              { title: "Bring the right people", desc: "Ads that target buyers, not just clicks" },
-              { title: "Make them buy", desc: "Websites fixed for maximum conversion" },
-              { title: "Increase order value", desc: "Offers that make people spend more" },
-              { title: "Bring them back", desc: "Retention systems for loyal customers" },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 + i * 0.1 }}
-                className="flex items-start gap-3 p-3 rounded-xl bg-secondary border border-border"
-              >
-                <div className="w-2 h-2 rounded-full bg-primary mt-1.5 flex-shrink-0" />
-                <div>
-                  <p className="text-sm font-semibold">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">{item.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Mobile service cards */}
-        <div className="lg:hidden grid grid-cols-2 gap-3">
-          {[
-            { label: "Bring the right people", icon: "🤝" },
-            { label: "Make them buy", icon: "🛒" },
-            { label: "Increase order value", icon: "📈" },
-            { label: "Bring them back", icon: "🔁" },
-          ].map((s) => (
-            <motion.div
-              key={s.label}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="bg-card rounded-xl p-3 text-center shadow-card border border-border"
-            >
-              <p className="text-lg mb-1">{s.icon}</p>
-              <p className="text-xs font-medium text-muted-foreground">{s.label}</p>
-            </motion.div>
-          ))}
-        </div>
+    <section ref={containerRef} className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-background">
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-[100%] bg-primary/10 blur-[100px] opacity-70"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       </div>
+      <motion.div className="container-main relative z-10">
+        <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
+
+          {/* Floating Top Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: [0, -8, 0] }}
+            transition={{
+              opacity: { duration: 0.6, ease: "easeOut" },
+              y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            }}
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary/10 border border-primary/20 backdrop-blur-md mb-8 shadow-lg shadow-primary/5"
+          >
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+            <span className="text-sm font-bold text-primary tracking-wide uppercase">
+              Trusted Across India, UAE & SEA
+            </span>
+          </motion.div>
+
+          {/* Core Headline */}
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-[5rem] font-black text-foreground tracking-tighter leading-[1.05] mb-6 drop-shadow-sm"
+          >
+            We Build High-Converting Websites <br className="hidden lg:block" />
+            <span className="text-primary drop-shadow-sm">& Scale Your Brand with Ads.</span>
+          </motion.h1>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+            className="text-lg md:text-2xl font-bold text-muted-foreground tracking-wide mb-10 max-w-3xl"
+          >
+            Tired of slow websites, missed deadlines, and agencies that ghost you? We deliver premium web development and data-driven performance marketing under one roof. No middlemen, no excuses.
+          </motion.h2>
+
+          {/* Subheading: Icon-driven benefits instead of a huge wall of text */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-6 max-w-4xl mb-12"
+          >
+            <div className="flex items-center gap-2 bg-secondary/80 border border-border px-4 py-2.5 rounded-full shadow-sm text-sm md:text-base font-semibold text-foreground/90">
+               <TrendingUp className="w-4 h-4 md:w-5 md:h-5 text-primary" /> End-to-end Web Development
+            </div>
+            <div className="flex items-center gap-2 bg-secondary/80 border border-border px-4 py-2.5 rounded-full shadow-sm text-sm md:text-base font-semibold text-foreground/90">
+               <Star className="w-4 h-4 md:w-5 md:h-5 text-yellow-500" /> Bespoke Landing Pages
+            </div>
+            <div className="flex items-center gap-2 bg-secondary/80 border border-border px-4 py-2.5 rounded-full shadow-sm text-sm md:text-base font-semibold text-foreground/90">
+               <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5 text-green-500" /> Results-focused Omnichannel
+            </div>
+          </motion.div>
+
+          {/* CTA & Actions */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+            className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto"
+          >
+            <a href="https://wa.me/918920150935?text=Hi%20DiziGroww,%20I'm%20interested%20in%20web%20development%20for%20my%20business." target="_blank" rel="noreferrer" className="w-full sm:w-auto">
+              <button aria-label="Chat on WhatsApp" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white px-8 py-5 rounded-full text-lg font-bold shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                <MessageCircle className="w-5 h-5 fill-current" /> Chat on WhatsApp
+              </button>
+            </a>
+
+            <a href="/contact" className="w-full sm:w-auto">
+              <button aria-label="Book a Free Call" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-5 rounded-full text-lg font-bold shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
+                Book a Free Call
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </a>
+          </motion.div>
+
+          {/* Social Proof Strip below CTA */}
+          <motion.div
+            initial={{ opacity: 0, filter: "blur(10px)" }}
+            animate={{ opacity: 1, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="mt-16 flex flex-wrap items-center justify-center gap-x-10 gap-y-6 pt-10 border-t border-border/60 w-full"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex -space-x-3">
+                <img src={`https://api.dicebear.com/7.x/initials/svg?seed=D`} className="w-10 h-10 rounded-full border-2 border-background shadow-sm" alt="User 1" />
+                <img src={`https://api.dicebear.com/7.x/initials/svg?seed=A`} className="w-10 h-10 rounded-full border-2 border-background shadow-sm" alt="User 2" />
+                <img src={`https://api.dicebear.com/7.x/initials/svg?seed=K`} className="w-10 h-10 rounded-full border-2 border-background shadow-sm" alt="User 3" />
+                <div className="w-10 h-10 rounded-full border-2 border-background bg-muted flex items-center justify-center text-xs font-bold text-muted-foreground shadow-sm">+8</div>
+              </div>
+              <div className="text-left flex flex-col">
+                <div className="flex text-yellow-400">
+                  {[1, 2, 3, 4, 5].map((s) => <Star key={s} className="w-4 h-4 fill-current" />)}
+                </div>
+                <span className="text-sm font-semibold text-foreground">4.5 Google Rating</span>
+              </div>
+            </div>
+
+            <div className="w-px h-10 bg-border hidden sm:block"></div>
+
+            <div className="flex items-center gap-3">
+              <div className="bg-primary/10 text-primary p-2.5 rounded-full">
+                <TrendingUp className="w-5 h-5" />
+              </div>
+              <div className="text-left flex flex-col">
+                <span className="text-xl font-black text-foreground">20+</span>
+                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Projects Delivered</span>
+              </div>
+            </div>
+
+            <div className="w-px h-10 bg-border hidden lg:block"></div>
+
+            <div className="flex items-center gap-3">
+              <div className="bg-primary/10 text-primary p-2.5 rounded-full">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <div className="text-left flex flex-col">
+                <span className="text-xl font-black text-foreground">3</span>
+                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Continents Served</span>
+              </div>
+            </div>
+          </motion.div>
+
+        </div>
+      </motion.div>
     </section>
   );
 };
