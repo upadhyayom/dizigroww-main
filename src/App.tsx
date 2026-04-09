@@ -12,6 +12,7 @@ import StarterPlan from "./pages/StarterPlan.tsx";
 import ThankYou from "./pages/ThankYou.tsx";
 import ProposalGenerator from "./pages/ProposalGenerator.tsx";
 import Internships from "./pages/Internships.tsx";
+import { Analytics } from "@vercel/analytics/next"
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 const queryClient = new QueryClient();
