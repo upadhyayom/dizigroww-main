@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Facebook, Search, BarChart3, Layout, Globe, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
+import TiltCard from "./TiltCard";
 
 const services = [
   {
@@ -66,9 +67,10 @@ const ServicesGrid = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.06 }}
-            whileHover={{ y: -3, scale: 1.01 }}
-            className={`relative bg-card rounded-2xl p-6 shadow-card border-l-4 ${s.color} hover:shadow-card-hover transition-all group cursor-pointer`}
           >
+            <TiltCard
+              className={`relative h-full bg-card rounded-2xl p-6 shadow-card border-l-4 ${s.color} hover:shadow-card-hover transition-all group cursor-pointer`}
+            >
             {s.popular && (
               <span className="absolute top-4 right-4 bg-primary/10 text-primary text-[10px] font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">
                 Most Popular
@@ -92,6 +94,7 @@ const ServicesGrid = () => (
             >
               Learn more →
             </Link>
+            </TiltCard>
           </motion.div>
         ))}
       </div>

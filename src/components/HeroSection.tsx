@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, ArrowRight, Star, StarHalf } from "lucide-react";
+import Background3D from "./Background3D";
 
 const HeroSection = () => {
   return (
-    <section className="min-h-[70vh] lg:min-h-[85vh] flex items-center px-4 sm:px-6 lg:px-8 py-10 md:py-20 pt-32 md:pt-36">
-      <div className="container-main grid lg:grid-cols-5 gap-10 lg:gap-16 items-center">
+    <section className="relative min-h-[70vh] lg:min-h-[85vh] flex items-center px-4 sm:px-6 lg:px-8 py-10 md:py-20 pt-32 md:pt-36 overflow-hidden">
+      <Background3D />
+      <div className="container-main relative z-10 grid lg:grid-cols-5 gap-10 lg:gap-16 items-center">
         {/* Left 60% */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
