@@ -17,6 +17,7 @@ import WebDevSingapore from "./pages/WebDevSingapore.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import CookieBanner from "@/components/CookieBanner";
+import { Analytics } from "@vercel/analytics/react";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
         </Routes>
         <WhatsAppButton />
         <CookieBanner />
+        <Analytics />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
