@@ -3,20 +3,20 @@ import { ArrowRight, MapPin, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const brands = [
-  { name: "Varak Edible Luxury", logoUrl: "https://www.varakedibleluxury.com/cdn/shop/files/LOGO_df45ac31-a887-4348-bae1-1f6bc182ddea.png", category: "Luxury F&B", location: "Global", url: "https://www.varakedibleluxury.com/", color: "bg-amber-500/10" },
+  { name: "Varak Edible Luxury", logoUrl: "https://www.varakedibleluxury.com/cdn/shop/files/Varak_logo_nav_copy2.png?v=1712817801&width=500", category: "Luxury F&B", location: "Global", url: "https://www.varakedibleluxury.com/", color: "bg-amber-500/10" },
   { name: "Prince Jewellers", logoUrl: "https://www.princejewellers.com.au/cdn/shop/files/PJlogo6_f90fe273-0906-44b4-bcc5-1ff2dfbb2ed5.png", category: "Premium Jewelry", location: "Australia", url: "https://www.princejewellers.com.au", color: "bg-blue-500/10" },
   { name: "EVO Labs", logoUrl: "https://api.microlink.io?url=https://www.evolabsresearch.co/&embed=logo.url", category: "Tech & Research", location: "Global", url: "https://www.evolabsresearch.co/", color: "bg-indigo-500/10" },
-  { name: "EvoVera", logoUrl: "https://api.microlink.io?url=https://evovera.store/&embed=logo.url", category: "eCommerce", location: "Global", url: "https://evovera.store/", color: "bg-emerald-500/10" },
+  { name: "EvoVera", logoUrl: "https://evovera.store/cdn/shop/files/Untitled_design_-_2026-01-06T230016.860_100x@2x.png?v=1767720623", category: "eCommerce", location: "Global", url: "https://evovera.store/", color: "bg-emerald-500/10" },
   { name: "MotoBlox", logoUrl: "https://motoblox.com/cdn/shop/files/Screenshot_2025-01-08_171555.png", category: "Automotive", location: "Global", url: "https://motoblox.com/", color: "bg-rose-500/10" },
   { name: "Toy Collectors India", logoUrl: "https://www.toycollectorsindia.com/cdn/shop/files/2_9f7f04f4-813a-4f4d-8bd4-4e648002e89b.png", category: "Retail", location: "India", url: "https://www.toycollectorsindia.com/", color: "bg-cyan-500/10" },
-  { name: "Purely Farm", logoUrl: "https://api.microlink.io?url=https://www.purelyfarm.in/&embed=logo.url", category: "Organic F&B", location: "India", url: "https://www.purelyfarm.in/", color: "bg-green-500/10" },
+  { name: "Purely Farm", logoUrl: "https://www.purelyfarm.in/cdn/shop/files/Purely_Farm_Logo_CC.png?v=1776247410&width=240", category: "Organic F&B", location: "India", url: "https://www.purelyfarm.in/", color: "bg-green-500/10" },
   { name: "Nexpept", logoUrl: "https://api.microlink.io?url=https://www.nexpept.ca/&embed=logo.url", category: "Health & Nutrition", location: "Canada", url: "https://www.nexpept.ca/", color: "bg-orange-500/10" },
   { name: "Sanduk", logoUrl: "https://cdn.shopify.com/s/files/1/0601/7961/1856/files/jpeg_shop_0c426d75-af5a-4e38-b90b-ddd05849ea5a.jpg", category: "Fashion & Retail", location: "India", url: "https://sanduk.co", color: "bg-fuchsia-500/10" },
-  { name: "Nutty Village", logoUrl: "https://api.microlink.io?url=https://nuttyvillage.in&embed=logo.url", category: "F&B Snacks", location: "India", url: "https://nuttyvillage.in", color: "bg-yellow-500/10" },
+  { name: "Nutty Village", logoUrl: "https://nuttyvillage.in/cdn/shop/files/nutty_village_wordmark.png?v=1755865924&width=180", category: "F&B Snacks", location: "India", url: "https://nuttyvillage.in", color: "bg-yellow-500/10" },
   { name: "The Fragrance Empire", logoUrl: "https://thefragranceempire.com/cdn/shop/files/TFE_GOLDEN_LOGO_Print_File_Updated_3.pdf.png", category: "Beauty", location: "Global", url: "https://thefragranceempire.com/", color: "bg-violet-500/10" },
   { name: "Ekatva Jewels", logoUrl: "https://api.microlink.io?url=https://ekatvajewels.com/&embed=logo.url", category: "Jewelry", location: "India", url: "https://ekatvajewels.com/", color: "bg-pink-500/10" },
   { name: "Alapco", logoUrl: "https://api.microlink.io?url=https://alapco.in/&embed=logo.url", category: "Industrial", location: "India", url: "https://alapco.in/", color: "bg-slate-500/10" },
-  { name: "Stikrly", logoUrl: "https://api.microlink.io?url=https://stikrly.in&embed=logo.url", category: "Custom Accessories", location: "India", url: "https://stikrly.in", color: "bg-red-500/10" },
+  { name: "Stikrly", logoUrl: "https://stikrly.in/cdn/shop/files/Stikrly_png_Logo.png?height=106&v=1774538260", category: "Custom Accessories", location: "India", url: "https://stikrly.in", color: "bg-red-500/10" },
 ];
 
 const TrustedBrands = () => {
