@@ -15,7 +15,7 @@ const projects = [
     type: "E-commerce",
     stack: "Shopify",
     result: "Premium UI/UX Increased AOV by 24%",
-    image: "https://image.thum.io/get/width/800/crop/800/https://www.varakedibleluxury.com/",
+    image: "https://api.microlink.io/?url=https://www.varakedibleluxury.com/&screenshot=true&meta=false&embed=screenshot.url",
     link: "https://www.varakedibleluxury.com/"
   },
   {
@@ -24,7 +24,7 @@ const projects = [
     type: "E-commerce",
     stack: "Shopify",
     result: "Scaling international cross-border sales",
-    image: "https://image.thum.io/get/width/800/crop/800/https://www.princejewellers.com.au",
+    image: "https://api.microlink.io/?url=https://www.princejewellers.com.au&screenshot=true&meta=false&embed=screenshot.url",
     link: "https://www.princejewellers.com.au"
   },
   {
@@ -33,7 +33,7 @@ const projects = [
     type: "Corporate",
     stack: "Next.js",
     result: "Launched high-performance research platform",
-    image: "https://image.thum.io/get/width/800/crop/800/https://www.evolabsresearch.co/",
+    image: "https://api.microlink.io/?url=https://www.evolabsresearch.co/&screenshot=true&meta=false&embed=screenshot.url",
     link: "https://www.evolabsresearch.co/"
   },
   {
@@ -42,7 +42,7 @@ const projects = [
     type: "E-commerce",
     stack: "React",
     result: "Increased conversion rate by 2.8%",
-    image: "https://image.thum.io/get/width/800/crop/800/https://evovera.store/",
+    image: "https://api.microlink.io/?url=https://evovera.store/&screenshot=true&meta=false&embed=screenshot.url",
     link: "https://evovera.store/"
   },
   {
@@ -51,7 +51,7 @@ const projects = [
     type: "Corporate",
     stack: "WordPress",
     result: "Automotive portal redesigned for speed",
-    image: "https://image.thum.io/get/width/800/crop/800/https://motoblox.com/",
+    image: "https://motoblox.com/cdn/shop/files/Screenshot_2025-01-08_171555.png?v=1736702496",
     link: "https://motoblox.com/"
   },
   {
@@ -60,7 +60,7 @@ const projects = [
     type: "E-commerce",
     stack: "Shopify Plus",
     result: "Health brand scaled to Canada market",
-    image: "https://image.thum.io/get/width/800/crop/800/https://www.nexpept.ca/",
+    image: "https://api.microlink.io/?url=https://www.nexpept.ca/&screenshot=true&meta=false&embed=screenshot.url",
     link: "https://www.nexpept.ca/"
   },
   {
@@ -69,7 +69,7 @@ const projects = [
     type: "E-commerce",
     stack: "Shopify",
     result: "Retail store UI overhaul boosting retention",
-    image: "https://image.thum.io/get/width/800/crop/800/https://www.toycollectorsindia.com/",
+    image: "https://api.microlink.io/?url=https://www.toycollectorsindia.com/&screenshot=true&meta=false&embed=screenshot.url",
     link: "https://www.toycollectorsindia.com/"
   },
   {
@@ -78,7 +78,7 @@ const projects = [
     type: "E-commerce",
     stack: "WooCommerce",
     result: "Modernized traditional fashion retail frontend",
-    image: "https://image.thum.io/get/width/800/crop/800/https://sanduk.co",
+    image: "https://cdn.shopify.com/s/files/1/0601/7961/1856/files/jpeg_shop_0c426d75-af5a-4e38-b90b-ddd05849ea5a.jpg",
     link: "https://sanduk.co"
   },
   {
@@ -87,7 +87,7 @@ const projects = [
     type: "E-commerce",
     stack: "Shopify",
     result: "Boosted cosmetic cart conversions",
-    image: "https://image.thum.io/get/width/800/crop/800/https://thefragranceempire.com/",
+    image: "https://thefragranceempire.com/cdn/shop/files/TFE_GOLDEN_LOGO_Print_File_Updated_3.pdf.png",
     link: "https://thefragranceempire.com/"
   }
 ];
