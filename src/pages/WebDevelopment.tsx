@@ -5,7 +5,8 @@ import Footer from "@/components/Footer";
 import TrustedBrands from "@/components/TrustedBrands";
 import { useMeta } from "@/hooks/useMeta";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, MonitorSmartphone, ShoppingCart, LayoutTemplate, Layout } from "lucide-react";
+import { ArrowRight, CheckCircle2, MonitorSmartphone, ShoppingCart, LayoutTemplate, Layout, Calendar, Mail, MessageCircle, MapPin } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 
 const WebDevelopment = () => {
   useMeta({
@@ -25,7 +26,7 @@ const WebDevelopment = () => {
   });
 
   const scrollToForm = () => {
-    document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById("contact-section")?.scrollIntoView({ behavior: "smooth" });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -56,6 +57,9 @@ const WebDevelopment = () => {
 
   return (
     <>
+      <Helmet>
+        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      </Helmet>
       <Navbar />
       <main className="overflow-x-hidden">
         {/* HERO SECTION */}
@@ -77,9 +81,9 @@ const WebDevelopment = () => {
               <motion.button onClick={scrollToForm} whileHover={{ scale: 1.05 }} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-full text-base font-bold shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-all">
                 Start Your Project <ArrowRight size={18} />
               </motion.button>
-              <motion.a href="#portfolio" whileHover={{ scale: 1.05 }} className="bg-secondary hover:bg-secondary/80 text-foreground px-8 py-4 rounded-full text-base font-bold border border-border shadow-sm flex items-center justify-center gap-2 transition-all">
-                See Our Work
-              </motion.a>
+              <motion.button onClick={scrollToForm} whileHover={{ scale: 1.05 }} className="bg-secondary hover:bg-secondary/80 text-foreground px-8 py-4 rounded-full text-base font-bold border border-border shadow-sm flex items-center justify-center gap-2 transition-all">
+                <Calendar size={18} /> Book Discovery Call
+              </motion.button>
             </div>
             
             <div className="mt-14 pt-8 border-t border-border/50 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-muted-foreground max-w-4xl mx-auto">
@@ -117,7 +121,7 @@ const WebDevelopment = () => {
                   </ul>
                   <div className="pt-6 border-t border-border flex justify-between items-center">
                     <span className="font-bold text-lg">Starts from <span className="text-primary">$299</span></span>
-                    <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline">Learn More →</button>
+                    <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline flex items-center gap-1"><Calendar size={14}/> Book Call →</button>
                   </div>
                 </div>
 
@@ -134,7 +138,7 @@ const WebDevelopment = () => {
                   </ul>
                   <div className="pt-6 border-t border-border flex justify-between items-center">
                     <span className="font-bold text-lg">Starts from <span className="text-primary">$199</span></span>
-                    <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline">Learn More →</button>
+                    <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline flex items-center gap-1"><Calendar size={14}/> Book Call →</button>
                   </div>
                 </div>
 
@@ -151,7 +155,7 @@ const WebDevelopment = () => {
                   </ul>
                   <div className="pt-6 border-t border-border flex justify-between items-center">
                     <span className="font-bold text-lg">Starts from <span className="text-primary">$499</span></span>
-                    <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline">Learn More →</button>
+                    <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline flex items-center gap-1"><Calendar size={14}/> Book Call →</button>
                   </div>
                 </div>
 
@@ -168,7 +172,7 @@ const WebDevelopment = () => {
                   </ul>
                   <div className="pt-6 border-t border-border flex justify-between items-center">
                     <span className="font-bold text-lg">Starts from <span className="text-primary">$599</span></span>
-                    <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline">Learn More →</button>
+                    <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline flex items-center gap-1"><Calendar size={14}/> Book Call →</button>
                   </div>
                 </div>
             </div>
@@ -224,7 +228,7 @@ const WebDevelopment = () => {
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> 1 round of revisions</li>
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Delivery: 7–10 days</li>
                 </ul>
-                <button onClick={scrollToForm} className="block w-full text-center bg-secondary hover:bg-secondary/80 text-foreground font-bold py-4 rounded-xl transition-colors border border-border">Get Started</button>
+                <button onClick={scrollToForm} className="block w-full text-center bg-secondary hover:bg-secondary/80 text-foreground font-bold py-4 rounded-xl transition-colors border border-border flex justify-center items-center gap-2"><Calendar size={18}/> Schedule Setup</button>
               </div>
               
               <div className="bg-background relative p-10 rounded-3xl border-2 border-primary shadow-2xl flex flex-col transform lg:-translate-y-4">
@@ -240,7 +244,7 @@ const WebDevelopment = () => {
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> 2 rounds of revisions</li>
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Delivery: 14 days</li>
                 </ul>
-                <button onClick={scrollToForm} className="block w-full text-center bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-colors shadow-lg shadow-primary/20">Get Started</button>
+                <button onClick={scrollToForm} className="block w-full text-center bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-colors shadow-lg shadow-primary/20 flex justify-center items-center gap-2"><Calendar size={18}/> Schedule Setup</button>
               </div>
 
               <div className="bg-card p-10 rounded-3xl border border-border/80 flex flex-col relative hover:border-primary/30 transition-colors">
@@ -256,81 +260,130 @@ const WebDevelopment = () => {
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Priority Support included</li>
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Delivery: 21 days</li>
                 </ul>
-                <button onClick={scrollToForm} className="block w-full text-center bg-secondary hover:bg-secondary/80 text-foreground font-bold py-4 rounded-xl transition-colors border border-border">Get Started</button>
+                <button onClick={scrollToForm} className="block w-full text-center bg-secondary hover:bg-secondary/80 text-foreground font-bold py-4 rounded-xl transition-colors border border-border flex justify-center items-center gap-2"><Calendar size={18}/> Schedule Setup</button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* LEAD CAPTURE FORM SECTION */}
-        <section id="contact-form" className="py-24 bg-background">
-          <div className="container-main max-w-3xl">
-            <div className="bg-card p-8 md:p-12 rounded-3xl border border-border shadow-xl">
-              <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold mb-3">Start Your Project</h2>
-                <p className="text-muted-foreground text-sm">Fill in the form below — we'll get back to you within 4 hours (Mon–Sat)</p>
+        {/* COMBINED CALENDLY + CONTACT FORM SECTION */}
+        <section id="contact-section" className="py-24 bg-background border-t border-border/50">
+          <div className="container-main max-w-7xl">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Let's Discuss <span className="text-primary">Your Project</span></h2>
+              <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto">Book a strategy call directly with our tech leads below, or drop your project brief into the form and we'll reply within 4 hours.</p>
+            </div>
+
+            <div className="grid lg:grid-cols-5 gap-8 lg:gap-10">
+              
+              {/* LEFT COLUMN: Calendly (Top) + Address Details (Bottom) */}
+              <div className="lg:col-span-2 flex flex-col gap-6">
+                <div className="bg-card p-6 md:p-8 rounded-3xl border border-border shadow-xl min-h-[500px] flex flex-col">
+                  <div className="mb-4">
+                    <h3 className="text-xl font-bold flex items-center gap-2 mb-1">Book a Strategy Call</h3>
+                    <p className="text-muted-foreground text-sm">Select a convenient time below.</p>
+                  </div>
+                  <div className="w-full bg-secondary/20 rounded-2xl overflow-hidden border border-border flex-grow h-[450px]">
+                    <div className="calendly-inline-widget w-full h-[450px]" data-url="https://calendly.com/dizigrowwofficial/30min?text_color=ffffff&primary_color=cb201f&background_color=1a1a1a"></div>
+                  </div>
+                </div>
+
+                <div className="bg-secondary/30 p-6 md:p-8 rounded-3xl border border-border h-full flex flex-col justify-center">
+                  <h3 className="font-bold text-lg mb-6">Contact Information</h3>
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary"><Mail size={18} /></div>
+                      <div>
+                        <p className="font-bold text-sm">Email Us</p>
+                        <p className="text-muted-foreground text-sm">info@dizigroww.in</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary"><MessageCircle size={18} /></div>
+                      <div>
+                        <p className="font-bold text-sm">WhatsApp / Phone</p>
+                        <p className="text-muted-foreground text-sm">+91 9450010826</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary"><MapPin size={18} /></div>
+                      <div>
+                        <p className="font-bold text-sm">Office Location</p>
+                        <p className="text-muted-foreground text-sm">Greater Noida, UP, India</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Full Name *</label>
-                    <input required type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground" placeholder="Jane Doe" />
+              {/* RIGHT COLUMN: Lead Capture Form */}
+              <div className="lg:col-span-3">
+                <div className="bg-card p-8 md:p-10 rounded-3xl border border-border shadow-xl h-full flex flex-col">
+                  <div className="mb-8">
+                    <h3 className="text-2xl font-bold mb-2">Send Your Project Brief</h3>
+                    <p className="text-muted-foreground text-sm">Prefer typing? Fill in the details and we'll send a proposal.</p>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Email Address *</label>
-                    <input required type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground" placeholder="jane@company.com" />
-                  </div>
-                </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Country</label>
-                    <select value={formData.country} onChange={(e) => setFormData({...formData, country: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
-                      <option value="Singapore">Singapore</option>
-                      <option value="UAE">UAE</option>
-                      <option value="Turkey">Turkey</option>
-                      <option value="Malaysia">Malaysia</option>
-                      <option value="South Africa">South Africa</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-sm font-medium">Service Needed</label>
-                    <select value={formData.service} onChange={(e) => setFormData({...formData, service: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
-                      <option value="Shopify">Shopify</option>
-                      <option value="WordPress">WordPress / WooCommerce</option>
-                      <option value="React">React.js</option>
-                      <option value="Nextjs">Next.js</option>
-                      <option value="Not Sure">Not Sure</option>
-                    </select>
-                  </div>
-                </div>
+                  <form onSubmit={handleSubmit} className="space-y-5 flex-grow flex flex-col justify-between">
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-semibold text-foreground/80 uppercase tracking-wider">Full Name *</label>
+                        <input required type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground" placeholder="Jane Doe" />
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-semibold text-foreground/80 uppercase tracking-wider">Email Address *</label>
+                        <input required type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground" placeholder="jane@company.com" />
+                      </div>
+                    </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Budget Range (USD)</label>
-                  <select value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
-                    <option value="Under $200">Under $200</option>
-                    <option value="$200–$500">$200–$500</option>
-                    <option value="$500–$1000">$500–$1000</option>
-                    <option value="$1000+">$1000+</option>
-                  </select>
-                </div>
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-semibold text-foreground/80 uppercase tracking-wider">Country</label>
+                        <select value={formData.country} onChange={(e) => setFormData({...formData, country: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
+                          <option value="Singapore">Singapore</option>
+                          <option value="UAE">UAE</option>
+                          <option value="Turkey">Turkey</option>
+                          <option value="Malaysia">Malaysia</option>
+                          <option value="South Africa">South Africa</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-semibold text-foreground/80 uppercase tracking-wider">Service Needed</label>
+                        <select value={formData.service} onChange={(e) => setFormData({...formData, service: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
+                          <option value="Shopify">Shopify</option>
+                          <option value="WordPress">WordPress / WooCommerce</option>
+                          <option value="React">React.js</option>
+                          <option value="Nextjs">Next.js</option>
+                          <option value="Not Sure">Not Sure</option>
+                        </select>
+                      </div>
+                    </div>
 
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Project Brief *</label>
-                  <textarea required rows={4} value={formData.brief} onChange={(e) => setFormData({...formData, brief: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground resize-y" placeholder="Tell us about your project..."></textarea>
-                </div>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-foreground/80 uppercase tracking-wider">Budget Range (USD)</label>
+                      <select value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
+                        <option value="Under $200">Under $200</option>
+                        <option value="$200–$500">$200–$500</option>
+                        <option value="$500–$1000">$500–$1000</option>
+                        <option value="$1000+">$1000+</option>
+                      </select>
+                    </div>
 
-                <button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-colors shadow-lg shadow-primary/20 flex justify-center items-center gap-2">
-                  {isSubmitting ? "Sending..." : <>Send My Brief <ArrowRight size={18} /></>}
-                </button>
-                
-                <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 pt-4 text-xs font-medium text-muted-foreground text-center">
-                  <span>🔒 We never share your information.</span>
-                  <span>📧 info@dizigroww.in</span>
+                    <div className="space-y-1.5">
+                      <label className="text-xs font-semibold text-foreground/80 uppercase tracking-wider">Project Brief *</label>
+                      <textarea required rows={4} value={formData.brief} onChange={(e) => setFormData({...formData, brief: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground resize-y" placeholder="Tell us about your project..."></textarea>
+                    </div>
+
+                    <div className="pt-2">
+                      <button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-colors shadow-lg shadow-primary/20 flex justify-center items-center gap-2">
+                        {isSubmitting ? "Sending..." : <>Send My Brief & Get Quote <ArrowRight size={18} /></>}
+                      </button>
+                    </div>
+                  </form>
                 </div>
-              </form>
+              </div>
+
             </div>
           </div>
         </section>
