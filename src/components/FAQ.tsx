@@ -5,7 +5,7 @@ import { useState } from "react";
 const faqs = [
   {
     q: "How is your pricing structured?",
-    a: "Fixed monthly retainer based on service scope and ad spend management. No percentage of spend, no hidden costs. We offer Starter (₹50,000/$3K), Growth (₹1,50,000/$7K), and custom Enterprise plans.",
+    a: "Fixed monthly retainer based on service scope and ad spend management. No percentage of spend, no hidden costs. We offer Starter (₹50,000/$3K onwards), Growth (₹1,50,000/$7K onwards), and custom Enterprise plans.",
   },
   {
     q: "What results can I realistically expect?",

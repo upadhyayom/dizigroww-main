@@ -102,7 +102,7 @@ const WebDevDubai = () => {
               <div className="bg-card p-8 rounded-2xl border border-border flex flex-col relative overflow-hidden">
                 <h3 className="text-xl font-bold mb-1">Starter</h3>
                 <p className="text-sm text-muted-foreground mb-6">Perfect for campaign landing pages.</p>
-                <div className="text-4xl font-black mb-6">$499</div>
+                <div className="text-4xl font-black mb-6">$499<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
                 <ul className="space-y-3 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Single Landing Page</li>
                   <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> 5 Dedicated Sections</li>
@@ -116,7 +116,7 @@ const WebDevDubai = () => {
                 <div className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl tracking-wider uppercase">Most Popular</div>
                 <h3 className="text-xl font-bold mb-1">Growth</h3>
                 <p className="text-sm text-gray-400 mb-6">For corporate & service businesses.</p>
-                <div className="text-4xl font-black mb-6">$999</div>
+                <div className="text-4xl font-black mb-6">$999<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
                 <ul className="space-y-3 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Multi-page Website (Up to 7)</li>
                   <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> CMS Setup (WordPress)</li>
@@ -129,7 +129,7 @@ const WebDevDubai = () => {
               <div className="bg-card p-8 rounded-2xl border border-border flex flex-col relative">
                 <h3 className="text-xl font-bold mb-1">E-Commerce</h3>
                 <p className="text-sm text-muted-foreground mb-6">Full scale online stores.</p>
-                <div className="text-4xl font-black mb-6">$1,799</div>
+                <div className="text-4xl font-black mb-6">$1,799<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
                 <ul className="space-y-3 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Shopify or WooCommerce</li>
                   <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Up to 50 Products added</li>

@@ -120,7 +120,7 @@ const WebDevelopment = () => {
                     <li className="flex gap-2 items-start"><ArrowRight size={18} className="text-primary mt-0.5 shrink-0"/> App integrations & speed optimization</li>
                   </ul>
                   <div className="pt-6 border-t border-border flex justify-between items-center">
-                    <span className="font-bold text-lg">Starts from <span className="text-primary">$299</span></span>
+                    <span className="font-bold text-lg">Starts from <span className="text-primary">$299 onwards</span></span>
                     <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline flex items-center gap-1"><Calendar size={14}/> Book Call →</button>
                   </div>
                 </div>
@@ -137,7 +137,7 @@ const WebDevelopment = () => {
                     <li className="flex gap-2 items-start"><ArrowRight size={18} className="text-primary mt-0.5 shrink-0"/> Plugin integrations & SEO structure</li>
                   </ul>
                   <div className="pt-6 border-t border-border flex justify-between items-center">
-                    <span className="font-bold text-lg">Starts from <span className="text-primary">$199</span></span>
+                    <span className="font-bold text-lg">Starts from <span className="text-primary">$199 onwards</span></span>
                     <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline flex items-center gap-1"><Calendar size={14}/> Book Call →</button>
                   </div>
                 </div>
@@ -154,7 +154,7 @@ const WebDevelopment = () => {
                     <li className="flex gap-2 items-start"><ArrowRight size={18} className="text-primary mt-0.5 shrink-0"/> Secure API integrations</li>
                   </ul>
                   <div className="pt-6 border-t border-border flex justify-between items-center">
-                    <span className="font-bold text-lg">Starts from <span className="text-primary">$499</span></span>
+                    <span className="font-bold text-lg">Starts from <span className="text-primary">$499 onwards</span></span>
                     <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline flex items-center gap-1"><Calendar size={14}/> Book Call →</button>
                   </div>
                 </div>
@@ -171,7 +171,7 @@ const WebDevelopment = () => {
                     <li className="flex gap-2 items-start"><ArrowRight size={18} className="text-primary mt-0.5 shrink-0"/> Headless CMS integrations</li>
                   </ul>
                   <div className="pt-6 border-t border-border flex justify-between items-center">
-                    <span className="font-bold text-lg">Starts from <span className="text-primary">$599</span></span>
+                    <span className="font-bold text-lg">Starts from <span className="text-primary">$599 onwards</span></span>
                     <button onClick={scrollToForm} className="text-primary font-semibold text-sm hover:underline flex items-center gap-1"><Calendar size={14}/> Book Call →</button>
                   </div>
                 </div>
@@ -219,7 +219,7 @@ const WebDevelopment = () => {
             <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               <div className="bg-card p-10 rounded-3xl border border-border/80 flex flex-col relative hover:border-primary/30 transition-colors">
                 <h3 className="text-2xl font-bold mb-2">Starter</h3>
-                <div className="text-5xl font-black mb-8 tracking-tight">$199</div>
+                <div className="text-5xl font-black mb-8 tracking-tight">$199<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
                 <ul className="space-y-4 mb-10 flex-1 text-muted-foreground">
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> WordPress or WooCommerce</li>
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Up to 5 pages</li>
@@ -234,7 +234,7 @@ const WebDevelopment = () => {
               <div className="bg-background relative p-10 rounded-3xl border-2 border-primary shadow-2xl flex flex-col transform lg:-translate-y-4">
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-6 py-1.5 rounded-full uppercase tracking-widest shadow-lg">Most Popular</div>
                 <h3 className="text-2xl font-bold mb-2 text-foreground">Growth</h3>
-                <div className="text-5xl font-black mb-8 text-foreground tracking-tight">$399</div>
+                <div className="text-5xl font-black mb-8 text-foreground tracking-tight">$399<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
                 <ul className="space-y-4 mb-10 flex-1 text-foreground/80">
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Shopify store or React SPA</li>
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Up to 10 pages / screens</li>
@@ -249,7 +249,7 @@ const WebDevelopment = () => {
 
               <div className="bg-card p-10 rounded-3xl border border-border/80 flex flex-col relative hover:border-primary/30 transition-colors">
                 <h3 className="text-2xl font-bold mb-2">Scale</h3>
-                <div className="text-5xl font-black mb-8 tracking-tight">$799</div>
+                <div className="text-5xl font-black mb-8 tracking-tight">$799<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
                 <ul className="space-y-4 mb-10 flex-1 text-muted-foreground">
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Next.js full-stack app</li>
                   <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Unlimited pages</li>
