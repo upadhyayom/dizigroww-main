@@ -1,6 +1,5 @@
 {
   "rewrites": [
-    { "source": "/web-development", "destination": "/web-development.html" },
     { "source": "/((?!.*\\.).*)", "destination": "/" }
   ]
 }
