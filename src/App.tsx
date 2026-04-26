@@ -16,6 +16,7 @@ import WebDevDubai from "./pages/WebDevDubai.tsx";
 import WebDevSingapore from "./pages/WebDevSingapore.tsx";
 import WebDevelopment from "./pages/WebDevelopment.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
+import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import ShopifyDevelopment from "./pages/services/ShopifyDevelopment.tsx";
 import WordPressDevelopment from "./pages/services/WordPressDevelopment.tsx";
 import LandingPageDesign from "./pages/services/LandingPageDesign.tsx";
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/proposal-generator" element={<ProposalGenerator />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/web-development" element={<WebDevelopment />} />
           <Route path="/web-development-dubai" element={<WebDevDubai />} />
           <Route path="/web-development-singapore" element={<WebDevSingapore />} />

@@ -88,7 +88,11 @@ const Footer = () => (
 
       <div className="mt-12 pt-8 border-t border-charcoal-foreground/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-charcoal-foreground/40">
         <span>© {new Date().getFullYear()} DiziGroww · Performance Marketing Agency</span>
-        <span>Google & Meta Certified</span>
+        <div className="flex gap-4 items-center">
+          <Link to="/privacy-policy" className="hover:text-primary transition-colors hover:underline">Privacy Policy</Link>
+          <span>·</span>
+          <span>Google & Meta Certified</span>
+        </div>
       </div>
     </div>
     </footer>
