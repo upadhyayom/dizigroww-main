@@ -134,6 +134,7 @@ const LeadForm = () => {
               <option>UAE</option>
               <option>Singapore</option>
               <option>India</option>
+              <option>US</option>
               <option>Other</option>
             </select>
             <select

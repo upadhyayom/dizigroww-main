@@ -345,6 +345,7 @@ const WebDevelopment = () => {
                           <option value="Turkey">Turkey</option>
                           <option value="Malaysia">Malaysia</option>
                           <option value="South Africa">South Africa</option>
+                          <option value="US">US</option>
                           <option value="Other">Other</option>
                         </select>
                       </div>
