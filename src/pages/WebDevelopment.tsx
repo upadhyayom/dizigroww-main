@@ -1,10 +1,11 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import TrustSection from "@/components/TrustSection";
 import TrustedBrands from "@/components/TrustedBrands";
 import { useMeta } from "@/hooks/useMeta";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, MonitorSmartphone, ShoppingCart, LayoutTemplate, Layout, MinusCircle } from "lucide-react";
+import { ArrowRight, CheckCircle2, MonitorSmartphone, ShoppingCart, LayoutTemplate, Layout } from "lucide-react";
 
 const WebDevelopment = () => {
   useMeta({
@@ -12,8 +13,45 @@ const WebDevelopment = () => {
     description: "Expert Web Development Agency for Singapore, UAE, Turkey, Malaysia & South Africa. Stores, React apps, WordPress & Next.js platforms."
   });
 
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    country: "Singapore",
+    service: "Shopify",
+    budget: "$200–$500",
+    brief: ""
+  });
+
   const scrollToForm = () => {
     document.getElementById("contact-form")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      if (import.meta.env.VITE_WEB3FORMS_ACCESS_KEY) {
+        await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+            from_name: "DiziGroww Leads (Landing Page)",
+            subject: "🚀 NEW LEAD - Web Dev Landing Page",
+            ...formData,
+            message: `New inquiry from ${formData.name}.\nEmail: ${formData.email}\nCountry: ${formData.country}\nService: ${formData.service}\nBudget: ${formData.budget}\nBrief: ${formData.brief}`
+          })
+        });
+      }
+    } catch (error) {
+      console.error("Submission Failed:", error);
+    } finally {
+      setIsSubmitting(false);
+      navigate("/thank-you");
+    }
   };
 
   return (
@@ -233,22 +271,22 @@ const WebDevelopment = () => {
                 <p className="text-muted-foreground text-sm">Fill in the form below — we'll get back to you within 4 hours (Mon–Sat)</p>
               </div>
 
-              <form onSubmit={(e) => { e.preventDefault(); alert("Thanks! We'll be in touch within 4 hours."); e.currentTarget.reset(); }} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Full Name *</label>
-                    <input required type="text" className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground" placeholder="Jane Doe" />
+                    <input required type="text" value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground" placeholder="Jane Doe" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Email Address *</label>
-                    <input required type="email" className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground" placeholder="jane@company.com" />
+                    <input required type="email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground" placeholder="jane@company.com" />
                   </div>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Country</label>
-                    <select className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
+                    <select value={formData.country} onChange={(e) => setFormData({...formData, country: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
                       <option value="Singapore">Singapore</option>
                       <option value="UAE">UAE</option>
                       <option value="Turkey">Turkey</option>
@@ -259,7 +297,7 @@ const WebDevelopment = () => {
                   </div>
                   <div className="space-y-2">
                     <label className="text-sm font-medium">Service Needed</label>
-                    <select className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
+                    <select value={formData.service} onChange={(e) => setFormData({...formData, service: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
                       <option value="Shopify">Shopify</option>
                       <option value="WordPress">WordPress / WooCommerce</option>
                       <option value="React">React.js</option>
@@ -271,9 +309,9 @@ const WebDevelopment = () => {
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Budget Range (USD)</label>
-                  <select className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
+                  <select value={formData.budget} onChange={(e) => setFormData({...formData, budget: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
                     <option value="Under $200">Under $200</option>
-                    <option value="$200–$500" selected>$200–$500</option>
+                    <option value="$200–$500">$200–$500</option>
                     <option value="$500–$1000">$500–$1000</option>
                     <option value="$1000+">$1000+</option>
                   </select>
@@ -281,11 +319,11 @@ const WebDevelopment = () => {
 
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Project Brief *</label>
-                  <textarea required rows={4} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground resize-y" placeholder="Tell us about your project..."></textarea>
+                  <textarea required rows={4} value={formData.brief} onChange={(e) => setFormData({...formData, brief: e.target.value})} className="w-full bg-background border border-border rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground resize-y" placeholder="Tell us about your project..."></textarea>
                 </div>
 
-                <button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-colors shadow-lg shadow-primary/20 flex justify-center items-center gap-2">
-                  Send My Brief <ArrowRight size={18} />
+                <button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-colors shadow-lg shadow-primary/20 flex justify-center items-center gap-2">
+                  {isSubmitting ? "Sending..." : <>Send My Brief <ArrowRight size={18} /></>}
                 </button>
                 
                 <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 pt-4 text-xs font-medium text-muted-foreground text-center">
