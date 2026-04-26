@@ -11,43 +11,84 @@ type ProjectType = "All" | "E-commerce" | "Landing Pages" | "Corporate";
 const projects = [
   {
     id: 1,
-    title: "Aura Aesthetics",
+    title: "Varak Edible Luxury",
     type: "E-commerce",
     stack: "Shopify",
-    result: "Increased conversion rate by 2.4%",
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000&auto=format&fit=crop"
+    result: "Premium UI/UX Increased AOV by 24%",
+    image: "https://image.thum.io/get/width/800/crop/800/https://www.varakedibleluxury.com/",
+    link: "https://www.varakedibleluxury.com/"
   },
   {
     id: 2,
-    title: "Vertex Financial",
-    type: "Corporate",
-    stack: "WordPress",
-    result: "Launched in 18 days with full CMS",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop"
+    title: "Prince Jewellers",
+    type: "E-commerce",
+    stack: "Shopify",
+    result: "Scaling international cross-border sales",
+    image: "https://image.thum.io/get/width/800/crop/800/https://www.princejewellers.com.au",
+    link: "https://www.princejewellers.com.au"
   },
   {
     id: 3,
-    title: "Bolt Energy Drink",
-    type: "Landing Pages",
-    stack: "React / Tailwind",
-    result: "Reduced CPA by 40% driven by CRO",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"
+    title: "EVO Labs",
+    type: "Corporate",
+    stack: "Next.js",
+    result: "Launched high-performance research platform",
+    image: "https://image.thum.io/get/width/800/crop/800/https://www.evolabsresearch.co/",
+    link: "https://www.evolabsresearch.co/"
   },
   {
     id: 4,
-    title: "Lumina Home",
+    title: "EvoVera",
     type: "E-commerce",
-    stack: "Shopify Plus",
-    result: "Handled 10k+ concurrent Black Friday visitors",
-    image: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1000&auto=format&fit=crop"
+    stack: "React",
+    result: "Increased conversion rate by 2.8%",
+    image: "https://image.thum.io/get/width/800/crop/800/https://evovera.store/",
+    link: "https://evovera.store/"
   },
   {
     id: 5,
-    title: "TechFlow SaaS",
-    type: "Landing Pages",
-    stack: "Next.js",
-    result: "Boosted trial signups by 185%",
-    image: "https://images.unsplash.com/photo-1555421689-491a97ff2040?q=80&w=1000&auto=format&fit=crop"
+    title: "MotoBlox",
+    type: "Corporate",
+    stack: "WordPress",
+    result: "Automotive portal redesigned for speed",
+    image: "https://image.thum.io/get/width/800/crop/800/https://motoblox.com/",
+    link: "https://motoblox.com/"
+  },
+  {
+    id: 6,
+    title: "Nexpept",
+    type: "E-commerce",
+    stack: "Shopify Plus",
+    result: "Health brand scaled to Canada market",
+    image: "https://image.thum.io/get/width/800/crop/800/https://www.nexpept.ca/",
+    link: "https://www.nexpept.ca/"
+  },
+  {
+    id: 7,
+    title: "Toy Collectors India",
+    type: "E-commerce",
+    stack: "Shopify",
+    result: "Retail store UI overhaul boosting retention",
+    image: "https://image.thum.io/get/width/800/crop/800/https://www.toycollectorsindia.com/",
+    link: "https://www.toycollectorsindia.com/"
+  },
+  {
+    id: 8,
+    title: "Sanduk",
+    type: "E-commerce",
+    stack: "WooCommerce",
+    result: "Modernized traditional fashion retail frontend",
+    image: "https://image.thum.io/get/width/800/crop/800/https://sanduk.co",
+    link: "https://sanduk.co"
+  },
+  {
+    id: 9,
+    title: "The Fragrance Empire",
+    type: "E-commerce",
+    stack: "Shopify",
+    result: "Boosted cosmetic cart conversions",
+    image: "https://image.thum.io/get/width/800/crop/800/https://thefragranceempire.com/",
+    link: "https://thefragranceempire.com/"
   }
 ];
 
@@ -109,7 +150,7 @@ const Portfolio = () => {
                     transition={{ duration: 0.3 }}
                     className="group bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-xl transition-all"
                   >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="relative aspect-[4/3] overflow-hidden bg-white block">
                         <img 
                           src={project.image} 
                           alt={project.title} 
@@ -121,7 +162,7 @@ const Portfolio = () => {
                                <ExternalLink size={24} />
                            </div>
                         </div>
-                    </div>
+                    </a>
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-3">
                         <span className="text-[10px] font-bold uppercase tracking-wider text-primary bg-primary/10 px-3 py-1 rounded-full">
