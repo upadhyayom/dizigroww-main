@@ -89,6 +89,15 @@ const projects = [
     result: "Boosted cosmetic cart conversions",
     image: "https://thefragranceempire.com/cdn/shop/files/TFE_GOLDEN_LOGO_Print_File_Updated_3.pdf.png",
     link: "https://thefragranceempire.com/"
+  },
+  {
+    id: 10,
+    title: "Stikrly",
+    type: "E-commerce",
+    stack: "Shopify & Web",
+    result: "Optimized storefront & seamless user flow",
+    image: "https://api.microlink.io/?url=https://stikrly.in&screenshot=true&meta=false&embed=screenshot.url",
+    link: "https://stikrly.in"
   }
 ];
 

@@ -16,6 +16,7 @@ const brands = [
   { name: "The Fragrance Empire", logoUrl: "https://thefragranceempire.com/cdn/shop/files/TFE_GOLDEN_LOGO_Print_File_Updated_3.pdf.png", category: "Beauty", location: "Global", url: "https://thefragranceempire.com/", color: "bg-violet-500/10" },
   { name: "Ekatva Jewels", logoUrl: "https://api.microlink.io?url=https://ekatvajewels.com/&embed=logo.url", category: "Jewelry", location: "India", url: "https://ekatvajewels.com/", color: "bg-pink-500/10" },
   { name: "Alapco", logoUrl: "https://api.microlink.io?url=https://alapco.in/&embed=logo.url", category: "Industrial", location: "India", url: "https://alapco.in/", color: "bg-slate-500/10" },
+  { name: "Stikrly", logoUrl: "https://api.microlink.io?url=https://stikrly.in&embed=logo.url", category: "Custom Accessories", location: "India", url: "https://stikrly.in", color: "bg-red-500/10" },
 ];
 
 const TrustedBrands = () => {
