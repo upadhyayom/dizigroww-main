@@ -73,7 +73,7 @@ const TrustedBrands = () => {
           ))}
           
           {/* Apply CTA Card */}
-          <Link to="/contact" className="lg:col-span-3 bg-gradient-to-br from-primary/5 to-transparent border-2 border-dashed border-primary/30 hover:border-primary/60 hover:bg-primary/5 rounded-[24px] p-6 text-center flex flex-col items-center justify-center min-h-[240px] transition-all duration-300 group">
+          <Link to="/contact" className="bg-gradient-to-br from-primary/5 to-transparent border-2 border-dashed border-primary/30 hover:border-primary/60 hover:bg-primary/5 rounded-[24px] p-6 text-center flex flex-col items-center justify-center min-h-[240px] transition-all duration-300 group">
             <div className="w-14 h-14 bg-primary/20 text-primary rounded-full flex items-center justify-center mb-5 group-hover:rotate-90 group-hover:scale-110 transition-all duration-500">
               <Plus size={28} />
             </div>
