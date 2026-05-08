@@ -22,7 +22,8 @@ const roles = [
 const Careers = () => {
   useMeta({
     title: "Careers | DiziGroww",
-    description: "Join the DiziGroww team. We are hiring talented performance marketers, content strategists, and web designers."
+    description: "Join the DiziGroww team. We are hiring talented performance marketers, content strategists, and web designers.",
+    canonicalUrl: "https://dizigroww.in/careers"
   });
   const [form, setForm] = useState({ name: "", email: "", role: "", message: "" });
   const [submitted, setSubmitted] = useState(false);

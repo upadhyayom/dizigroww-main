@@ -9,7 +9,8 @@ import { ArrowRight, CheckCircle2, ChevronRight, MonitorSmartphone, ShoppingCart
 const WebDevDubai = () => {
   useMeta({
     title: "Website Development Agency in Dubai, UAE | DiziGroww",
-    description: "Built to convert. Fixed price. Fixed timeline. Professional Website Development for Dubai & UAE Businesses."
+    description: "Built to convert. Fixed price. Fixed timeline. Professional Website Development for Dubai & UAE Businesses.",
+    canonicalUrl: "https://dizigroww.in/web-development-dubai"
   });
 
   return (

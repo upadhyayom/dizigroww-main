@@ -19,7 +19,8 @@ import { useMeta } from "@/hooks/useMeta";
 const Index = () => {
   useMeta({
     title: "DiziGroww | Web Development & Performance Marketing | UAE, Singapore & India",
-    description: "We Build High-Converting Websites & Run Ads That Actually Grow Your Business."
+    description: "We Build High-Converting Websites & Run Ads That Actually Grow Your Business.",
+    canonicalUrl: "https://dizigroww.in/"
   });
 
   return (

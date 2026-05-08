@@ -46,7 +46,8 @@ const steps = [
 const Services = () => {
   useMeta({
     title: "Our Services | DiziGroww",
-    description: "Explore our premium web development and performance marketing services. We build eCommerce stores, landing pages, and run high-converting ad campaigns."
+    description: "Explore our premium web development and performance marketing services. We build eCommerce stores, landing pages, and run high-converting ad campaigns.",
+    canonicalUrl: "https://dizigroww.in/services"
   });
 
   return (

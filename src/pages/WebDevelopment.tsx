@@ -11,7 +11,8 @@ import { Helmet } from "react-helmet-async";
 const WebDevelopment = () => {
   useMeta({
     title: "Web Development Agency | DiziGroww",
-    description: "Expert Web Development Agency for Singapore, UAE, Turkey, Malaysia & South Africa. Stores, React apps, WordPress & Next.js platforms."
+    description: "Expert Web Development Agency for Singapore, UAE, Turkey, Malaysia & South Africa. Stores, React apps, WordPress & Next.js platforms.",
+    canonicalUrl: "https://dizigroww.in/web-development"
   });
 
   const navigate = useNavigate();

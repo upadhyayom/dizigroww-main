@@ -8,7 +8,8 @@ import { ArrowRight, CheckCircle2, MonitorSmartphone, ShoppingCart, LayoutTempla
 const WebDevSingapore = () => {
   useMeta({
     title: "Website Development for Singapore Businesses | DiziGroww",
-    description: "Website Development Agency for Singapore Startups & SMEs. Fixed price. Fast delivery. Built to perform."
+    description: "Website Development Agency for Singapore Startups & SMEs. Fixed price. Fast delivery. Built to perform.",
+    canonicalUrl: "https://dizigroww.in/web-development-singapore"
   });
 
   return (

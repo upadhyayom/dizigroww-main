@@ -5,7 +5,8 @@ import { useMeta } from "@/hooks/useMeta";
 const PrivacyPolicy = () => {
   useMeta({
     title: "Privacy Policy | DiziGroww",
-    description: "Learn how DiziGroww collects, uses, and protects your personal data and privacy."
+    description: "Learn how DiziGroww collects, uses, and protects your personal data and privacy.",
+    canonicalUrl: "https://dizigroww.in/privacy-policy"
   });
 
   return (

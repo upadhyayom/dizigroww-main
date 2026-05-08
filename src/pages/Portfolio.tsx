@@ -106,7 +106,8 @@ const filters: ProjectType[] = ["All", "E-commerce", "Landing Pages", "Corporate
 const Portfolio = () => {
   useMeta({
     title: "Our Work | Web & E-commerce Projects | DiziGroww",
-    description: "Explore our portfolio of high-converting E-commerce stores, Corporate websites, and Landing pages built for international clients."
+    description: "Explore our portfolio of high-converting E-commerce stores, Corporate websites, and Landing pages built for international clients.",
+    canonicalUrl: "https://dizigroww.in/portfolio"
   });
 
   const [activeFilter, setActiveFilter] = useState<ProjectType>("All");
