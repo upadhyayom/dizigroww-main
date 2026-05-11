@@ -17,7 +17,7 @@ const navLinks = [
   { label: "Services", to: "/services", dropdown: serviceLinks },
   { label: "Starter Plan", to: "/starter-plan" },
   { label: "About Us", to: "/about" },
-  { label: "Contact", to: "/#audit-form" },
+  { label: "Contact", to: "/contact" },
 ];
 
 const Navbar = () => {
@@ -107,7 +107,7 @@ const Navbar = () => {
               )}
             </div>
           ))}
-          <Link to="/#audit-form">
+          <Link to="/contact">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.97 }}
@@ -190,11 +190,11 @@ const Navbar = () => {
                   )}
                 </div>
               ))}
-              <a href="/#audit-form" onClick={() => setOpen(false)} className="mt-2 block">
+              <Link to="/contact" onClick={() => setOpen(false)} className="mt-2 block">
                 <button className="w-full bg-gradient-to-r from-primary to-primary-deep text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold">
                   Get Free Audit
                 </button>
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}

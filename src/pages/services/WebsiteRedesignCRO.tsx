@@ -4,7 +4,7 @@ import TrustSection from "@/components/TrustSection";
 import Pricing from "@/components/Pricing";
 import { motion } from "framer-motion";
 import { BarChart3, LineChart, Target, Eye } from "lucide-react";
-import { Helmet } from "react-helmet-async";
+import { useMeta } from "@/hooks/useMeta";
 
 const features = [
   { icon: Eye, title: "Heatmap Analysis", desc: "We track exactly where users drop off and optimize the funnel." },
@@ -13,13 +13,15 @@ const features = [
 ];
 
 const WebsiteRedesignCRO = () => {
+  useMeta({
+    title: "Website Redesign & CRO Agency | DiziGroww",
+    description: "Transform your outdated website into a high-converting machine. Heatmap analysis, UX rebuilds, trust architecture, and multivariate testing — measurable ROI in 30 days.",
+    keywords: "website redesign agency, CRO services, conversion rate optimization, UX audit, website revamp, ecommerce CRO",
+    canonicalUrl: "https://dizigroww.in/services/website-redesign-cro",
+    ogImage: "https://dizigroww.in/logo.png"
+  });
   return (
     <>
-      <Helmet>
-        <title>Website Redesign & CRO | DiziGroww</title>
-        <meta name="description" content="We audit and revamp your outdated site to meet modern standards, dramatically improving your conversion rates." />
-      </Helmet>
-      
       <Navbar />
       <main className="pt-20">
         <section className="relative pt-20 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">

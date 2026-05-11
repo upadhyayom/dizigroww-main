@@ -38,8 +38,8 @@ const plans = [
   {
     name: "Meta Ads + Web",
     priceUSD: "$400 onwards",
-    priceINR: "₹20,000",
-    period: "/mo",
+    priceINR: "₹20,000 onwards",
+    period: " /mo",
     desc: "Consistent traffic via Meta ads with a dedicated website.",
     features: [
       "Meta ads management",
@@ -55,8 +55,8 @@ const plans = [
   {
     name: "Omnichannel",
     priceUSD: "$500 onwards",
-    priceINR: "₹25,000",
-    period: "/mo",
+    priceINR: "₹25,000 onwards",
+    period: " /mo",
     desc: "Complete ad management across Meta & Google plus web.",
     features: [
       "Meta ads + Google ads",

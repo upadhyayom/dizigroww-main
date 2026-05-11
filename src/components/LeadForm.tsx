@@ -50,7 +50,7 @@ const LeadForm = () => {
       setSubmitted(true);
       
       // Always open WhatsApp after attempt, even if Webhook fails (e.g., 403 Forbidden)
-      window.open(whatsappUrl, "_blank");
+      window.open(whatsappUrl, "_blank", "noopener,noreferrer");
     }
   };
 
@@ -90,6 +90,10 @@ const LeadForm = () => {
           <div className="grid sm:grid-cols-2 gap-5">
             <input
               required
+              name="name"
+              autoComplete="name"
+              aria-label="Your Name"
+              maxLength={80}
               placeholder="Your Name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
@@ -98,6 +102,10 @@ const LeadForm = () => {
             <input
               required
               type="email"
+              name="email"
+              autoComplete="email"
+              aria-label="Email Address"
+              maxLength={120}
               placeholder="Email Address"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
@@ -106,6 +114,12 @@ const LeadForm = () => {
           </div>
           <div className="grid sm:grid-cols-2 gap-5">
             <input
+              name="phone"
+              type="tel"
+              autoComplete="tel"
+              aria-label="Phone Number"
+              maxLength={20}
+              inputMode="tel"
               placeholder="Phone Number"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value })}

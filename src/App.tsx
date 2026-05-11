@@ -23,7 +23,7 @@ import LandingPageDesign from "./pages/services/LandingPageDesign.tsx";
 import WebsiteRedesignCRO from "./pages/services/WebsiteRedesignCRO.tsx";
 import PerformanceMarketing from "./pages/services/PerformanceMarketing.tsx";
 import CookieBanner from "@/components/CookieBanner";
-import { Analytics } from "@vercel/analytics/react";
+
 import { ScrollToHash } from "@/components/ScrollToHash";
 
 const queryClient = new QueryClient();
@@ -57,7 +57,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieBanner />
-        <Analytics />
+
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

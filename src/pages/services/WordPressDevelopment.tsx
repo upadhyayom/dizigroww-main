@@ -4,7 +4,7 @@ import TrustSection from "@/components/TrustSection";
 import Pricing from "@/components/Pricing";
 import { motion } from "framer-motion";
 import { Globe, Server, Code, Search } from "lucide-react";
-import { Helmet } from "react-helmet-async";
+import { useMeta } from "@/hooks/useMeta";
 
 const features = [
   { icon: Code, title: "Custom Architecture", desc: "No bloated builders. Clean, custom WordPress themes engineered for speed." },
@@ -13,13 +13,15 @@ const features = [
 ];
 
 const WordPressDevelopment = () => {
+  useMeta({
+    title: "WordPress & WooCommerce Development Agency | DiziGroww",
+    description: "Custom WordPress and WooCommerce builds engineered for speed, SEO, and conversion. Hardened security, technical SEO, and Core Web Vitals optimisations baked in.",
+    keywords: "wordpress development agency, woocommerce development, custom wordpress themes, wordpress SEO, wordpress speed optimization, wordpress developer India, wordpress developer Dubai",
+    canonicalUrl: "https://dizigroww.in/services/wordpress-development",
+    ogImage: "https://dizigroww.in/logo.png"
+  });
   return (
     <>
-      <Helmet>
-        <title>WordPress & WooCommerce Development | DiziGroww</title>
-        <meta name="description" content="Custom WordPress websites and WooCommerce platforms that look stunning and empower B2B and retail growth." />
-      </Helmet>
-      
       <Navbar />
       <main className="pt-20">
         <section className="relative pt-20 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">

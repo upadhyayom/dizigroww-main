@@ -8,8 +8,31 @@ const HeroSection = () => {
 
   return (
     <section ref={containerRef} className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden bg-background">
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[800px] h-[500px] rounded-[100%] bg-primary/10 blur-[100px] opacity-70"></div>
+      <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+        {/* Animated 3D-style glowing orb */}
+        <motion.div
+          aria-hidden="true"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 0.7, scale: [0.85, 1.05, 0.85] }}
+          transition={{ scale: { duration: 9, repeat: Infinity, ease: "easeInOut" }, opacity: { duration: 1.5 } }}
+          className="absolute top-[10%] left-1/2 -translate-x-1/2 w-[820px] h-[520px] rounded-[100%] bg-gradient-to-br from-primary/30 via-primary/15 to-transparent blur-[110px]"
+        />
+        {/* Secondary floating glow */}
+        <motion.div
+          aria-hidden="true"
+          initial={{ opacity: 0, x: -40 }}
+          animate={{ opacity: 0.5, x: [ -40, 30, -40 ], y: [0, 18, 0] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[30%] left-[15%] w-[340px] h-[340px] rounded-full bg-purple-400/25 blur-[100px] mix-blend-screen"
+        />
+        <motion.div
+          aria-hidden="true"
+          initial={{ opacity: 0, x: 40 }}
+          animate={{ opacity: 0.5, x: [40, -20, 40], y: [0, -16, 0] }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[20%] right-[10%] w-[300px] h-[300px] rounded-full bg-amber-300/25 blur-[100px] mix-blend-screen"
+        />
+        {/* Subtle grid */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       </div>
       <motion.div className="container-main relative z-10">
@@ -116,8 +139,8 @@ const HeroSection = () => {
                 <TrendingUp className="w-5 h-5" />
               </div>
               <div className="text-left flex flex-col">
-                <span className="text-xl font-black text-foreground">20+</span>
-                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Projects Delivered</span>
+                <span className="text-xl font-black text-foreground">50+</span>
+                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Clients Served Globally</span>
               </div>
             </div>
 

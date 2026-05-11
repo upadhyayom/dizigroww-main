@@ -8,9 +8,11 @@ import { ArrowRight, CheckCircle2, ChevronRight, MonitorSmartphone, ShoppingCart
 
 const WebDevDubai = () => {
   useMeta({
-    title: "Website Development Agency in Dubai, UAE | DiziGroww",
-    description: "Built to convert. Fixed price. Fixed timeline. Professional Website Development for Dubai & UAE Businesses.",
-    canonicalUrl: "https://dizigroww.in/web-development-dubai"
+    title: "#1 Website Development Agency in Dubai & UAE | DiziGroww",
+    description: "Top-rated website development agency in Dubai, UAE. Conversion-focused Shopify, WordPress & React websites delivered with fixed pricing and fixed timelines for UAE businesses.",
+    keywords: "website development Dubai, web development agency UAE, shopify developer Dubai, wordpress developer Dubai, ecommerce development UAE, web design Dubai",
+    canonicalUrl: "https://dizigroww.in/web-development-dubai",
+    ogImage: "https://dizigroww.in/logo.png"
   });
 
   return (
@@ -30,7 +32,7 @@ const WebDevDubai = () => {
               Fixed price. Fixed timeline. Built to convert.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="https://wa.me/918920150935?text=Hi%20DiziGroww,%20I'm%20interested%20in%20web%20development%20for%20my%20business%20in%20Dubai" target="_blank" rel="noreferrer">
+              <a href="https://wa.me/918920150935?text=Hi%20DiziGroww,%20I'm%20interested%20in%20web%20development%20for%20my%20business%20in%20Dubai" target="_blank" rel="noopener noreferrer">
                 <motion.button whileHover={{ scale: 1.05 }} className="bg-[#25D366] text-white px-8 py-4 rounded-full text-base font-bold shadow-lg w-full sm:w-auto">
                   Chat on WhatsApp
                 </motion.button>

@@ -38,7 +38,7 @@ const WhyChooseUs = () => (
           Most agencies run ads. We run ads AND fix your landing pages. Same team. No hand-offs. No excuses.
         </p>
       </motion.div>
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
         {reasons.map((r, i) => (
           <motion.div
             key={i}
@@ -46,7 +46,7 @@ const WhyChooseUs = () => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.08 }}
-            className="bg-card rounded-2xl p-6 shadow-card border border-border hover:shadow-card-hover transition-shadow group"
+            className="bg-card rounded-2xl p-4 sm:p-6 shadow-card border border-border hover:shadow-card-hover transition-shadow group"
           >
             <div className="w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/15 transition-colors">
               <r.icon size={22} className="text-primary" />

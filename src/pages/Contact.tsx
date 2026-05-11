@@ -3,7 +3,8 @@ import Footer from "@/components/Footer";
 import LeadForm from "@/components/LeadForm";
 import { motion } from "framer-motion";
 import { Mail, MessageCircle, MapPin } from "lucide-react";
-import { Helmet } from "react-helmet-async";
+import { useMeta } from "@/hooks/useMeta";
+
 
 const contactInfo = [
   { icon: Mail, label: "Email Us", value: "info@dizigroww.in" },
@@ -11,12 +12,18 @@ const contactInfo = [
   { icon: MapPin, label: "Location", value: "Greater Noida, UP" },
 ];
 
-const Contact = () => (
+const Contact = () => {
+  useMeta({
+    title: "Contact DiziGroww | Performance Marketing & Web Development Agency",
+    description: "Get in touch with DiziGroww for a free audit or custom quote. We respond within 4 business hours. Offices serving India, UAE & Singapore.",
+    keywords: "contact dizigroww, performance marketing agency contact, web development agency contact, hire dizigroww",
+    canonicalUrl: "https://dizigroww.in/contact",
+    ogImage: "https://dizigroww.in/logo.png"
+  });
+
+  return (
   <>
-    <Helmet>
-      <title>Contact Us | DiziGroww</title>
-      <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-    </Helmet>
+
     <Navbar />
     <main className="pt-16">
       <section className="section-padding">
@@ -68,6 +75,7 @@ const Contact = () => (
     </main>
     <Footer />
   </>
-);
+  );
+};
 
 export default Contact;

@@ -45,9 +45,11 @@ const steps = [
 
 const Services = () => {
   useMeta({
-    title: "Our Services | DiziGroww",
-    description: "Explore our premium web development and performance marketing services. We build eCommerce stores, landing pages, and run high-converting ad campaigns.",
-    canonicalUrl: "https://dizigroww.in/services"
+    title: "Web Development & Performance Marketing Services | DiziGroww",
+    description: "Shopify, WordPress, React & Next.js development plus Meta Ads, Google Ads, CRO, and landing page services. Engineered for ROI across India, UAE & Singapore.",
+    keywords: "shopify development services, wordpress development services, react development, landing page design, performance marketing services, meta ads, google ads, CRO services, DiziGroww",
+    canonicalUrl: "https://dizigroww.in/services",
+    ogImage: "https://dizigroww.in/logo.png"
   });
 
   return (

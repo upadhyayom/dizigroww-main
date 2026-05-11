@@ -93,8 +93,8 @@ const GoogleReviews = () => {
             </div>
 
             <a 
-              href="#" /* FIXME: Replace '#' with the correct Google Business Profile URL */
-              target="_blank" 
+              href="https://www.google.com/search?q=DiziGroww+reviews"
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-card hover:bg-[#f2f2f2] text-foreground px-6 py-3 rounded-full text-sm font-semibold shadow-card transition-colors border border-border"
             >

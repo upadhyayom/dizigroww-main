@@ -4,7 +4,7 @@ import TrustSection from "@/components/TrustSection";
 import Pricing from "@/components/Pricing";
 import { motion } from "framer-motion";
 import { Layout, MousePointerClick, TrendingUp, PenTool } from "lucide-react";
-import { Helmet } from "react-helmet-async";
+import { useMeta } from "@/hooks/useMeta";
 
 const features = [
   { icon: PenTool, title: "Persuasive Copywriting", desc: "We write direct-response copy that speaks directly to your buyers' pain points." },
@@ -13,13 +13,15 @@ const features = [
 ];
 
 const LandingPageDesign = () => {
+  useMeta({
+    title: "Landing Page Design & CRO Agency | DiziGroww",
+    description: "High-converting landing pages engineered for paid traffic. Direct-response copywriting, frictionless UX, A/B testing — built to multiply your ROAS.",
+    keywords: "landing page design, landing page agency, CRO services, paid media landing pages, A/B testing, conversion rate optimization",
+    canonicalUrl: "https://dizigroww.in/services/landing-page-design",
+    ogImage: "https://dizigroww.in/logo.png"
+  });
   return (
     <>
-      <Helmet>
-        <title>Landing Page Design & CRO | DiziGroww</title>
-        <meta name="description" content="High-converting standalone landing pages engineered to capture leads from your paid traffic campaigns." />
-      </Helmet>
-      
       <Navbar />
       <main className="pt-20">
         <section className="relative pt-20 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">

@@ -4,17 +4,19 @@ import TrustSection from "@/components/TrustSection";
 import Pricing from "@/components/Pricing";
 import WebDevelopmentGlimpse from "@/components/WebDevelopmentGlimpse";
 import MarketingBreakdown from "@/components/MarketingBreakdown";
-import { Helmet } from "react-helmet-async";
 import { ArrowRight } from "lucide-react";
+import { useMeta } from "@/hooks/useMeta";
 
 const ShopifyDevelopment = () => {
+  useMeta({
+    title: "Shopify Development Agency | Custom Stores Built to Convert | DiziGroww",
+    description: "Enterprise-grade Shopify development. Custom themes, conversion-optimised product pages, advanced apps and CRO baked in. Trusted by 50+ D2C brands globally.",
+    keywords: "shopify development agency, shopify expert, custom shopify themes, shopify CRO, ecommerce development, shopify developer India, shopify developer Dubai",
+    canonicalUrl: "https://dizigroww.in/services/shopify-development",
+    ogImage: "https://dizigroww.in/logo.png"
+  });
   return (
     <>
-      <Helmet>
-        <title>Shopify Development Agency | DiziGroww</title>
-        <meta name="description" content="Scale your e-commerce brand with enterprise-grade Shopify development and CRO optimization." />
-      </Helmet>
-      
       <Navbar />
       
       <main className="pt-20">

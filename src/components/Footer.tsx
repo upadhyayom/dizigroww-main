@@ -9,12 +9,12 @@ const Footer = () => (
         <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
           Have questions about our services or need help with a campaign? Book a free discovery call with our experts today.
         </p>
-        <a 
-          href="/contact" 
+        <Link
+          to="/contact"
           className="bg-primary text-primary-foreground font-bold px-8 py-4 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all flex items-center gap-2"
         >
           Book a Discovery Call
-        </a>
+        </Link>
       </div>
     </section>
 
@@ -57,7 +57,7 @@ const Footer = () => (
             <li><Link to="/web-development-dubai" className="hover:text-primary transition-colors">Web Dev Dubai</Link></li>
             <li><Link to="/web-development-singapore" className="hover:text-primary transition-colors">Web Dev Singapore</Link></li>
             <li><Link to="/#why-us" className="hover:text-primary transition-colors">About</Link></li>
-            <li><a href="/contact" className="hover:text-primary transition-colors">Contact</a></li>
+            <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
             <li><Link to="/careers" className="hover:text-primary transition-colors">Careers</Link></li>
           </ul>
         </div>

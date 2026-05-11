@@ -6,13 +6,15 @@ import TrustedBrands from "@/components/TrustedBrands";
 import { useMeta } from "@/hooks/useMeta";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, MonitorSmartphone, ShoppingCart, LayoutTemplate, Layout, Calendar, Mail, MessageCircle, MapPin } from "lucide-react";
-import { Helmet } from "react-helmet-async";
+
 
 const WebDevelopment = () => {
   useMeta({
-    title: "Web Development Agency | DiziGroww",
-    description: "Expert Web Development Agency for Singapore, UAE, Turkey, Malaysia & South Africa. Stores, React apps, WordPress & Next.js platforms.",
-    canonicalUrl: "https://dizigroww.in/web-development"
+    title: "Top Web Development Agency | Shopify, WordPress, React, Next.js | DiziGroww",
+    description: "Award-winning web development agency. We build high-converting Shopify stores, WordPress sites, React SPAs & Next.js platforms for D2C brands and startups across India, UAE & Singapore. 50+ clients served globally.",
+    keywords: "web development agency, shopify development, wordpress development, react development, nextjs development, ecommerce development, web developer India, web developer Dubai, web developer Singapore",
+    canonicalUrl: "https://dizigroww.in/web-development",
+    ogImage: "https://dizigroww.in/logo.png"
   });
 
   const navigate = useNavigate();
@@ -58,9 +60,7 @@ const WebDevelopment = () => {
 
   return (
     <>
-      <Helmet>
-        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
-      </Helmet>
+
       <Navbar />
       <main className="overflow-x-hidden">
         {/* HERO SECTION */}
@@ -88,7 +88,7 @@ const WebDevelopment = () => {
             </div>
             
             <div className="mt-14 pt-8 border-t border-border/50 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-muted-foreground max-w-4xl mx-auto">
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> 35+ Projects Delivered</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> 50+ Clients Served Globally</span>
               <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> 4 Countries Served</span>
               <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> 100% Client Satisfaction</span>
               <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> Avg. Delivery: 14 Days</span>

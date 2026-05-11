@@ -7,9 +7,11 @@ import { ArrowRight, CheckCircle2, MonitorSmartphone, ShoppingCart, LayoutTempla
 
 const WebDevSingapore = () => {
   useMeta({
-    title: "Website Development for Singapore Businesses | DiziGroww",
-    description: "Website Development Agency for Singapore Startups & SMEs. Fixed price. Fast delivery. Built to perform.",
-    canonicalUrl: "https://dizigroww.in/web-development-singapore"
+    title: "#1 Website Development Agency in Singapore | DiziGroww",
+    description: "Top-rated website development agency in Singapore for startups, SMEs & D2C brands. Conversion-focused Shopify, WordPress & React builds. Fixed price, fast delivery, built to perform.",
+    keywords: "website development Singapore, web development agency Singapore, shopify developer Singapore, wordpress developer Singapore, web design Singapore",
+    canonicalUrl: "https://dizigroww.in/web-development-singapore",
+    ogImage: "https://dizigroww.in/logo.png"
   });
 
   return (
@@ -29,7 +31,7 @@ const WebDevSingapore = () => {
               Fixed price. Fast delivery. Built to perform. Reliable technology partners for modern brands.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="https://wa.me/918920150935?text=Hi%20DiziGroww,%20I'm%20interested%20in%20web%20development%20for%20my%20business%20in%20Singapore" target="_blank" rel="noreferrer">
+              <a href="https://wa.me/918920150935?text=Hi%20DiziGroww,%20I'm%20interested%20in%20web%20development%20for%20my%20business%20in%20Singapore" target="_blank" rel="noopener noreferrer">
                 <motion.button whileHover={{ scale: 1.05 }} className="bg-[#25D366] text-white px-8 py-4 rounded-full text-base font-bold shadow-lg w-full sm:w-auto">
                   Chat on WhatsApp
                 </motion.button>

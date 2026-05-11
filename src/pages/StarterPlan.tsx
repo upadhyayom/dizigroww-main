@@ -44,7 +44,7 @@ const StarterPlan = () => {
               </div>
 
               <div className="mb-10">
-                <a href="#" /* FIXME: Replace '#' with the correct Google Business Profile URL */ target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-medium bg-secondary/80 border border-border px-4 py-2 rounded-full hover:border-[#FBBC05]/50 transition-colors">
+                <a href="https://www.google.com/search?q=DiziGroww+reviews" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm font-medium bg-secondary/80 border border-border px-4 py-2 rounded-full hover:border-[#FBBC05]/50 transition-colors">
                   <div className="flex text-[#FBBC05]">
                     <Star size={16} className="fill-current" />
                     <Star size={16} className="fill-current" />

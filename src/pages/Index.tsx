@@ -18,9 +18,11 @@ import { useMeta } from "@/hooks/useMeta";
 
 const Index = () => {
   useMeta({
-    title: "DiziGroww | Web Development & Performance Marketing | UAE, Singapore & India",
-    description: "We Build High-Converting Websites & Run Ads That Actually Grow Your Business.",
-    canonicalUrl: "https://dizigroww.in/"
+    title: "DiziGroww | #1 Performance Marketing & Web Development Agency | India, UAE, Singapore",
+    description: "DiziGroww is a top-rated performance marketing & web development agency. We build high-converting Shopify, WordPress & React websites and scale brands with Meta Ads & Google Ads across India, UAE & Singapore. 50+ clients served globally.",
+    keywords: "performance marketing agency, web development agency, shopify development, wordpress development, meta ads agency, google ads agency, CRO agency, digital marketing India, digital marketing Dubai, digital marketing Singapore, landing page design, DiziGroww",
+    canonicalUrl: "https://dizigroww.in/",
+    ogImage: "https://dizigroww.in/logo.png"
   });
 
   return (

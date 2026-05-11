@@ -493,7 +493,7 @@ const test = () => {
 
     const trackAndPay = () => {
         if (typeof fbq !== "undefined") fbq("track", "InitiateCheckout");
-        window.open(paymentLink, "_blank");
+        window.open(paymentLink, "_blank", "noopener,noreferrer");
     };
 
     return (

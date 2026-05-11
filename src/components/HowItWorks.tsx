@@ -61,7 +61,7 @@ const HowItWorks = () => {
         </div>
 
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 px-2 sm:px-4"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -72,16 +72,16 @@ const HowItWorks = () => {
               key={index}
               variants={cardVariants}
               whileHover={{ scale: 1.05, y: -10 }}
-              className="bg-card border border-border/50 hover:border-primary/50 p-8 rounded-3xl shadow-sm hover:shadow-2xl transition-all flex flex-col items-center text-center group relative overflow-hidden"
+              className="bg-card border border-border/50 hover:border-primary/50 p-5 sm:p-8 rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-2xl transition-all flex flex-col items-center text-center group relative overflow-hidden"
             >
               <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-primary/30 to-transparent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
               
-              <div className="w-20 h-20 bg-primary/10 group-hover:bg-primary border border-primary/20 group-hover:border-primary rounded-2xl flex items-center justify-center mb-8 transition-colors duration-300">
-                <step.icon className="w-10 h-10 text-primary group-hover:text-white transition-colors duration-300" />
+              <div className="w-14 h-14 sm:w-20 sm:h-20 bg-primary/10 group-hover:bg-primary border border-primary/20 group-hover:border-primary rounded-xl sm:rounded-2xl flex items-center justify-center mb-4 sm:mb-8 transition-colors duration-300">
+                <step.icon className="w-7 h-7 sm:w-10 sm:h-10 text-primary group-hover:text-white transition-colors duration-300" />
               </div>
-              
-              <h3 className="text-xl font-black text-foreground mb-4">{step.title}</h3>
-              <p className="text-muted-foreground text-sm font-medium leading-relaxed">
+
+              <h3 className="text-base sm:text-xl font-black text-foreground mb-2 sm:mb-4">{step.title}</h3>
+              <p className="text-muted-foreground text-xs sm:text-sm font-medium leading-relaxed">
                 {step.desc}
               </p>
             </motion.div>
