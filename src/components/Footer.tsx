@@ -27,7 +27,7 @@ const Footer = () => (
             <img src="/logo.png" alt="DiziGroww Logo" className="h-12 w-auto bg-white/90 p-2 rounded" />
           </Link>
           <p className="text-sm text-charcoal-foreground/60 leading-relaxed">
-            International Web Development and Performance Marketing Agency. Serving clients in India 🇮🇳 | UAE 🇦🇪 | Singapore 🇸🇬
+            International Web Development and Performance Marketing Agency. Serving clients in India 🇮🇳 | UAE 🇦🇪 | Singapore 🇸🇬 | Philippines 🇵🇭
           </p>
           <p className="mt-4 text-xs text-charcoal-foreground/50 font-semibold uppercase tracking-wider flex items-center gap-2">
             <span>🕒 Available Mon–Sat, 10AM–7PM IST (GMT+5:30)</span>
@@ -56,6 +56,7 @@ const Footer = () => (
             <li><Link to="/portfolio" className="hover:text-primary transition-colors">Portfolio</Link></li>
             <li><Link to="/web-development-dubai" className="hover:text-primary transition-colors">Web Dev Dubai</Link></li>
             <li><Link to="/web-development-singapore" className="hover:text-primary transition-colors">Web Dev Singapore</Link></li>
+            <li><Link to="/web-development-philippines" className="hover:text-primary transition-colors">Web Dev Philippines</Link></li>
             <li><Link to="/#why-us" className="hover:text-primary transition-colors">About</Link></li>
             <li><Link to="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
             <li><Link to="/careers" className="hover:text-primary transition-colors">Careers</Link></li>
