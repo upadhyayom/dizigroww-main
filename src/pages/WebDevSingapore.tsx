@@ -1,9 +1,11 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TrustSection from "@/components/TrustSection";
+import TrustedBrands from "@/components/TrustedBrands";
+import Pricing from "@/components/Pricing";
 import { useMeta } from "@/hooks/useMeta";
 import { motion } from "framer-motion";
-import { ArrowRight, CheckCircle2, MonitorSmartphone, ShoppingCart, LayoutTemplate, PenTool } from "lucide-react";
+import { ArrowRight, MonitorSmartphone, ShoppingCart, LayoutTemplate, PenTool } from "lucide-react";
 
 const WebDevSingapore = () => {
   useMeta({
@@ -31,7 +33,7 @@ const WebDevSingapore = () => {
               Fixed price. Fast delivery. Built to perform. Reliable technology partners for modern brands.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a href="https://wa.me/918920150935?text=Hi%20DiziGroww,%20I'm%20interested%20in%20web%20development%20for%20my%20business%20in%20Singapore" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/919450010826?text=Hi%20DiziGroww,%20I'm%20interested%20in%20web%20development%20for%20my%20business%20in%20Singapore" target="_blank" rel="noopener noreferrer">
                 <motion.button whileHover={{ scale: 1.05 }} className="bg-[#25D366] text-white px-8 py-4 rounded-full text-base font-bold shadow-lg w-full sm:w-auto">
                   Chat on WhatsApp
                 </motion.button>
@@ -92,57 +94,11 @@ const WebDevSingapore = () => {
           </div>
         </section>
 
-        {/* PRICING (USD Base with SGD Request) */}
-        <section className="section-padding bg-secondary/30 border-y border-border">
-          <div className="container-main">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Transparent Pricing</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">Clearly defined scope with flat-rate international billing (USD default, SGD accepted).</p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <div className="bg-card p-8 rounded-2xl border border-border flex flex-col relative overflow-hidden">
-                <h3 className="text-xl font-bold mb-1">Starter</h3>
-                <p className="text-sm text-muted-foreground mb-6">Perfect for campaign landing pages.</p>
-                <div className="text-4xl font-black mb-6">$499<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Single Landing Page</li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> 5 Dedicated Sections</li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Mobile Responsive</li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Lead Form Integration</li>
-                </ul>
-                <a href="/contact" className="block text-center bg-secondary hover:bg-border text-foreground font-semibold py-3 rounded-xl transition-colors">Start Project</a>
-              </div>
-              
-              <div className="bg-foreground text-background p-8 rounded-2xl border flex flex-col relative shadow-xl transform md:-translate-y-4">
-                <div className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl tracking-wider uppercase">Most Popular</div>
-                <h3 className="text-xl font-bold mb-1">Growth</h3>
-                <p className="text-sm text-gray-400 mb-6">For corporate & service businesses.</p>
-                <div className="text-4xl font-black mb-6">$999<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Multi-page Website (Up to 7)</li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> CMS Setup (WordPress)</li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Basic Technical SEO</li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Mobile & Tablet Optimized</li>
-                </ul>
-                <a href="/contact" className="block text-center bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition-colors">Start Project</a>
-              </div>
+        {/* BRANDS WE'VE BUILT */}
+        <TrustedBrands />
 
-              <div className="bg-card p-8 rounded-2xl border border-border flex flex-col relative">
-                <h3 className="text-xl font-bold mb-1">E-Commerce</h3>
-                <p className="text-sm text-muted-foreground mb-6">Full scale online stores.</p>
-                <div className="text-4xl font-black mb-6">$1,799<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Shopify or WooCommerce</li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Up to 50 Products added</li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Payment Gateway Integration</li>
-                  <li className="flex items-center gap-2 text-sm"><CheckCircle2 size={16} className="text-primary" /> Cart & Checkout Optimization</li>
-                </ul>
-                <a href="/contact" className="block text-center bg-secondary hover:bg-border text-foreground font-semibold py-3 rounded-xl transition-colors">Start Project</a>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* PRICING (shared component, USD default for Singapore) */}
+        <Pricing defaultCurrency="USD" />
 
       </main>
       <Footer />

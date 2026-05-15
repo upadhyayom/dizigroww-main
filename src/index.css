@@ -74,4 +74,84 @@
   .container-main {
     @apply max-w-7xl mx-auto;
   }
+
+  /* Premium "glow" CTA button */
+  .btn-premium {
+    @apply relative inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full font-bold text-primary-foreground bg-gradient-to-r from-primary to-primary-deep shadow-[0_10px_30px_-10px_hsl(var(--primary)/0.6)] hover:shadow-[0_20px_50px_-10px_hsl(var(--primary)/0.7)] transition-all duration-300 hover:-translate-y-0.5;
+  }
+
+  /* Premium gradient-bordered card */
+  .card-premium {
+    @apply relative rounded-2xl bg-card border border-border/80 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_18px_40px_-8px_rgba(0,0,0,0.14)] transition-all duration-300;
+  }
+  .card-premium::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(var(--primary)/0.35), transparent 40%, hsl(var(--primary)/0.2));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+  .card-premium:hover::before {
+    opacity: 1;
+  }
+
+  /* Subtle floating animation */
+  .float-slow {
+    animation: floatSlow 6s ease-in-out infinite;
+  }
+
+  /* Soft shimmer for stat numbers */
+  .text-shimmer {
+    background: linear-gradient(90deg, hsl(var(--foreground)) 0%, hsl(var(--primary)) 50%, hsl(var(--foreground)) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+            background-clip: text;
+    color: transparent;
+    animation: shimmer 4s linear infinite;
+  }
+
+  /* Marquee */
+  .marquee-track {
+    animation: marquee 35s linear infinite;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes shimmer {
+  to { background-position: -200% center; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .float-slow,
+  .text-shimmer,
+  .marquee-track {
+    animation: none !important;
+  }
 }

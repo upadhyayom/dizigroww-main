@@ -30,7 +30,7 @@ const ResultsSection = () => {
           className="text-center mb-12"
         >
           <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-4 py-1.5 rounded-full mb-3 uppercase tracking-wider">
-            See the Results We Acheived
+            See the Results We Achieved
           </span>
           <h2 className="text-3xl md:text-4xl mb-3">100% Real, Verified Client Growth.</h2>
           <p className="text-muted-foreground text-sm max-w-xl mx-auto">

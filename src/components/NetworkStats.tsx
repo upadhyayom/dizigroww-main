@@ -1,13 +1,30 @@
-import { motion } from "framer-motion";
+import { motion, useInView, useMotionValue, useTransform, animate } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { Users, Star, Trophy, Globe, Target, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const networkData = [
-  { icon: Target, label: "Ad Spend Managed", value: "$4M+", desc: "Across Meta & Google" },
-  { icon: Star, label: "Average ROI", value: "350%", desc: "For D2C & Service clients" },
-  { icon: Briefcase, label: "Websites Built", value: "80+", desc: "High-converting funnels" },
-  { icon: Globe, label: "Countries Served", value: "6+", desc: "True global agency" },
+  { icon: Target, label: "Ad Spend Managed", numeric: 4, prefix: "$", suffix: "M+", desc: "Across Meta & Google" },
+  { icon: Star, label: "Average ROI", numeric: 350, prefix: "", suffix: "%", desc: "For D2C & Service clients" },
+  { icon: Briefcase, label: "Websites Built", numeric: 80, prefix: "", suffix: "+", desc: "High-converting funnels" },
+  { icon: Globe, label: "Countries Served", numeric: 6, prefix: "", suffix: "+", desc: "True global agency" },
 ];
+
+const Counter = ({ to, prefix = "", suffix = "" }: { to: number; prefix?: string; suffix?: string }) => {
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const motionVal = useMotionValue(0);
+  const rounded = useTransform(motionVal, (v) => `${prefix}${Math.round(v)}${suffix}`);
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(motionVal, to, { duration: 1.6, ease: "easeOut" });
+      return () => controls.stop();
+    }
+  }, [isInView, to, motionVal]);
+
+  return <motion.span ref={ref}>{rounded}</motion.span>;
+};
 
 const NetworkStats = () => {
   return (
@@ -63,7 +80,9 @@ const NetworkStats = () => {
               className="bg-black/20 backdrop-blur-md border border-white/10 p-6 rounded-2xl flex flex-col items-center text-center hover:bg-black/30 transition-colors"
             >
               <item.icon className="w-8 h-8 text-white/70 mb-4" />
-              <h4 className="text-2xl md:text-3xl font-black mb-1">{item.value}</h4>
+              <h4 className="text-2xl md:text-3xl font-black mb-1 tabular-nums">
+                <Counter to={item.numeric} prefix={item.prefix} suffix={item.suffix} />
+              </h4>
               <p className="text-sm font-bold text-white mb-1 uppercase tracking-wider">{item.label}</p>
               <p className="text-xs text-white/60">{item.desc}</p>
             </motion.div>

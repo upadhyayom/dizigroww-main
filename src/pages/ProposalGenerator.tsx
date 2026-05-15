@@ -5,32 +5,32 @@ import { ProposalData } from "@/templates/ProposalTemplate";
 import { Button } from "@/components/ui/button";
 
 const defaultData: ProposalData = {
-  clientName: "DEBMALYA",
+  clientName: "",
   clientPhone: "",
-  clientEmail: "debmalya@example.com",
-  projectOverview: "This project involves designing a modern and user-friendly Landing page for Debmalya to enhance his online presence and improve user engagement",
+  clientEmail: "",
+  projectOverview: "This project involves designing a modern and user-friendly landing page to enhance the client's online presence and improve user engagement.",
   pagesOverview: [
-    "1.Home Page: Hero banner, featured work, CTA (Book a Session).",
-    "2.AboutMe: Personal story, achievements, experience.",
-    "3.Services & Pricing: Packages with pricing, client testimonials.",
-    "4.Contact: Contact form, WhatsApp chat, email/phone/social links."
+    "1. Home Page: Hero banner, featured work, CTA (Book a Session).",
+    "2. About: Personal story, achievements, experience.",
+    "3. Services & Pricing: Packages with pricing, client testimonials.",
+    "4. Contact: Contact form, WhatsApp chat, email/phone/social links."
   ],
   pagesNote: "*Each page: WhatsApp popup for inquiries.\n*Testimonial on Home and Contact Page\n\nNote: Certain sections will feature animations for better user experience.",
-  paymentCost: "₹8000/-",
+  paymentCost: "₹8,000/-",
   paymentSchedule: [
-    "25%-Advance",
-    "25%- After final revision",
-    "50%- At the time of going live"
+    "25% – Advance",
+    "25% – After final revision",
+    "50% – At the time of going live"
   ],
   contactInfo: "+91 9450010826",
   references: [
-    { title: "Reference 1.", url: "#" },
-    { title: "Reference 2.", url: "#" }
+    { title: "Reference 1", url: "https://dizigroww.in/portfolio" },
+    { title: "Reference 2", url: "https://dizigroww.in/portfolio" }
   ],
   addedValue: [
     "Hosting – (Fast & Secure)",
-    "Domain – 1 Year **FREE** (yournamephotography.com or similar)",
-    "SEO – 1 Months **FREE** (to help your website rank for industry keywords)",
+    "Domain – 1 Year **FREE** (custom domain of your choice)",
+    "SEO – 1 Month **FREE** (to help your website rank for industry keywords)",
     "Lifetime Support"
   ],
   timeline: [

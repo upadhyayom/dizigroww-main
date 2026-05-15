@@ -151,8 +151,8 @@ const HeroSection = () => {
                 <CheckCircle2 className="w-5 h-5" />
               </div>
               <div className="text-left flex flex-col">
-                <span className="text-xl font-black text-foreground">3</span>
-                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Continents Served</span>
+                <span className="text-xl font-black text-foreground">6+</span>
+                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">Countries Served</span>
               </div>
             </div>
           </motion.div>

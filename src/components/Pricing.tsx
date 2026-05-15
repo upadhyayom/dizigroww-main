@@ -11,7 +11,7 @@ const plans = [
     desc: "High-converting single page tailored for your campaigns.",
     features: [
       "Landing page development",
-      "CRO optimisation",
+      "CRO optimization",
       "Funnel creation",
       "Content creation",
     ],
@@ -27,7 +27,7 @@ const plans = [
     desc: "End-to-end e-commerce development ready for sales.",
     features: [
       "Full e-com store development",
-      "CRO optimisation",
+      "CRO optimization",
       "Funnel creation",
       "Content creation",
     ],
@@ -37,14 +37,14 @@ const plans = [
   },
   {
     name: "Meta Ads + Web",
-    priceUSD: "$400 onwards",
-    priceINR: "₹20,000 onwards",
-    period: " /mo",
+    priceUSD: "$400+",
+    priceINR: "₹20,000+",
+    period: "/mo onwards",
     desc: "Consistent traffic via Meta ads with a dedicated website.",
     features: [
       "Meta ads management",
       "Website management",
-      "CRO optimisation",
+      "CRO optimization",
       "Funnel creation",
       "Content creation",
     ],
@@ -54,14 +54,14 @@ const plans = [
   },
   {
     name: "Omnichannel",
-    priceUSD: "$500 onwards",
-    priceINR: "₹25,000 onwards",
-    period: " /mo",
+    priceUSD: "$500+",
+    priceINR: "₹25,000+",
+    period: "/mo onwards",
     desc: "Complete ad management across Meta & Google plus web.",
     features: [
       "Meta ads + Google ads",
       "Website management",
-      "CRO optimisation",
+      "CRO optimization",
       "Funnel creation",
       "Content creation",
     ],
@@ -71,8 +71,12 @@ const plans = [
   },
 ];
 
-const Pricing = () => {
-  const [currency, setCurrency] = useState<"INR" | "USD">("INR");
+interface PricingProps {
+  defaultCurrency?: "INR" | "USD";
+}
+
+const Pricing = ({ defaultCurrency = "INR" }: PricingProps) => {
+  const [currency, setCurrency] = useState<"INR" | "USD">(defaultCurrency);
 
   return (
     <section className="section-padding">

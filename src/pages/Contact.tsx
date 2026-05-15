@@ -9,7 +9,7 @@ import { useMeta } from "@/hooks/useMeta";
 const contactInfo = [
   { icon: Mail, label: "Email Us", value: "info@dizigroww.in" },
   { icon: MessageCircle, label: "WhatsApp / Phone", value: "+91 9450010826" },
-  { icon: MapPin, label: "Location", value: "Greater Noida, UP" },
+  { icon: MapPin, label: "Location", value: "Plot 19, KP, Greater Noida, UP, India" },
 ];
 
 const Contact = () => {

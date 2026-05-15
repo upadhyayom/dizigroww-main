@@ -24,7 +24,7 @@ const Internships = () => {
             
             <div className="flex flex-wrap justify-center gap-6 mt-10">
               <div className="flex items-center gap-2 text-charcoal flex-col">
-                <span className="text-3xl font-black text-primary">50+</span>
+                <span className="text-3xl font-black text-primary">40+</span>
                 <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Hiring Partners</span>
               </div>
               <div className="w-px h-12 bg-border hidden sm:block"></div>
@@ -71,13 +71,13 @@ const Internships = () => {
         <section className="section-padding bg-white border-y border-border">
           <div className="container-main text-center">
             <h2 className="text-3xl font-bold mb-4">Recent Success Stories</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto mb-12">Don't just take our word for it. Hear from candidates who trusted our process and kickstarted their careers through our exact screening method.</p>
-            
+            <p className="text-muted-foreground max-w-2xl mx-auto mb-12">Don't just take our word for it. Hear from candidates who trusted our screening process and started their careers with our partner network.</p>
+
             <div className="grid md:grid-cols-3 gap-6">
               {[
-                { name: "Rahul S.", role: "Placed as Business Analyst", text: "I was highly skeptical about the ₹199 processing fee. But their resume screening process is incredibly thorough. I received two interview calls and got placed in a reputed firm within 3 weeks!" },
-                { name: "Priya M.", role: "Placed as HR Executive", text: "Their team didn't just forward my resume to companies; they actively helped me understand my weak points and prepared me specifically for the technical rounds. Highly genuine." },
-                { name: "Amit K.", role: "Secured Paid Internship", text: "Getting a paid internship was extremely hard until I registered. The complete transparency and constant communication throughout the matching process is what makes them trustworthy." }
+                { name: "Aakash R.", role: "Placed as Business Analyst", text: "I was skeptical about the ₹199 processing fee, but their resume screening is incredibly thorough. I received two interview calls and got placed at a reputed firm within 3 weeks!" },
+                { name: "Sneha M.", role: "Placed as HR Executive", text: "Their team didn't just forward my resume — they actively helped me understand my weak points and prepared me for technical rounds. Genuinely helpful." },
+                { name: "Amit K.", role: "Secured Paid Internship", text: "Landing a paid internship was extremely hard before I registered. Their transparency and constant communication during matching is what makes them trustworthy." }
               ].map((t, i) => (
                 <div key={i} className="bg-secondary/20 p-8 rounded-2xl border border-border text-left relative hover:shadow-md transition-shadow">
                   <div className="text-[#FFD700] mb-4 text-xl tracking-widest">
@@ -139,7 +139,7 @@ const Internships = () => {
                       <Briefcase className="text-primary mt-0.5 shrink-0" size={20} />
                       <div>
                         <h4 className="font-bold text-charcoal mb-1">What kind of roles do you offer?</h4>
-                        <p className="text-sm text-muted-foreground">As a general HR consultancy, we match candidates across IT, Marketing, Operations, HR, and Sales. If your resume has the potential, we will find the right desk for you to sit at.</p>
+                        <p className="text-sm text-muted-foreground">As a general HR consultancy, we match candidates across IT, Marketing, Operations, HR, and Sales. If your resume has potential, we'll find the right role for you.</p>
                       </div>
                     </div>
                   </div>

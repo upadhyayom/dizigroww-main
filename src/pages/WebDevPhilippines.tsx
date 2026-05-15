@@ -1,11 +1,12 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TrustSection from "@/components/TrustSection";
+import TrustedBrands from "@/components/TrustedBrands";
+import Pricing from "@/components/Pricing";
 import { useMeta } from "@/hooks/useMeta";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
-  CheckCircle2,
   MonitorSmartphone,
   ShoppingCart,
   LayoutTemplate,
@@ -16,23 +17,7 @@ import {
   CreditCard,
   LineChart,
   Award,
-  ExternalLink,
 } from "lucide-react";
-
-const philippinesBrands = [
-  { name: "Mortantra", tagline: "Heritage jewellery, modern web", url: "https://mortantra.com/", stack: "Shopify" },
-  { name: "Dring", tagline: "Wellness D2C storefront", url: "https://dring.in/", stack: "Shopify" },
-  { name: "Varak Edible Luxury", tagline: "Premium edible luxury", url: "https://www.varakedibleluxury.com/", stack: "Shopify" },
-  { name: "Prince Jewellers", tagline: "Cross-border jewellery", url: "https://www.princejewellers.com.au/", stack: "Shopify" },
-  { name: "EVO Labs", tagline: "Research & supplements", url: "https://www.evolabsresearch.co/", stack: "Next.js" },
-  { name: "EvoVera", tagline: "Wellness ecommerce", url: "https://evovera.store/", stack: "React" },
-  { name: "MotoBlox", tagline: "Automotive parts portal", url: "https://motoblox.com/", stack: "WordPress" },
-  { name: "Nexpept", tagline: "Health brand, scaled to Canada", url: "https://www.nexpept.ca/", stack: "Shopify Plus" },
-  { name: "The Fragrance Empire", tagline: "Luxury fragrances", url: "https://thefragranceempire.com/", stack: "Shopify" },
-  { name: "Toy Collectors India", tagline: "Collectibles retail", url: "https://www.toycollectorsindia.com/", stack: "Shopify" },
-  { name: "Sanduk", tagline: "Modern traditional fashion", url: "https://sanduk.co/", stack: "WooCommerce" },
-  { name: "Stikrly", tagline: "Storefront optimised", url: "https://stikrly.in/", stack: "Shopify & Web" },
-];
 
 const WebDevPhilippines = () => {
   useMeta({
@@ -249,156 +234,10 @@ const WebDevPhilippines = () => {
         </section>
 
         {/* BRANDS WE'VE BUILT */}
-        <section className="section-padding bg-background">
-          <div className="container-main">
-            <div className="text-center mb-14">
-              <span className="inline-block bg-primary/10 text-primary text-xs font-semibold px-4 py-1.5 rounded-full mb-3 uppercase tracking-wider">
-                Brands We've Built &amp; Partnered With
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">20+ Brands. Live. Converting. Globally.</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                From heritage jewellery to D2C wellness — here's a snapshot of the conversion machines we've shipped for brands across India, the USA, Dubai and Asia-Pacific.
-              </p>
-            </div>
+        <TrustedBrands />
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              {philippinesBrands.map((brand) => (
-                <a
-                  key={brand.name}
-                  href={brand.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group bg-card p-6 rounded-2xl border border-border shadow-sm hover:shadow-lg hover:border-primary/40 transition-all flex flex-col gap-2"
-                >
-                  <div className="flex items-start justify-between">
-                    <h3 className="text-lg font-bold font-display tracking-tight group-hover:text-primary transition-colors">
-                      {brand.name}
-                    </h3>
-                    <ExternalLink size={16} className="text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 mt-1" />
-                  </div>
-                  <p className="text-sm text-muted-foreground">{brand.tagline}</p>
-                  <span className="mt-1 inline-block text-[10px] font-semibold uppercase tracking-wider text-primary bg-primary/10 px-2 py-1 rounded-full self-start">
-                    {brand.stack}
-                  </span>
-                </a>
-              ))}
-            </div>
-
-            <p className="text-center text-sm text-muted-foreground mt-10">
-              Want to see the full portfolio? <a href="/portfolio" className="text-primary font-semibold hover:underline">View all projects →</a>
-            </p>
-          </div>
-        </section>
-
-        {/* PRICING */}
-        <section className="section-padding bg-secondary/30 border-y border-border">
-          <div className="container-main">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Transparent Pricing</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Flat-rate USD billing. PHP invoicing available on request. No retainers, no surprises.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <div className="bg-card p-8 rounded-2xl border border-border flex flex-col relative overflow-hidden">
-                <h3 className="text-xl font-bold mb-1">Launch</h3>
-                <p className="text-sm text-muted-foreground mb-6">Perfect for ad campaign landing pages.</p>
-                <div className="text-4xl font-black mb-6">
-                  $200<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span>
-                </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Single high-converting page
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Mobile-first responsive build
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Meta Pixel + GA4 setup
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Lead form / WhatsApp CTA
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Live in 7–10 days
-                  </li>
-                </ul>
-                <a
-                  href="/contact"
-                  className="block text-center bg-secondary hover:bg-border text-foreground font-semibold py-3 rounded-xl transition-colors"
-                >
-                  Start Project
-                </a>
-              </div>
-
-              <div className="bg-foreground text-background p-8 rounded-2xl border flex flex-col relative shadow-xl transform md:-translate-y-4">
-                <div className="absolute top-0 right-0 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl tracking-wider uppercase">
-                  Most Popular
-                </div>
-                <h3 className="text-xl font-bold mb-1">Conversion Store</h3>
-                <p className="text-sm text-gray-400 mb-6">Full Shopify store, ad-ready.</p>
-                <div className="text-4xl font-black mb-6">
-                  $799<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span>
-                </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Full Shopify store (up to 30 products)
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> COD + GCash + Maya gateways
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Pixel + CAPI + GA4 + TikTok pixel
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> CRO-optimised product pages
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Live in 14 days
-                  </li>
-                </ul>
-                <a
-                  href="/contact"
-                  className="block text-center bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-xl transition-colors"
-                >
-                  Start Project
-                </a>
-              </div>
-
-              <div className="bg-card p-8 rounded-2xl border border-border flex flex-col relative">
-                <h3 className="text-xl font-bold mb-1">Scale</h3>
-                <p className="text-sm text-muted-foreground mb-6">For brands ready to scale ads.</p>
-                <div className="text-4xl font-black mb-6">
-                  $1,799<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span>
-                </div>
-                <ul className="space-y-3 mb-8 flex-1">
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Custom Shopify or headless build
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Up to 100 products + collections
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Conversion audit + A/B framework
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> Email + SMS automation setup
-                  </li>
-                  <li className="flex items-center gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-primary" /> 30-day post-launch support
-                  </li>
-                </ul>
-                <a
-                  href="/contact"
-                  className="block text-center bg-secondary hover:bg-border text-foreground font-semibold py-3 rounded-xl transition-colors"
-                >
-                  Start Project
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* PRICING (shared component, USD default for Philippines) */}
+        <Pricing defaultCurrency="USD" />
 
         {/* PROCESS */}
         <section className="section-padding bg-background">

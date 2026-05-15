@@ -42,7 +42,7 @@ const PrivacyPolicy = () => {
 
               <h2>3. Meta (Facebook) Data Collection & Conversions API</h2>
               <p>
-                We use the Meta Pixel and the Meta Conversions API (CAPI) to better understand our advertising effectiveness and to deliver more relevant ads to you. When you submit a lead form on our website, we may securely securely hash specific contact information (such as your email address and phone number) using SHA-256 and transmit it to Meta. Meta uses this hashed data to match you to a Facebook account and measure the results of our advertising. You can learn more about how Meta uses this data in the <a href="https://www.facebook.com/policy.php" target="_blank" rel="noopener noreferrer">Meta Privacy Policy</a>.
+                We use the Meta Pixel and the Meta Conversions API (CAPI) to better understand our advertising effectiveness and to deliver more relevant ads to you. When you submit a lead form on our website, we may securely hash specific contact information (such as your email address and phone number) using SHA-256 and transmit it to Meta. Meta uses this hashed data to match you to a Facebook account and measure the results of our advertising. You can learn more about how Meta uses this data in the <a href="https://www.facebook.com/policy.php" target="_blank" rel="noopener noreferrer">Meta Privacy Policy</a>.
               </p>
 
               <h2>4. Sharing of Your Information</h2>

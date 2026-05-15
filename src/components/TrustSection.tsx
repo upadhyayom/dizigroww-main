@@ -5,7 +5,7 @@ const trustFeatures = [
   { icon: <Zap size={24} />, title: "Fast Delivery", desc: "Projects launched in 3-6 weeks." },
   { icon: <MessageCircle size={24} />, title: "Direct Communication", desc: "WhatsApp & Email. No middlemen." },
   { icon: <Lock size={24} />, title: "Fixed Pricing", desc: "No hidden costs, ever." },
-  { icon: <Globe2 size={24} />, title: "Global Clients", desc: "Serving India, UAE & Singapore." },
+  { icon: <Globe2 size={24} />, title: "Global Clients", desc: "Serving India, UAE, Singapore, Australia, Canada & US." },
   { icon: <RefreshCcw size={24} />, title: "Revision Policy", desc: "2 rounds of revisions always included." }
 ];
 
@@ -20,9 +20,9 @@ const TrustSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold">Built for International Standards</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 flex-wrap lg:flex lg:flex-row justify-center gap-6 lg:gap-8 max-w-6xl mx-auto mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 flex-wrap lg:flex lg:flex-row justify-center gap-6 lg:gap-8 max-w-6xl mx-auto">
           {trustFeatures.map((feature, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -37,20 +37,6 @@ const TrustSection = () => {
               <p className="text-sm text-muted-foreground">{feature.desc}</p>
             </motion.div>
           ))}
-        </div>
-
-        <div className="text-center">
-          <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-8">
-            Global Brands We've Partnered With
-          </p>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
-            {/* Placeholder Logos */}
-            <div className="text-xl md:text-2xl font-black font-display tracking-tighter">NEXUS<span className="text-primary">.io</span></div>
-            <div className="text-xl md:text-2xl font-black font-display tracking-tight text-gray-500">GlobalMarket</div>
-            <div className="text-xl md:text-2xl font-black font-display italic">VERTEX UAE</div>
-            <div className="text-xl md:text-2xl font-bold font-serif">AURA <span className="font-light">SG</span></div>
-            <div className="text-xl md:text-2xl font-bold">Tech<span className="text-primary">Flow</span></div>
-          </div>
         </div>
       </div>
     </section>

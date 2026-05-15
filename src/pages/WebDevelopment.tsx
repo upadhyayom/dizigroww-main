@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TrustedBrands from "@/components/TrustedBrands";
+import Pricing from "@/components/Pricing";
 import { useMeta } from "@/hooks/useMeta";
 import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, MonitorSmartphone, ShoppingCart, LayoutTemplate, Layout, Calendar, Mail, MessageCircle, MapPin } from "lucide-react";
@@ -89,7 +90,7 @@ const WebDevelopment = () => {
             
             <div className="mt-14 pt-8 border-t border-border/50 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm font-medium text-muted-foreground max-w-4xl mx-auto">
               <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> 50+ Clients Served Globally</span>
-              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> 4 Countries Served</span>
+              <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> 6+ Countries Served</span>
               <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> 100% Client Satisfaction</span>
               <span className="flex items-center gap-2"><CheckCircle2 size={16} className="text-primary"/> Avg. Delivery: 14 Days</span>
             </div>
@@ -209,63 +210,8 @@ const WebDevelopment = () => {
           </div>
         </section>
 
-        {/* PRICING (USD Base) */}
-        <section className="py-24 bg-card/40 border-y border-border">
-          <div className="container-main">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight">Transparent Pricing. No Surprises.</h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">All prices in USD. One-time project fee. No hidden charges.</p>
-            </div>
-            
-            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <div className="bg-card p-10 rounded-3xl border border-border/80 flex flex-col relative hover:border-primary/30 transition-colors">
-                <h3 className="text-2xl font-bold mb-2">Starter</h3>
-                <div className="text-5xl font-black mb-8 tracking-tight">$199<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
-                <ul className="space-y-4 mb-10 flex-1 text-muted-foreground">
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> WordPress or WooCommerce</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Up to 5 pages</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Mobile responsive</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Basic SEO setup</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> 1 round of revisions</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Delivery: 7–10 days</li>
-                </ul>
-                <button onClick={scrollToForm} className="block w-full text-center bg-secondary hover:bg-secondary/80 text-foreground font-bold py-4 rounded-xl transition-colors border border-border flex justify-center items-center gap-2"><Calendar size={18}/> Schedule Setup</button>
-              </div>
-              
-              <div className="bg-background relative p-10 rounded-3xl border-2 border-primary shadow-2xl flex flex-col transform lg:-translate-y-4">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-bold px-6 py-1.5 rounded-full uppercase tracking-widest shadow-lg">Most Popular</div>
-                <h3 className="text-2xl font-bold mb-2 text-foreground">Growth</h3>
-                <div className="text-5xl font-black mb-8 text-foreground tracking-tight">$399<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
-                <ul className="space-y-4 mb-10 flex-1 text-foreground/80">
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Shopify store or React SPA</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Up to 10 pages / screens</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Custom UI design</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Speed optimized</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Payment integration</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> 2 rounds of revisions</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Delivery: 14 days</li>
-                </ul>
-                <button onClick={scrollToForm} className="block w-full text-center bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-colors shadow-lg shadow-primary/20 flex justify-center items-center gap-2"><Calendar size={18}/> Schedule Setup</button>
-              </div>
-
-              <div className="bg-card p-10 rounded-3xl border border-border/80 flex flex-col relative hover:border-primary/30 transition-colors">
-                <h3 className="text-2xl font-bold mb-2">Scale</h3>
-                <div className="text-5xl font-black mb-8 tracking-tight">$799<span className="text-xl ml-2 font-bold tracking-normal opacity-70">onwards</span></div>
-                <ul className="space-y-4 mb-10 flex-1 text-muted-foreground">
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Next.js full-stack app</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Unlimited pages</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Custom animations & UI</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> API / CMS integrations</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> SEO + Performance audit</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> 3 rounds of revisions</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Priority Support included</li>
-                  <li className="flex items-start gap-3"><CheckCircle2 size={20} className="text-primary shrink-0" /> Delivery: 21 days</li>
-                </ul>
-                <button onClick={scrollToForm} className="block w-full text-center bg-secondary hover:bg-secondary/80 text-foreground font-bold py-4 rounded-xl transition-colors border border-border flex justify-center items-center gap-2"><Calendar size={18}/> Schedule Setup</button>
-              </div>
-            </div>
-          </div>
-        </section>
+        {/* PRICING (shared component, USD default for international page) */}
+        <Pricing defaultCurrency="USD" />
 
         {/* COMBINED CALENDLY + CONTACT FORM SECTION */}
         <section id="contact-section" className="py-24 bg-background border-t border-border/50">
@@ -341,12 +287,13 @@ const WebDevelopment = () => {
                       <div className="space-y-1.5">
                         <label className="text-xs font-semibold text-foreground/80 uppercase tracking-wider">Country</label>
                         <select value={formData.country} onChange={(e) => setFormData({...formData, country: e.target.value})} className="w-full bg-background border border-border rounded-xl px-4 py-3 focus:outline-none focus:border-primary transition-colors text-foreground appearance-none">
-                          <option value="Singapore">Singapore</option>
+                          <option value="India">India</option>
                           <option value="UAE">UAE</option>
-                          <option value="Turkey">Turkey</option>
-                          <option value="Malaysia">Malaysia</option>
-                          <option value="South Africa">South Africa</option>
+                          <option value="Singapore">Singapore</option>
+                          <option value="Australia">Australia</option>
+                          <option value="Canada">Canada</option>
                           <option value="US">US</option>
+                          <option value="UK">UK</option>
                           <option value="Other">Other</option>
                         </select>
                       </div>
@@ -379,7 +326,7 @@ const WebDevelopment = () => {
 
                     <div className="pt-2">
                       <button type="submit" disabled={isSubmitting} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-4 rounded-xl transition-colors shadow-lg shadow-primary/20 flex justify-center items-center gap-2">
-                        {isSubmitting ? "Sending..." : <>Send My Brief & Get Quote <ArrowRight size={18} /></>}
+                        {isSubmitting ? "Sending..." : <>Send My Brief & Get a Quote <ArrowRight size={18} /></>}
                       </button>
                     </div>
                   </form>

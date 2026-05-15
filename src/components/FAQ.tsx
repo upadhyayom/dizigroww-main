@@ -5,7 +5,7 @@ import { useState } from "react";
 const faqs = [
   {
     q: "How is your pricing structured?",
-    a: "Fixed monthly retainer based on service scope and ad spend management. No percentage of spend, no hidden costs. We offer Starter (₹50,000/$3K onwards), Growth (₹1,50,000/$7K onwards), and custom Enterprise plans.",
+    a: "Fixed monthly retainer based on service scope. No percentage of ad spend, no hidden costs. Plans start at ₹8,000 ($200) for a single landing page, ₹20,000 onwards ($400+) per month for Meta Ads + Web, and ₹25,000 onwards ($500+) per month for full Omnichannel scaling. Custom Enterprise plans available on request.",
   },
   {
     q: "What results can I realistically expect?",

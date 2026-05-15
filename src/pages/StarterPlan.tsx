@@ -172,7 +172,7 @@ const StarterPlan = () => {
                 { step: "1", title: "Apply & Pay", desc: "Submit ₹1,999 to secure your spot. We only take 5 fresh brands per month." },
                 { step: "2", title: "Manual Review", desc: "If we don't think we can help you scale, we refund you immediately. No questions asked." },
                 { step: "3", title: "Setup & Audit", desc: "We gain access, audit your site, and build your initial campaign infrastructure." },
-                { step: "4", title: "Go Live", desc: " campaigns go live. You receive your 30-day scaling roadmap." }
+                { step: "4", title: "Go Live", desc: "Your campaigns go live and you receive a 30-day scaling roadmap." }
               ].map((item, i) => (
                 <div key={i} className="relative z-10 bg-card p-6 rounded-2xl border border-border shadow-md text-center">
                   <div className="w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-6 border-4 border-background shadow-lg">

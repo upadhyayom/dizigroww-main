@@ -3,6 +3,8 @@ import { ArrowRight, MapPin, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const brands = [
+  { name: "Mortantra", logoUrl: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://mortantra.com/&size=128", category: "Heritage Jewellery", location: "India", url: "https://mortantra.com/", color: "bg-rose-500/10" },
+  { name: "Dring", logoUrl: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://dring.in/&size=128", category: "Wellness D2C", location: "India", url: "https://dring.in/", color: "bg-teal-500/10" },
   { name: "Varak Edible Luxury", logoUrl: "https://www.varakedibleluxury.com/cdn/shop/files/Varak_logo_nav_copy2.png?v=1712817801&width=500", category: "Luxury F&B", location: "Global", url: "https://www.varakedibleluxury.com/", color: "bg-amber-500/10" },
   { name: "Prince Jewellers", logoUrl: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.princejewellers.com.au/&size=128", category: "Premium Jewelry", location: "Australia", url: "https://www.princejewellers.com.au", color: "bg-blue-500/10" },
   { name: "EVO Labs", logoUrl: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.evolabsresearch.co/&size=128", category: "Tech & Research", location: "Global", url: "https://www.evolabsresearch.co/", color: "bg-indigo-500/10" },
