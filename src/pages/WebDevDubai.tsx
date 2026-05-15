@@ -52,6 +52,9 @@ const WebDevDubai = () => {
           </div>
         </section>
 
+        {/* BRANDS WE'VE BUILT (second section) */}
+        <TrustedBrands />
+
         {/* TRUST */}
         <TrustSection />
 
@@ -94,9 +97,6 @@ const WebDevDubai = () => {
             </div>
           </div>
         </section>
-
-        {/* BRANDS WE'VE BUILT */}
-        <TrustedBrands />
 
         {/* PRICING (shared component, USD default for Dubai) */}
         <Pricing defaultCurrency="USD" />

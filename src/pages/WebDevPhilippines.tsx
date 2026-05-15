@@ -83,6 +83,9 @@ const WebDevPhilippines = () => {
           </div>
         </section>
 
+        {/* BRANDS WE'VE BUILT (second section) */}
+        <TrustedBrands />
+
         {/* TRUST */}
         <TrustSection />
 
@@ -232,9 +235,6 @@ const WebDevPhilippines = () => {
             </div>
           </div>
         </section>
-
-        {/* BRANDS WE'VE BUILT */}
-        <TrustedBrands />
 
         {/* PRICING (shared component, USD default for Philippines) */}
         <Pricing defaultCurrency="USD" />

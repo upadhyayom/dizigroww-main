@@ -51,6 +51,9 @@ const WebDevSingapore = () => {
           </div>
         </section>
 
+        {/* BRANDS WE'VE BUILT (second section) */}
+        <TrustedBrands />
+
         {/* TRUST */}
         <TrustSection />
 
@@ -93,9 +96,6 @@ const WebDevSingapore = () => {
             </div>
           </div>
         </section>
-
-        {/* BRANDS WE'VE BUILT */}
-        <TrustedBrands />
 
         {/* PRICING (shared component, USD default for Singapore) */}
         <Pricing defaultCurrency="USD" />
