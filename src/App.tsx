@@ -11,6 +11,7 @@ import NotFound from "./pages/NotFound.tsx";
 import StarterPlan from "./pages/StarterPlan.tsx";
 import ThankYou from "./pages/ThankYou.tsx";
 import ProposalGenerator from "./pages/ProposalGenerator.tsx";
+import Invoices from "./pages/Invoices.tsx";
 import Internships from "./pages/Internships.tsx";
 import WebDevDubai from "./pages/WebDevDubai.tsx";
 import WebDevSingapore from "./pages/WebDevSingapore.tsx";
@@ -44,6 +45,7 @@ const App = () => (
           <Route path="/careers" element={<Careers />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/proposal-generator" element={<ProposalGenerator />} />
+          <Route path="/invoices" element={<Invoices />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/web-development" element={<WebDevelopment />} />
