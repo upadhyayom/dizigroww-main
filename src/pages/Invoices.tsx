@@ -99,6 +99,7 @@ const BRAND = {
     upiId: "",
   },
   signatoryLabel: "For DiziGroww",
+  signatureImage: "/signature.png", // transparent PNG dropped in /public/
 };
 
 // Seed: the very next invoice number for the current year. Set once so the
@@ -1269,8 +1270,26 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
           </div>
 
           {/* Authorised signatory */}
-          <div style={{ textAlign: "right", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: 90 }}>
-            <div style={{ borderTop: "1px solid #0f172a", paddingTop: 6, marginTop: 60, display: "inline-block", marginLeft: "auto" }}>
+          <div style={{ textAlign: "right", display: "flex", flexDirection: "column", justifyContent: "flex-end", alignItems: "flex-end", minHeight: 110 }}>
+            {BRAND.signatureImage && (
+              <img
+                src={BRAND.signatureImage}
+                alt="Signature"
+                style={{
+                  height: 60,
+                  width: "auto",
+                  maxWidth: 180,
+                  objectFit: "contain",
+                  marginBottom: -6,
+                }}
+                crossOrigin="anonymous"
+                onError={(e) => {
+                  // hide image if file is missing — fall back to text only
+                  (e.currentTarget as HTMLImageElement).style.display = "none";
+                }}
+              />
+            )}
+            <div style={{ borderTop: "1px solid #0f172a", paddingTop: 6, display: "inline-block", minWidth: 180 }}>
               <div style={{ fontWeight: 600 }}>{BRAND.signatoryLabel}</div>
               <div style={{ color: "#64748b", fontSize: 10 }}>Authorised Signatory</div>
             </div>
