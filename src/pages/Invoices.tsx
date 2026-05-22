@@ -61,6 +61,7 @@ import {
   cryptoId,
   deleteInvoice,
   duplicateInvoice,
+  ensureCounterFloor,
   exportAllJson,
   formatMoney,
   importAllJson,
@@ -80,10 +81,14 @@ const BRAND = {
   email: "info@dizigroww.in",
   phone: "+91 94500 10826",
   address: "Plot 19, KP, Greater Noida, Uttar Pradesh, India",
-  taxId: "",
+  taxId: "09AMVPU5948E1Z4", // DiziGroww GSTIN
   website: "dizigroww.in",
   logo: "/logo.png",
 };
+
+// Seed: the very next invoice number for the current year. Set once so the
+// counter floor is bumped on app boot without rolling back any later numbers.
+const NEXT_NUMBER_SEED = { year: 2026, nextNumber: 273 };
 
 // Password gate. Set VITE_INVOICE_PASSWORD in .env to override.
 const INVOICE_PASSWORD =
@@ -117,6 +122,7 @@ function blankInvoice(): Invoice {
     toAddress: "",
     toEmail: "",
     toPhone: "",
+    toGstin: "",
 
     items: [
       { id: cryptoId(), description: "", quantity: 1, unitPrice: 0 },
@@ -208,6 +214,8 @@ function InvoiceApp() {
   // Load + run recurring scheduler on mount
   useEffect(() => {
     document.title = "Invoices · DiziGroww";
+    // Seed counter floor so the next invoice is at least NEXT_NUMBER_SEED.
+    ensureCounterFloor(NEXT_NUMBER_SEED.year, NEXT_NUMBER_SEED.nextNumber - 1);
     const created = runRecurringScheduler();
     setInvoices(listInvoices());
     if (created.length) {
@@ -251,6 +259,7 @@ function InvoiceApp() {
       inv.toAddress = prefillFromClient.toAddress;
       inv.toEmail = prefillFromClient.toEmail;
       inv.toPhone = prefillFromClient.toPhone;
+      inv.toGstin = prefillFromClient.toGstin || "";
       inv.currency = prefillFromClient.currency;
     }
     setEditing(inv);
@@ -656,6 +665,15 @@ function InvoiceEditor({
                   placeholder="+91 ..."
                 />
               </Field>
+              <Field label="Client GSTIN" className="md:col-span-2">
+                <Input
+                  value={draft.toGstin}
+                  onChange={(e) => update("toGstin", e.target.value.toUpperCase())}
+                  placeholder="e.g. 09ABCDE1234F1Z5 (leave blank if unregistered)"
+                  maxLength={15}
+                  className="font-mono uppercase tracking-wider"
+                />
+              </Field>
               <Field label="Billing address" className="md:col-span-2">
                 <Textarea
                   value={draft.toAddress}
@@ -1040,7 +1058,14 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
             <div style={{ whiteSpace: "pre-line", color: "#334155" }}>{invoice.fromAddress}</div>
             <div style={{ color: "#334155" }}>{invoice.fromEmail}</div>
             <div style={{ color: "#334155" }}>{invoice.fromPhone}</div>
-            {invoice.fromTaxId && <div style={{ color: "#334155" }}>Tax ID: {invoice.fromTaxId}</div>}
+            {invoice.fromTaxId && (
+              <div style={{ color: "#334155", marginTop: 4 }}>
+                <span style={{ color: "#64748b" }}>GSTIN: </span>
+                <span style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontWeight: 600 }}>
+                  {invoice.fromTaxId}
+                </span>
+              </div>
+            )}
           </div>
           <div>
             <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", marginBottom: 4 }}>Bill to</div>
@@ -1049,6 +1074,14 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
             <div style={{ whiteSpace: "pre-line", color: "#334155" }}>{invoice.toAddress}</div>
             <div style={{ color: "#334155" }}>{invoice.toEmail}</div>
             <div style={{ color: "#334155" }}>{invoice.toPhone}</div>
+            {invoice.toGstin && (
+              <div style={{ color: "#334155", marginTop: 4 }}>
+                <span style={{ color: "#64748b" }}>GSTIN: </span>
+                <span style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontWeight: 600 }}>
+                  {invoice.toGstin}
+                </span>
+              </div>
+            )}
           </div>
           <div>
             <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", marginBottom: 4 }}>Details</div>

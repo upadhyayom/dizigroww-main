@@ -60,6 +60,7 @@ export interface Invoice {
   toAddress: string;
   toEmail: string;
   toPhone: string;
+  toGstin: string;
 
   items: InvoiceLineItem[];
 
@@ -120,6 +121,18 @@ export function peekNextInvoiceNumber(date = new Date()): string {
   const counter = readCounter();
   const next = (counter[String(year)] ?? 0) + 1;
   return `INV-${year}-${String(next).padStart(4, "0")}`;
+}
+
+// Make sure the counter for `year` is at least `floor`. Useful when starting
+// invoicing partway through the year (e.g. seeding next invoice to be #273).
+// Idempotent — safe to call on every page mount. Never rolls the counter back.
+export function ensureCounterFloor(year: number, floor: number) {
+  const counter = readCounter();
+  const current = counter[String(year)] ?? 0;
+  if (current < floor) {
+    counter[String(year)] = floor;
+    writeCounter(counter);
+  }
 }
 
 // --- CRUD -----------------------------------------------------------------
