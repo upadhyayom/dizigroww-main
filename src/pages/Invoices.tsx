@@ -57,6 +57,8 @@ import {
   Currency,
   InvoiceStatus,
   addDaysIso,
+  amountInIndianWords,
+  computeTaxBreakdown,
   computeTotals,
   cryptoId,
   deleteInvoice,
@@ -66,10 +68,12 @@ import {
   formatMoney,
   importAllJson,
   listInvoices,
+  migrateInvoices,
   nextInvoiceNumber,
   peekNextInvoiceNumber,
   runRecurringScheduler,
   saveInvoice,
+  stateFromGstin,
   todayIso,
 } from "@/lib/invoices";
 
@@ -84,6 +88,17 @@ const BRAND = {
   taxId: "09AMVPU5948E1Z4", // DiziGroww GSTIN
   website: "dizigroww.in",
   logo: "/logo.png",
+  // Payment block — shown on the PDF only if at least one field is non-empty.
+  // Fill these in when you have the values.
+  bank: {
+    accountName: "",
+    accountNumber: "",
+    ifsc: "",
+    bankName: "",
+    branch: "",
+    upiId: "",
+  },
+  signatoryLabel: "For DiziGroww",
 };
 
 // Seed: the very next invoice number for the current year. Set once so the
@@ -105,7 +120,7 @@ function blankInvoice(): Invoice {
     number: peekNextInvoiceNumber(),
     issueDate: todayIso(),
     dueDate: addDaysIso(todayIso(), 14),
-    status: "draft",
+    status: "due",
     currency: "INR",
     taxPercent: 18,
     discountPercent: 0,
@@ -124,8 +139,10 @@ function blankInvoice(): Invoice {
     toPhone: "",
     toGstin: "",
 
+    placeOfSupply: "",
+
     items: [
-      { id: cryptoId(), description: "", quantity: 1, unitPrice: 0 },
+      { id: cryptoId(), description: "", hsnSac: "998314", quantity: 1, unitPrice: 0 },
     ],
 
     recurrence: { interval: "none", nextRunAt: null },
@@ -214,6 +231,8 @@ function InvoiceApp() {
   // Load + run recurring scheduler on mount
   useEffect(() => {
     document.title = "Invoices · DiziGroww";
+    // One-time migration of older invoice records (status names, hsnSac field).
+    migrateInvoices();
     // Seed counter floor so the next invoice is at least NEXT_NUMBER_SEED.
     ensureCounterFloor(NEXT_NUMBER_SEED.year, NEXT_NUMBER_SEED.nextNumber - 1);
     const created = runRecurringScheduler();
@@ -402,11 +421,9 @@ function InvoiceApp() {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All statuses</SelectItem>
-              <SelectItem value="draft">Draft</SelectItem>
-              <SelectItem value="sent">Sent</SelectItem>
+              <SelectItem value="due">Due</SelectItem>
               <SelectItem value="paid">Paid</SelectItem>
               <SelectItem value="overdue">Overdue</SelectItem>
-              <SelectItem value="cancelled">Cancelled</SelectItem>
             </SelectContent>
           </Select>
           <Button variant="outline" onClick={refresh} title="Refresh">
@@ -564,14 +581,12 @@ function Stat({ label, value, small }: { label: string; value: string; small?: b
 
 function StatusBadge({ status }: { status: InvoiceStatus }) {
   const variant: Record<InvoiceStatus, string> = {
-    draft: "bg-slate-200 text-slate-700",
-    sent: "bg-blue-100 text-blue-700",
+    due: "bg-amber-100 text-amber-800",
     paid: "bg-green-100 text-green-700",
     overdue: "bg-red-100 text-red-700",
-    cancelled: "bg-slate-200 text-slate-500 line-through",
   };
   return (
-    <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${variant[status]}`}>
+    <span className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${variant[status] || "bg-slate-200 text-slate-700"}`}>
       {status}
     </span>
   );
@@ -605,7 +620,7 @@ function InvoiceEditor({
   const addItem = () =>
     setDraft((d) => ({
       ...d,
-      items: [...d.items, { id: cryptoId(), description: "", quantity: 1, unitPrice: 0 }],
+      items: [...d.items, { id: cryptoId(), description: "", hsnSac: "998314", quantity: 1, unitPrice: 0 }],
     }));
 
   const removeItem = (id: string) =>
@@ -692,6 +707,7 @@ function InvoiceEditor({
                 <thead className="text-left text-xs text-slate-500">
                   <tr>
                     <th className="py-1 pr-2">Description</th>
+                    <th className="py-1 pr-2 w-24">HSN / SAC</th>
                     <th className="py-1 pr-2 w-20">Qty</th>
                     <th className="py-1 pr-2 w-32">Unit price</th>
                     <th className="py-1 pr-2 w-32 text-right">Amount</th>
@@ -706,6 +722,14 @@ function InvoiceEditor({
                           value={it.description}
                           onChange={(e) => updateItem(it.id, { description: e.target.value })}
                           placeholder="Service or product"
+                        />
+                      </td>
+                      <td className="py-1 pr-2">
+                        <Input
+                          value={it.hsnSac}
+                          onChange={(e) => updateItem(it.id, { hsnSac: e.target.value })}
+                          placeholder="998314"
+                          className="font-mono text-xs"
                         />
                       </td>
                       <td className="py-1 pr-2">
@@ -750,6 +774,9 @@ function InvoiceEditor({
                   ))}
                 </tbody>
               </table>
+              <p className="text-xs text-slate-500">
+                Default SAC <span className="font-mono">998314</span> is "IT design &amp; development services". Override per line if needed.
+              </p>
             </div>
             <Button variant="outline" size="sm" onClick={addItem}>
               <Plus className="w-4 h-4 mr-1" /> Add line item
@@ -788,11 +815,9 @@ function InvoiceEditor({
                 >
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="draft">Draft</SelectItem>
-                    <SelectItem value="sent">Sent</SelectItem>
+                    <SelectItem value="due">Due</SelectItem>
                     <SelectItem value="paid">Paid</SelectItem>
                     <SelectItem value="overdue">Overdue</SelectItem>
-                    <SelectItem value="cancelled">Cancelled</SelectItem>
                   </SelectContent>
                 </Select>
               </Field>
@@ -828,6 +853,17 @@ function InvoiceEditor({
                   step="any"
                   value={draft.discountPercent}
                   onChange={(e) => update("discountPercent", Number(e.target.value))}
+                />
+              </Field>
+              <Field label="Place of Supply (override)" className="md:col-span-3">
+                <Input
+                  value={draft.placeOfSupply || ""}
+                  onChange={(e) => update("placeOfSupply", e.target.value)}
+                  placeholder={
+                    stateFromGstin(draft.toGstin)
+                      ? `Auto-detected: ${stateFromGstin(draft.toGstin)!.name} (${stateFromGstin(draft.toGstin)!.code})`
+                      : "Leave blank to auto-derive from client GSTIN"
+                  }
                 />
               </Field>
             </div>
@@ -1023,6 +1059,22 @@ function InvoicePreviewDialog({
 const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
   ({ invoice }, ref) => {
     const totals = computeTotals(invoice);
+    const tax = computeTaxBreakdown(invoice);
+    const isTaxInvoice = !!invoice.fromTaxId;
+    const isInr = invoice.currency === "INR";
+
+    // Place of Supply — explicit override, or derived from client GSTIN
+    const derivedPos = stateFromGstin(invoice.toGstin);
+    const placeOfSupply =
+      invoice.placeOfSupply ||
+      (derivedPos ? `${derivedPos.name} (${derivedPos.code})` : "");
+
+    const bank = BRAND.bank;
+    const hasPaymentBlock =
+      bank.accountNumber || bank.ifsc || bank.bankName || bank.upiId;
+
+    const amountWords = isInr ? amountInIndianWords(totals.total) : "";
+
     return (
       <div
         ref={ref}
@@ -1035,31 +1087,31 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
           width: "100%",
         }}
       >
-        {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
+        {/* Header — single DiziGroww mention via logo + title */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <img src={BRAND.logo} alt="DiziGroww" style={{ height: 48, width: "auto" }} crossOrigin="anonymous" />
-            <div>
-              <div style={{ fontSize: 18, fontWeight: 700 }}>{invoice.fromName}</div>
-              <div style={{ color: "#64748b" }}>{BRAND.website}</div>
-            </div>
+            <img src={BRAND.logo} alt={BRAND.name} style={{ height: 56, width: "auto" }} crossOrigin="anonymous" />
           </div>
           <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: 1 }}>INVOICE</div>
-            <div style={{ color: "#64748b", fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>{invoice.number}</div>
+            <div style={{ fontSize: 22, fontWeight: 700, letterSpacing: 1 }}>
+              {isTaxInvoice ? "TAX INVOICE" : "INVOICE"}
+            </div>
+            <div style={{ color: "#64748b", fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", marginTop: 2 }}>
+              {invoice.number}
+            </div>
           </div>
         </div>
 
         {/* From / To / Meta */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginBottom: 24 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1.1fr 1.1fr 0.9fr", gap: 20, marginBottom: 24 }}>
+          {/* From — no redundant brand name; the header already states it */}
           <div>
-            <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", marginBottom: 4 }}>From</div>
-            <div style={{ fontWeight: 600 }}>{invoice.fromName}</div>
-            <div style={{ whiteSpace: "pre-line", color: "#334155" }}>{invoice.fromAddress}</div>
+            <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>From</div>
+            <div style={{ whiteSpace: "pre-line", color: "#334155", lineHeight: 1.5 }}>{invoice.fromAddress}</div>
             <div style={{ color: "#334155" }}>{invoice.fromEmail}</div>
             <div style={{ color: "#334155" }}>{invoice.fromPhone}</div>
             {invoice.fromTaxId && (
-              <div style={{ color: "#334155", marginTop: 4 }}>
+              <div style={{ color: "#0f172a", marginTop: 6 }}>
                 <span style={{ color: "#64748b" }}>GSTIN: </span>
                 <span style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontWeight: 600 }}>
                   {invoice.fromTaxId}
@@ -1068,14 +1120,14 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
             )}
           </div>
           <div>
-            <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", marginBottom: 4 }}>Bill to</div>
+            <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>Bill to</div>
             <div style={{ fontWeight: 600 }}>{invoice.toCompany || invoice.toName || "—"}</div>
             {invoice.toCompany && invoice.toName && <div>{invoice.toName}</div>}
-            <div style={{ whiteSpace: "pre-line", color: "#334155" }}>{invoice.toAddress}</div>
+            <div style={{ whiteSpace: "pre-line", color: "#334155", lineHeight: 1.5 }}>{invoice.toAddress}</div>
             <div style={{ color: "#334155" }}>{invoice.toEmail}</div>
             <div style={{ color: "#334155" }}>{invoice.toPhone}</div>
             {invoice.toGstin && (
-              <div style={{ color: "#334155", marginTop: 4 }}>
+              <div style={{ color: "#0f172a", marginTop: 6 }}>
                 <span style={{ color: "#64748b" }}>GSTIN: </span>
                 <span style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontWeight: 600 }}>
                   {invoice.toGstin}
@@ -1084,11 +1136,11 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
             )}
           </div>
           <div>
-            <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", marginBottom: 4 }}>Details</div>
+            <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>Details</div>
             <MetaRow label="Issue date" value={invoice.issueDate} />
             <MetaRow label="Due date" value={invoice.dueDate} />
             <MetaRow label="Status" value={invoice.status.toUpperCase()} />
-            <MetaRow label="Currency" value={invoice.currency} />
+            {placeOfSupply && <MetaRow label="Place of supply" value={placeOfSupply} />}
             {invoice.recurrence.interval !== "none" && (
               <MetaRow label="Recurs" value={invoice.recurrence.interval} />
             )}
@@ -1100,9 +1152,10 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
           <thead>
             <tr style={{ background: "#0f172a", color: "white" }}>
               <th style={{ textAlign: "left", padding: "8px 10px", fontWeight: 600 }}>Description</th>
-              <th style={{ textAlign: "right", padding: "8px 10px", fontWeight: 600, width: 60 }}>Qty</th>
-              <th style={{ textAlign: "right", padding: "8px 10px", fontWeight: 600, width: 100 }}>Unit price</th>
-              <th style={{ textAlign: "right", padding: "8px 10px", fontWeight: 600, width: 100 }}>Amount</th>
+              <th style={{ textAlign: "left", padding: "8px 10px", fontWeight: 600, width: 80 }}>HSN/SAC</th>
+              <th style={{ textAlign: "right", padding: "8px 10px", fontWeight: 600, width: 50 }}>Qty</th>
+              <th style={{ textAlign: "right", padding: "8px 10px", fontWeight: 600, width: 95 }}>Unit price</th>
+              <th style={{ textAlign: "right", padding: "8px 10px", fontWeight: 600, width: 95 }}>Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -1110,6 +1163,9 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
               <tr key={it.id} style={{ background: idx % 2 === 0 ? "#f8fafc" : "white" }}>
                 <td style={{ padding: "8px 10px", borderBottom: "1px solid #e2e8f0" }}>
                   {it.description || "—"}
+                </td>
+                <td style={{ padding: "8px 10px", borderBottom: "1px solid #e2e8f0", fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace", fontSize: 11 }}>
+                  {it.hsnSac || "—"}
                 </td>
                 <td style={{ padding: "8px 10px", borderBottom: "1px solid #e2e8f0", textAlign: "right" }}>
                   {it.quantity}
@@ -1127,7 +1183,7 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
 
         {/* Totals */}
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
-          <table style={{ width: 280, borderCollapse: "collapse" }}>
+          <table style={{ width: 300, borderCollapse: "collapse" }}>
             <tbody>
               <SumRow label="Subtotal" value={formatMoney(totals.subtotal, invoice.currency)} />
               {invoice.discountPercent > 0 && (
@@ -1136,10 +1192,22 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
                   value={`- ${formatMoney(totals.discount, invoice.currency)}`}
                 />
               )}
-              {invoice.taxPercent > 0 && (
+              {tax.mode === "cgst_sgst" && (
+                <>
+                  <SumRow
+                    label={`CGST (${(invoice.taxPercent / 2).toFixed(2)}%)`}
+                    value={formatMoney(tax.cgst, invoice.currency)}
+                  />
+                  <SumRow
+                    label={`SGST (${(invoice.taxPercent / 2).toFixed(2)}%)`}
+                    value={formatMoney(tax.sgst, invoice.currency)}
+                  />
+                </>
+              )}
+              {tax.mode === "igst" && (
                 <SumRow
-                  label={`Tax (${invoice.taxPercent}%)`}
-                  value={formatMoney(totals.tax, invoice.currency)}
+                  label={`IGST (${invoice.taxPercent}%)`}
+                  value={formatMoney(tax.igst, invoice.currency)}
                 />
               )}
               <tr>
@@ -1169,26 +1237,58 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
           </table>
         </div>
 
-        {/* Notes */}
-        {invoice.notes && (
-          <div style={{ marginTop: 24 }}>
-            <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", marginBottom: 4 }}>Notes</div>
-            <div style={{ whiteSpace: "pre-line", color: "#334155" }}>{invoice.notes}</div>
+        {/* Amount in words */}
+        {amountWords && (
+          <div style={{ marginTop: 8, color: "#334155", fontStyle: "italic" }}>
+            <span style={{ color: "#64748b", fontStyle: "normal" }}>Amount in words: </span>
+            {amountWords}
           </div>
         )}
 
-        {/* Footer */}
+        {/* Payment + Notes block */}
+        <div style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: 20, marginTop: 24 }}>
+          <div>
+            {hasPaymentBlock && (
+              <>
+                <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>Payment details</div>
+                <div style={{ color: "#334155", lineHeight: 1.6 }}>
+                  {bank.accountName && <div><span style={{ color: "#64748b" }}>Account name: </span>{bank.accountName}</div>}
+                  {bank.bankName && <div><span style={{ color: "#64748b" }}>Bank: </span>{bank.bankName}{bank.branch ? `, ${bank.branch}` : ""}</div>}
+                  {bank.accountNumber && <div><span style={{ color: "#64748b" }}>A/C no: </span><span style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>{bank.accountNumber}</span></div>}
+                  {bank.ifsc && <div><span style={{ color: "#64748b" }}>IFSC: </span><span style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>{bank.ifsc}</span></div>}
+                  {bank.upiId && <div><span style={{ color: "#64748b" }}>UPI: </span><span style={{ fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace" }}>{bank.upiId}</span></div>}
+                </div>
+              </>
+            )}
+            {invoice.notes && (
+              <div style={{ marginTop: hasPaymentBlock ? 14 : 0 }}>
+                <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>Notes</div>
+                <div style={{ whiteSpace: "pre-line", color: "#334155" }}>{invoice.notes}</div>
+              </div>
+            )}
+          </div>
+
+          {/* Authorised signatory */}
+          <div style={{ textAlign: "right", display: "flex", flexDirection: "column", justifyContent: "flex-end", minHeight: 90 }}>
+            <div style={{ borderTop: "1px solid #0f172a", paddingTop: 6, marginTop: 60, display: "inline-block", marginLeft: "auto" }}>
+              <div style={{ fontWeight: 600 }}>{BRAND.signatoryLabel}</div>
+              <div style={{ color: "#64748b", fontSize: 10 }}>Authorised Signatory</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer — contact only, no brand name (already on top via logo) */}
         <div
           style={{
-            marginTop: 32,
-            paddingTop: 12,
+            marginTop: 28,
+            paddingTop: 10,
             borderTop: "1px solid #e2e8f0",
             color: "#64748b",
             fontSize: 10,
             textAlign: "center",
           }}
         >
-          {BRAND.name} · {BRAND.website} · {BRAND.email} · {BRAND.phone}
+          {BRAND.website} · {BRAND.email} · {BRAND.phone}
         </div>
       </div>
     );

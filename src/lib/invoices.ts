@@ -20,6 +20,7 @@ export type RecurrenceInterval = "none" | "weekly" | "monthly" | "quarterly" | "
 export interface InvoiceLineItem {
   id: string;
   description: string;
+  hsnSac: string; // HSN/SAC code (e.g. 998314 for IT/web services)
   quantity: number;
   unitPrice: number;
 }
@@ -34,7 +35,7 @@ export interface InvoiceRecurrence {
   parentId?: string;
 }
 
-export type InvoiceStatus = "draft" | "sent" | "paid" | "overdue" | "cancelled";
+export type InvoiceStatus = "due" | "paid" | "overdue";
 
 export interface Invoice {
   id: string;                    // uuid-ish
@@ -61,6 +62,9 @@ export interface Invoice {
   toEmail: string;
   toPhone: string;
   toGstin: string;
+
+  // GST: optional override; if blank, derived from client GSTIN state code
+  placeOfSupply?: string;
 
   items: InvoiceLineItem[];
 
@@ -246,6 +250,175 @@ export function formatMoney(amount: number, currency: Currency): string {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   })}`;
+}
+
+// --- GST helpers ---------------------------------------------------------
+
+// Indian GST state codes — first 2 digits of every GSTIN
+export const INDIAN_STATE_CODES: Record<string, string> = {
+  "01": "Jammu and Kashmir",
+  "02": "Himachal Pradesh",
+  "03": "Punjab",
+  "04": "Chandigarh",
+  "05": "Uttarakhand",
+  "06": "Haryana",
+  "07": "Delhi",
+  "08": "Rajasthan",
+  "09": "Uttar Pradesh",
+  "10": "Bihar",
+  "11": "Sikkim",
+  "12": "Arunachal Pradesh",
+  "13": "Nagaland",
+  "14": "Manipur",
+  "15": "Mizoram",
+  "16": "Tripura",
+  "17": "Meghalaya",
+  "18": "Assam",
+  "19": "West Bengal",
+  "20": "Jharkhand",
+  "21": "Odisha",
+  "22": "Chhattisgarh",
+  "23": "Madhya Pradesh",
+  "24": "Gujarat",
+  "26": "Dadra and Nagar Haveli and Daman and Diu",
+  "27": "Maharashtra",
+  "28": "Andhra Pradesh",
+  "29": "Karnataka",
+  "30": "Goa",
+  "31": "Lakshadweep",
+  "32": "Kerala",
+  "33": "Tamil Nadu",
+  "34": "Puducherry",
+  "35": "Andaman and Nicobar Islands",
+  "36": "Telangana",
+  "37": "Andhra Pradesh (New)",
+  "38": "Ladakh",
+  "97": "Other Territory",
+  "99": "Centre Jurisdiction",
+};
+
+export function stateFromGstin(gstin?: string): { code: string; name: string } | null {
+  if (!gstin || gstin.length < 2) return null;
+  const code = gstin.slice(0, 2);
+  const name = INDIAN_STATE_CODES[code];
+  return name ? { code, name } : null;
+}
+
+export interface TaxBreakdown {
+  mode: "cgst_sgst" | "igst" | "none";
+  cgst: number;
+  sgst: number;
+  igst: number;
+  total: number;
+}
+
+// Decide whether to split into CGST+SGST (intra-state) or IGST (inter-state)
+// based on the two GSTIN state codes. If client GSTIN absent → treat as IGST
+// (safest default for B2C / unregistered).
+export function computeTaxBreakdown(invoice: Invoice): TaxBreakdown {
+  const taxedBase =
+    invoice.items.reduce(
+      (s, i) => s + Number(i.quantity || 0) * Number(i.unitPrice || 0),
+      0
+    ) * (1 - Number(invoice.discountPercent || 0) / 100);
+  const ratePct = Number(invoice.taxPercent || 0);
+  const totalTax = taxedBase * (ratePct / 100);
+  if (ratePct <= 0) {
+    return { mode: "none", cgst: 0, sgst: 0, igst: 0, total: 0 };
+  }
+  const fromState = stateFromGstin(invoice.fromTaxId);
+  const toState = stateFromGstin(invoice.toGstin);
+  // intra-state: same state code on both GSTINs
+  if (fromState && toState && fromState.code === toState.code) {
+    return {
+      mode: "cgst_sgst",
+      cgst: totalTax / 2,
+      sgst: totalTax / 2,
+      igst: 0,
+      total: totalTax,
+    };
+  }
+  // default: IGST
+  return { mode: "igst", cgst: 0, sgst: 0, igst: totalTax, total: totalTax };
+}
+
+// Indian numbering system (lakh, crore) → words. Up to ~99,99,99,999.99.
+export function amountInIndianWords(amount: number): string {
+  if (!Number.isFinite(amount) || amount < 0) return "";
+  const ones = [
+    "", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
+    "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen",
+    "seventeen", "eighteen", "nineteen",
+  ];
+  const tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"];
+
+  const below1000 = (n: number): string => {
+    let r = "";
+    if (n >= 100) {
+      r += ones[Math.floor(n / 100)] + " hundred ";
+      n %= 100;
+    }
+    if (n >= 20) {
+      r += tens[Math.floor(n / 10)] + " ";
+      n %= 10;
+    }
+    if (n > 0) r += ones[n] + " ";
+    return r.trim();
+  };
+
+  const rupees = Math.floor(amount);
+  const paise = Math.round((amount - rupees) * 100);
+
+  if (rupees === 0 && paise === 0) return "Zero rupees only";
+
+  let words = "";
+  const crore = Math.floor(rupees / 10000000);
+  const lakh = Math.floor((rupees % 10000000) / 100000);
+  const thousand = Math.floor((rupees % 100000) / 1000);
+  const remainder = rupees % 1000;
+
+  if (crore > 0) words += below1000(crore) + " crore ";
+  if (lakh > 0) words += below1000(lakh) + " lakh ";
+  if (thousand > 0) words += below1000(thousand) + " thousand ";
+  if (remainder > 0) words += below1000(remainder) + " ";
+
+  words = words.trim().replace(/\s+/g, " ");
+  if (!words) words = "zero";
+  let result = words.charAt(0).toUpperCase() + words.slice(1) + " rupees";
+  if (paise > 0) {
+    const p = below1000(paise);
+    result += " and " + p.charAt(0).toUpperCase() + p.slice(1) + " paise";
+  }
+  result += " only";
+  return result;
+}
+
+// --- migration -----------------------------------------------------------
+// Translates older saved invoices (with status draft/sent/cancelled, no
+// hsnSac on items) into the current shape. Safe to call repeatedly.
+export function migrateInvoices() {
+  const all = readAll();
+  let changed = false;
+  const fixed = all.map((inv) => {
+    const next: Invoice = { ...inv };
+    // status migration
+    const oldStatus = (inv as unknown as { status: string }).status;
+    if (oldStatus === "draft" || oldStatus === "sent") {
+      next.status = "due";
+      changed = true;
+    } else if (oldStatus === "cancelled") {
+      next.status = "due";
+      changed = true;
+    }
+    // line items hsnSac default
+    next.items = (inv.items || []).map((it) => {
+      if (typeof (it as InvoiceLineItem).hsnSac === "string") return it;
+      changed = true;
+      return { ...it, hsnSac: "998314" };
+    });
+    return next;
+  });
+  if (changed) writeAll(fixed);
 }
 
 // --- recurring scheduler --------------------------------------------------
