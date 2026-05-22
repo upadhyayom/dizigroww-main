@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -150,6 +149,10 @@ function PasswordGate({ onPass }: { onPass: () => void }) {
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
 
+  useEffect(() => {
+    document.title = "Invoices · DiziGroww";
+  }, []);
+
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     if (pw === INVOICE_PASSWORD) {
@@ -162,9 +165,6 @@ function PasswordGate({ onPass }: { onPass: () => void }) {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-      <Helmet>
-        <title>Invoices · DiziGroww</title>
-      </Helmet>
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <div className="mx-auto mb-2 w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
@@ -207,6 +207,7 @@ function InvoiceApp() {
 
   // Load + run recurring scheduler on mount
   useEffect(() => {
+    document.title = "Invoices · DiziGroww";
     const created = runRecurringScheduler();
     setInvoices(listInvoices());
     if (created.length) {
@@ -316,10 +317,6 @@ function InvoiceApp() {
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>Invoices · DiziGroww</title>
-      </Helmet>
-
       {/* Top bar */}
       <header className="bg-white border-b sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
