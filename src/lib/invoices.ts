@@ -3,6 +3,13 @@
 // keep this module's exported function signatures the same and swap the
 // internals — the page component only talks to these functions.
 
+import {
+  pushInvoiceToCloud,
+  deleteInvoiceFromCloud,
+  fetchAllFromCloud,
+  pushManyToCloud,
+} from "./invoicesCloud";
+
 export type Currency = "INR" | "USD" | "AED" | "SGD" | "PHP" | "EUR" | "GBP";
 
 export const CURRENCY_SYMBOL: Record<Currency, string> = {
@@ -159,12 +166,35 @@ export function saveInvoice(invoice: Invoice): Invoice {
     all.push(stamped);
   }
   writeAll(all);
+  // Mirror to cloud (no-op if Supabase isn't configured). Fire-and-forget so
+  // the synchronous UI flow isn't blocked on the network.
+  void pushInvoiceToCloud(stamped);
   return stamped;
 }
 
 export function deleteInvoice(id: string) {
   const all = readAll().filter((i) => i.id !== id);
   writeAll(all);
+  void deleteInvoiceFromCloud(id);
+}
+
+// --- cloud sync -----------------------------------------------------------
+// Pull all invoices from the backend and merge them into the local cache
+// (cloud wins on conflicts). Returns true if the cloud was reachable.
+export async function hydrateFromCloud(): Promise<boolean> {
+  const cloud = await fetchAllFromCloud();
+  if (!cloud) return false;
+  const byId = new Map<string, Invoice>();
+  readAll().forEach((i) => byId.set(i.id, i));
+  cloud.forEach((i) => byId.set(i.id, i));
+  writeAll(Array.from(byId.values()));
+  return true;
+}
+
+// Push every locally-stored invoice up to the backend. Use this once to
+// backfill invoices that were created before the database was connected.
+export async function backfillToCloud(): Promise<number> {
+  return pushManyToCloud(readAll());
 }
 
 export function duplicateInvoice(id: string): Invoice | undefined {

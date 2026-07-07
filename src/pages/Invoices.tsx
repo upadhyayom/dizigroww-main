@@ -68,6 +68,8 @@ import {
   formatMoney,
   importAllJson,
   listInvoices,
+  hydrateFromCloud,
+  backfillToCloud,
   migrateInvoices,
   nextInvoiceNumber,
   peekNextInvoiceNumber,
@@ -243,9 +245,30 @@ function InvoiceApp() {
         `Auto-generated ${created.length} recurring invoice${created.length > 1 ? "s" : ""}`
       );
     }
+    // Pull any invoices stored in the cloud (other devices) and merge them in.
+    hydrateFromCloud()
+      .then((ok) => {
+        if (ok) setInvoices(listInvoices());
+      })
+      .catch(() => {
+        /* offline / not configured — stay on local cache */
+      });
   }, []);
 
   const refresh = () => setInvoices(listInvoices());
+
+  const handleBackfill = async () => {
+    try {
+      const n = await backfillToCloud();
+      toast.success(
+        n > 0
+          ? `Synced ${n} invoice${n > 1 ? "s" : ""} to the cloud database`
+          : "Cloud database not configured yet"
+      );
+    } catch {
+      toast.error("Cloud sync failed — check your Supabase settings");
+    }
+  };
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -356,6 +379,9 @@ function InvoiceApp() {
           </div>
           <Button variant="outline" size="sm" onClick={handleExport}>
             <Download className="w-4 h-4 mr-1" /> Backup
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleBackfill} title="Push all invoices to the cloud database">
+            <Upload className="w-4 h-4 mr-1" /> Sync to Cloud
           </Button>
           <label className="inline-flex">
             <input
