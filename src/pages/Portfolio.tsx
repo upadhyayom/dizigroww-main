@@ -98,6 +98,15 @@ const projects = [
     result: "Optimized storefront & seamless user flow",
     image: "https://api.microlink.io/?url=https://stikrly.in&screenshot=true&meta=false&embed=screenshot.url",
     link: "https://stikrly.in"
+  },
+  {
+    id: 11,
+    title: "Lovely Lady",
+    type: "E-commerce",
+    stack: "Shopify",
+    result: "Fashion & beauty storefront built to convert",
+    image: "https://api.microlink.io/?url=https://lovely-lady.com/&screenshot=true&meta=false&embed=screenshot.url",
+    link: "https://lovely-lady.com/"
   }
 ];
 
