@@ -116,6 +116,25 @@ const INVOICE_PASSWORD =
 const PASS_STORAGE_KEY = "dizi_invoice_auth_v1";
 
 // ----------------------------------------------------------------------------
+// Preset services — quick-add common line items instead of typing them.
+// Edit / add rows here to manage your standard offerings.
+// ----------------------------------------------------------------------------
+const SERVICE_PRESETS: { label: string; item: Omit<InvoiceLineItem, "id"> }[] = [
+  {
+    label: "Meta Ads Campaign Management — ₹10,000",
+    item: { description: "Meta Ads Campaign Management", hsnSac: "998314", quantity: 1, unitPrice: 10000 },
+  },
+  {
+    label: "Website Maintenance & Management — ₹5,000",
+    item: { description: "Website Maintenance & Management", hsnSac: "998314", quantity: 1, unitPrice: 5000 },
+  },
+  {
+    label: "Meta Ads Creative Package — ₹5,000",
+    item: { description: "Meta Ads Creative Package", hsnSac: "998314", quantity: 1, unitPrice: 5000 },
+  },
+];
+
+// ----------------------------------------------------------------------------
 // Empty invoice factory
 // ----------------------------------------------------------------------------
 function blankInvoice(): Invoice {
@@ -656,6 +675,18 @@ function InvoiceEditor({
       items: [...d.items, { id: cryptoId(), description: "", hsnSac: "998314", quantity: 1, unitPrice: 0 }],
     }));
 
+  const addPreset = (idx: number) => {
+    const preset = SERVICE_PRESETS[idx];
+    if (!preset) return;
+    setDraft((d) => {
+      // Drop a single leftover blank row so presets land cleanly.
+      const kept = d.items.filter(
+        (it) => it.description.trim() !== "" || it.unitPrice > 0
+      );
+      return { ...d, items: [...kept, { id: cryptoId(), ...preset.item }] };
+    });
+  };
+
   const removeItem = (id: string) =>
     setDraft((d) => ({ ...d, items: d.items.filter((it) => it.id !== id) }));
 
@@ -811,9 +842,26 @@ function InvoiceEditor({
                 Default SAC <span className="font-mono">998314</span> is "IT design &amp; development services". Override per line if needed.
               </p>
             </div>
-            <Button variant="outline" size="sm" onClick={addItem}>
-              <Plus className="w-4 h-4 mr-1" /> Add line item
-            </Button>
+            <div className="flex flex-wrap items-center gap-2">
+              <Button variant="outline" size="sm" onClick={addItem}>
+                <Plus className="w-4 h-4 mr-1" /> Add line item
+              </Button>
+              <select
+                value=""
+                onChange={(e) => {
+                  const i = Number(e.target.value);
+                  if (!Number.isNaN(i)) addPreset(i);
+                  e.currentTarget.value = "";
+                }}
+                className="text-sm border rounded-md px-3 py-[7px] bg-white hover:bg-slate-50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/30"
+                title="Quick-add a standard service"
+              >
+                <option value="">+ Add preset service…</option>
+                {SERVICE_PRESETS.map((p, i) => (
+                  <option key={i} value={i}>{p.label}</option>
+                ))}
+              </select>
+            </div>
 
             <TotalsPanel totals={totals} currency={draft.currency} />
           </TabsContent>
