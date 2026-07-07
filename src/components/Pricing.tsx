@@ -179,6 +179,40 @@ const Pricing = ({ defaultCurrency = "INR" }: PricingProps) => {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-6 max-w-7xl mx-auto rounded-2xl bg-charcoal text-charcoal-foreground p-6 sm:p-8 shadow-xl ring-2 ring-primary flex flex-col md:flex-row md:items-center md:justify-between gap-6"
+        >
+          <div>
+            <span className="inline-block bg-primary text-primary-foreground text-[10px] font-semibold px-3 py-1 rounded-full uppercase tracking-wider mb-3">
+              UGC Video Package
+            </span>
+            <h3 className="text-xl font-bold">10 UGC Videos</h3>
+            <p className="text-sm text-charcoal-foreground/60 mt-1 max-w-md">
+              Scroll-stopping user-generated content built to convert — scripting, creators, and edits included.
+            </p>
+          </div>
+          <div className="flex flex-col items-start md:items-end gap-3">
+            <div>
+              <span className="text-3xl font-display font-bold">
+                {currency === "USD" ? "$600" : "₹50,000"}
+              </span>
+              <span className="text-sm text-charcoal-foreground/50"> / 10 videos</span>
+            </div>
+            <a href="/#audit-form">
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-8 py-3 rounded-full text-sm font-semibold bg-gradient-to-r from-primary to-primary-deep text-primary-foreground"
+              >
+                Get Started
+              </motion.button>
+            </a>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
