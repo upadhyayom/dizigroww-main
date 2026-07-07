@@ -13,6 +13,14 @@ const url = (import.meta as any).env?.VITE_SUPABASE_URL as string | undefined;
 const anonKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY as string | undefined;
 
 export const supabase: SupabaseClient | null =
-  url && anonKey ? createClient(url, anonKey, { auth: { persistSession: false } }) : null;
+  url && anonKey
+    ? createClient(url, anonKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+          detectSessionInUrl: false,
+        },
+      })
+    : null;
 
 export const cloudEnabled = (): boolean => supabase !== null;

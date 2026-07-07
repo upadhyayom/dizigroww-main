@@ -17,6 +17,7 @@ const brands = [
   { name: "Ekatva Jewels", logoUrl: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://ekatvajewels.com/&size=128", category: "Jewelry", location: "India", url: "https://ekatvajewels.com/", color: "bg-pink-500/10" },
   { name: "Alapco", logoUrl: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://alapco.in/&size=128", category: "Industrial", location: "India", url: "https://alapco.in/", color: "bg-slate-500/10" },
   { name: "Stikrly", logoUrl: "https://stikrly.in/cdn/shop/files/Stikrly_png_Logo.png?height=106&v=1774538260", category: "Custom Accessories", location: "India", url: "https://stikrly.in", color: "bg-red-500/10" },
+  { name: "Lovely Lady", logoUrl: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://lovely-lady.com/&size=128", category: "Fashion & Beauty", location: "Global", url: "https://lovely-lady.com/", color: "bg-pink-500/10" },
 ];
 
 const TrustedBrands = () => {

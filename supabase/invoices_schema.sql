@@ -21,21 +21,24 @@ create index if not exists invoices_issue_date_idx  on public.invoices (issue_da
 create index if not exists invoices_created_at_idx  on public.invoices (created_at desc);
 
 -- Row Level Security.
--- The app authenticates with the public "anon" key (no user login), so we
--- allow the anon role full access to this single table. The invoices page is
--- already gated behind a password (VITE_INVOICE_PASSWORD) in the UI.
+-- Access is restricted to LOGGED-IN (authenticated) users only. The public
+-- anon key shipped in the browser bundle CANNOT read or write this table —
+-- a valid Supabase Auth session is required. This is what prevents invoice
+-- data (client names, addresses, GSTINs) from leaking to anyone who finds
+-- the anon key.
 --
--- NOTE: the anon key is shipped to the browser, so anyone who finds this table
--- name could read/write it. For a stricter setup, add Supabase Auth and
--- restrict these policies to authenticated users. For now this matches the
--- app's existing "shared admin password" security model.
+-- Create your admin login in the Supabase dashboard:
+--   Authentication → Users → Add user  (set a password, enable "Auto Confirm")
 
 alter table public.invoices enable row level security;
 
+-- Remove any older, insecure anon policy if it exists.
 drop policy if exists "anon full access to invoices" on public.invoices;
-create policy "anon full access to invoices"
+
+drop policy if exists "authenticated full access to invoices" on public.invoices;
+create policy "authenticated full access to invoices"
   on public.invoices
   for all
-  to anon
+  to authenticated
   using (true)
   with check (true);

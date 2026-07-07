@@ -5,11 +5,13 @@ User-agent: Googlebot
 Allow: /
 Disallow: /thank-you
 Disallow: /proposal-generator
+Disallow: /invoices
 
 User-agent: Bingbot
 Allow: /
 Disallow: /thank-you
 Disallow: /proposal-generator
+Disallow: /invoices
 
 User-agent: Twitterbot
 Allow: /
@@ -42,6 +44,7 @@ User-agent: *
 Allow: /
 Disallow: /thank-you
 Disallow: /proposal-generator
+Disallow: /invoices
 Disallow: /api/
 
 Sitemap: https://dizigroww.in/sitemap.xml
