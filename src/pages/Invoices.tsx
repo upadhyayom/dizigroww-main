@@ -433,6 +433,9 @@ function InvoiceApp() {
         {/* Stats */}
         <StatsRow invoices={invoices} />
 
+        {/* Month-wise revenue */}
+        <MonthlyRevenue invoices={invoices} />
+
         {/* Recent clients quick pick */}
         {recentClients.length > 0 && (
           <Card>
@@ -615,6 +618,73 @@ function StatsRow({ invoices }: { invoices: Invoice[] }) {
       <Stat label="Outstanding" value={String(stats.outstanding)} />
       <Stat label="Billed total" value={totalLine} small />
     </div>
+  );
+}
+
+// ----------------------------------------------------------------------------
+// Month-wise revenue breakdown
+// ----------------------------------------------------------------------------
+function MonthlyRevenue({ invoices }: { invoices: Invoice[] }) {
+  const rows = useMemo(() => {
+    const map: Record<
+      string,
+      { count: number; billed: Record<string, number>; collected: Record<string, number> }
+    > = {};
+    invoices.forEach((inv) => {
+      const key = (inv.issueDate || "").slice(0, 7); // YYYY-MM
+      if (!key) return;
+      const total = computeTotals(inv).total;
+      const m = (map[key] ||= { count: 0, billed: {}, collected: {} });
+      m.count += 1;
+      m.billed[inv.currency] = (m.billed[inv.currency] || 0) + total;
+      if (inv.status === "paid")
+        m.collected[inv.currency] = (m.collected[inv.currency] || 0) + total;
+    });
+    return Object.entries(map).sort((a, b) => (a[0] < b[0] ? 1 : -1));
+  }, [invoices]);
+
+  const fmt = (rec: Record<string, number>) =>
+    Object.entries(rec)
+      .map(([c, v]) => formatMoney(v, c as Currency))
+      .join(" · ") || "—";
+
+  const monthLabel = (key: string) => {
+    const [y, m] = key.split("-").map(Number);
+    return new Date(y, m - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
+  };
+
+  if (rows.length === 0) return null;
+
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-base">Revenue by month</CardTitle>
+      </CardHeader>
+      <CardContent className="p-0 overflow-x-auto">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="text-xs uppercase tracking-wide text-slate-500 border-b">
+              <th className="py-2.5 px-4 text-left font-medium">Month</th>
+              <th className="py-2.5 px-4 text-center font-medium">Invoices</th>
+              <th className="py-2.5 px-4 text-right font-medium">Billed</th>
+              <th className="py-2.5 px-4 text-right font-medium">Collected</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(([key, v]) => (
+              <tr key={key} className="border-b last:border-0 hover:bg-slate-50">
+                <td className="py-2.5 px-4 font-medium">{monthLabel(key)}</td>
+                <td className="py-2.5 px-4 text-center text-slate-600">{v.count}</td>
+                <td className="py-2.5 px-4 text-right tabular-nums">{fmt(v.billed)}</td>
+                <td className="py-2.5 px-4 text-right tabular-nums font-semibold text-emerald-600">
+                  {fmt(v.collected)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </CardContent>
+    </Card>
   );
 }
 
