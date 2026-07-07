@@ -65,7 +65,7 @@ const HeroSection = () => {
             className="text-4xl sm:text-5xl md:text-7xl lg:text-[5rem] font-black text-foreground tracking-tighter leading-[1.05] mb-6 drop-shadow-sm"
           >
             Stop Burning Ad Spend on <br className="hidden lg:block" />
-            <span className="text-primary drop-shadow-sm">Websites That Can't Convert.</span>
+            <span className="text-primary drop-shadow-sm">Websites That Don't Convert.</span>
           </motion.h1>
 
           <motion.h2

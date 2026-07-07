@@ -79,7 +79,7 @@ const Pricing = ({ defaultCurrency = "INR" }: PricingProps) => {
   const [currency, setCurrency] = useState<"INR" | "USD">(defaultCurrency);
 
   return (
-    <section className="section-padding">
+    <section id="pricing" className="section-padding scroll-mt-24">
       <div className="container-main">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

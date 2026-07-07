@@ -10,7 +10,13 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+dist-check*
 *.local
+
+# Env / secrets
+.env
+.env.*
+!.env.example
 
 # Vite temp files
 vite.config.ts.timestamp-*.mjs
