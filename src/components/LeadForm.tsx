@@ -76,9 +76,9 @@ const LeadForm = () => {
           viewport={{ once: true }}
           className="text-3xl md:text-4xl text-center mb-4"
         >
-          Ready to build something great?
+          Ready to stop guessing and start scaling?
         </motion.h2>
-        <p className="text-center text-muted-foreground mb-10">Fill out the form below and our team will respond within 4 business hours.</p>
+        <p className="text-center text-muted-foreground mb-10">Tell us about your business and get a free growth audit — our team replies within 4 business hours.</p>
 
         <motion.form
           initial={{ opacity: 0, y: 20 }}

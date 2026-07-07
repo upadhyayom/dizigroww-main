@@ -5,22 +5,22 @@ const steps = [
   {
     icon: PhoneCall,
     title: "1. Discovery Call",
-    desc: "Rigorous 30-min session to validate your digital ecosystem.",
+    desc: "A focused 30-minute call to understand your business, goals, and numbers.",
   },
   {
     icon: Search,
     title: "2. The Audit",
-    desc: "Find immediate revenue leaks in your landing pages & ads.",
+    desc: "We pinpoint exactly where you're losing sales — in your pages and your ads.",
   },
   {
     icon: PenTool,
     title: "3. Creation & Design",
-    desc: "Deploy high-converting custom CRO pages.",
+    desc: "We design and build high-converting pages, funnels, and ad creative.",
   },
   {
     icon: Rocket,
     title: "4. Scaling",
-    desc: "Setup campaigns & aggressively scale your business.",
+    desc: "We launch your campaigns and scale what's working — aggressively.",
   },
 ];
 
@@ -56,7 +56,7 @@ const HowItWorks = () => {
             How We Execute
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground font-medium max-w-2xl mx-auto">
-            A transparent, 4-step process to end guesswork and build your conversion machinery.
+            A transparent 4-step process that replaces guesswork with a system built to convert.
           </p>
         </div>
 

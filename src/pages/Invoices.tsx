@@ -78,6 +78,7 @@ import {
   stateFromGstin,
   todayIso,
 } from "@/lib/invoices";
+import { cloudEnabled } from "@/lib/supabaseClient";
 
 // ----------------------------------------------------------------------------
 // Brand defaults (DiziGroww). Change here once if you rebrand.
@@ -258,15 +259,20 @@ function InvoiceApp() {
   const refresh = () => setInvoices(listInvoices());
 
   const handleBackfill = async () => {
+    if (!cloudEnabled()) {
+      toast.error("Cloud database not connected — add your Supabase keys and redeploy");
+      return;
+    }
+    const localCount = listInvoices().length;
+    if (localCount === 0) {
+      toast("No invoices in this browser to sync");
+      return;
+    }
     try {
       const n = await backfillToCloud();
-      toast.success(
-        n > 0
-          ? `Synced ${n} invoice${n > 1 ? "s" : ""} to the cloud database`
-          : "Cloud database not configured yet"
-      );
+      toast.success(`Synced ${n} invoice${n > 1 ? "s" : ""} to the cloud database`);
     } catch {
-      toast.error("Cloud sync failed — check your Supabase settings");
+      toast.error("Cloud sync failed — check the table exists and RLS policy is set");
     }
   };
 

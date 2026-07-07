@@ -74,7 +74,7 @@ const HeroSection = () => {
             transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
             className="text-lg md:text-2xl font-bold text-muted-foreground tracking-wide mb-10 max-w-3xl"
           >
-            Most agencies focus on meaningless traffic. We build psychological sales funnels and scale them aggressively using data-driven Meta & Google Ads. Direct ROI. No excuses.
+            Most agencies chase clicks that never turn into customers. We build websites and funnels engineered to convert — then scale them with data-driven Meta & Google Ads. Real revenue. No excuses.
           </motion.h2>
 
           {/* Subheading: Icon-driven benefits instead of a huge wall of text */}

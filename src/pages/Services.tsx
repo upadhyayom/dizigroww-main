@@ -60,8 +60,8 @@ const Services = () => {
       <section className="section-padding bg-secondary">
         <div className="container-main text-center">
           <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-primary text-xs font-semibold uppercase tracking-wider">Premium Web Development & Marketing</motion.span>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl mt-4 mb-6">Expert Services for Global Brands</motion.h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto">End-to-end web architecture and performance marketing solutions to help your business attract, convert, and engage customers at an international scale.</p>
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-5xl mt-4 mb-6">Everything You Need to Convert & Scale</motion.h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto">From high-converting websites to data-driven ad campaigns — one team handling the entire journey that turns visitors into paying customers, at an international scale.</p>
         </div>
       </section>
 
