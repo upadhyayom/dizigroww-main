@@ -5,6 +5,7 @@ import Pricing from "@/components/Pricing";
 import { motion } from "framer-motion";
 import { BarChart3, LineChart, Target, Eye } from "lucide-react";
 import { useMeta } from "@/hooks/useMeta";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo";
 
 const features = [
   { icon: Eye, title: "Heatmap Analysis", desc: "We track exactly where users drop off and optimize the funnel." },
@@ -18,7 +19,20 @@ const WebsiteRedesignCRO = () => {
     description: "Transform your outdated website into a high-converting machine. Heatmap analysis, UX rebuilds, trust architecture, and multivariate testing — measurable ROI in 30 days.",
     keywords: "website redesign agency, CRO services, conversion rate optimization, UX audit, website revamp, ecommerce CRO",
     canonicalUrl: "https://dizigroww.in/services/website-redesign-cro",
-    ogImage: "https://dizigroww.in/logo.png"
+    ogImage: "https://dizigroww.in/logo.png",
+    structuredData: [
+      serviceSchema({
+        name: "Website Redesign & CRO",
+        description: "Data-driven website redesign and conversion rate optimisation with heatmaps and multivariate testing.",
+        url: "https://dizigroww.in/services/website-redesign-cro",
+        serviceType: "Conversion Rate Optimization",
+      }),
+      breadcrumbSchema([
+        { name: "Home", url: "https://dizigroww.in/" },
+        { name: "Services", url: "https://dizigroww.in/services" },
+        { name: "Website Redesign & CRO", url: "https://dizigroww.in/services/website-redesign-cro" },
+      ]),
+    ],
   });
   return (
     <>

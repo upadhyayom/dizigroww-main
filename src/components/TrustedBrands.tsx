@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const brands = [
   { name: "Lovely Lady", logoUrl: "https://lovely-lady.com/cdn/shop/files/LOVELY_LADY-removebg-preview_-_Edited.png?v=1780936192&width=600", category: "Women's Fashion", location: "India", url: "https://lovely-lady.com/", color: "bg-pink-500/10" },
+  { name: "Nesiy", logoUrl: "https://nesiy.com/cdn/shop/files/Untitled_design_4.png?v=1784663054&width=600", category: "Demi-fine Jewelry", location: "India", url: "https://nesiy.com/", color: "bg-amber-500/10" },
   { name: "Varak Edible Luxury", logoUrl: "https://www.varakedibleluxury.com/cdn/shop/files/Varak_logo_nav_copy2.png?v=1712817801&width=500", category: "Luxury F&B", location: "Global", url: "https://www.varakedibleluxury.com/", color: "bg-amber-500/10" },
   { name: "Prince Jewellers", logoUrl: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.princejewellers.com.au/&size=128", category: "Premium Jewelry", location: "Australia", url: "https://www.princejewellers.com.au", color: "bg-blue-500/10" },
   { name: "EVO Labs", logoUrl: "https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.evolabsresearch.co/&size=128", category: "Tech & Research", location: "Global", url: "https://www.evolabsresearch.co/", color: "bg-indigo-500/10" },

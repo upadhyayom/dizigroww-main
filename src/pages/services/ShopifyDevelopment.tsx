@@ -6,6 +6,7 @@ import WebDevelopmentGlimpse from "@/components/WebDevelopmentGlimpse";
 import MarketingBreakdown from "@/components/MarketingBreakdown";
 import { ArrowRight } from "lucide-react";
 import { useMeta } from "@/hooks/useMeta";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo";
 
 const ShopifyDevelopment = () => {
   useMeta({
@@ -13,7 +14,20 @@ const ShopifyDevelopment = () => {
     description: "Enterprise-grade Shopify development. Custom themes, conversion-optimised product pages, advanced apps and CRO baked in. Trusted by 50+ D2C brands globally.",
     keywords: "shopify development agency, shopify expert, custom shopify themes, shopify CRO, ecommerce development, shopify developer India, shopify developer Dubai",
     canonicalUrl: "https://dizigroww.in/services/shopify-development",
-    ogImage: "https://dizigroww.in/logo.png"
+    ogImage: "https://dizigroww.in/logo.png",
+    structuredData: [
+      serviceSchema({
+        name: "Shopify Development",
+        description: "Custom Shopify stores, themes, and conversion optimisation for D2C and ecommerce brands.",
+        url: "https://dizigroww.in/services/shopify-development",
+        serviceType: "Shopify Development",
+      }),
+      breadcrumbSchema([
+        { name: "Home", url: "https://dizigroww.in/" },
+        { name: "Services", url: "https://dizigroww.in/services" },
+        { name: "Shopify Development", url: "https://dizigroww.in/services/shopify-development" },
+      ]),
+    ],
   });
   return (
     <>

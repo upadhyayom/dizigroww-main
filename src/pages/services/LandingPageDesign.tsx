@@ -5,6 +5,7 @@ import Pricing from "@/components/Pricing";
 import { motion } from "framer-motion";
 import { Layout, MousePointerClick, TrendingUp, PenTool } from "lucide-react";
 import { useMeta } from "@/hooks/useMeta";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo";
 
 const features = [
   { icon: PenTool, title: "Persuasive Copywriting", desc: "We write direct-response copy that speaks directly to your buyers' pain points." },
@@ -18,7 +19,20 @@ const LandingPageDesign = () => {
     description: "High-converting landing pages engineered for paid traffic. Direct-response copywriting, frictionless UX, A/B testing — built to multiply your ROAS.",
     keywords: "landing page design, landing page agency, CRO services, paid media landing pages, A/B testing, conversion rate optimization",
     canonicalUrl: "https://dizigroww.in/services/landing-page-design",
-    ogImage: "https://dizigroww.in/logo.png"
+    ogImage: "https://dizigroww.in/logo.png",
+    structuredData: [
+      serviceSchema({
+        name: "Landing Page Design & CRO",
+        description: "High-converting landing pages for paid traffic with direct-response copy, UX, and A/B testing.",
+        url: "https://dizigroww.in/services/landing-page-design",
+        serviceType: "Landing Page Design",
+      }),
+      breadcrumbSchema([
+        { name: "Home", url: "https://dizigroww.in/" },
+        { name: "Services", url: "https://dizigroww.in/services" },
+        { name: "Landing Page Design & CRO", url: "https://dizigroww.in/services/landing-page-design" },
+      ]),
+    ],
   });
   return (
     <>

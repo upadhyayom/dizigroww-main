@@ -18,6 +18,8 @@ import WebDevSingapore from "./pages/WebDevSingapore.tsx";
 import WebDevPhilippines from "./pages/WebDevPhilippines.tsx";
 import WebDevelopment from "./pages/WebDevelopment.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
+import Blog from "./pages/Blog.tsx";
+import BlogPost from "./pages/BlogPost.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
 import ShopifyDevelopment from "./pages/services/ShopifyDevelopment.tsx";
 import WordPressDevelopment from "./pages/services/WordPressDevelopment.tsx";
@@ -47,6 +49,8 @@ const App = () => (
           <Route path="/proposal-generator" element={<ProposalGenerator />} />
           <Route path="/invoices" element={<Invoices />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/web-development" element={<WebDevelopment />} />
           <Route path="/web-development-dubai" element={<WebDevDubai />} />

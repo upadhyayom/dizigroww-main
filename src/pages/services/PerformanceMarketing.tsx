@@ -7,6 +7,7 @@ import MarketingBreakdown from "@/components/MarketingBreakdown";
 import WhatsAppTestimonials from "@/components/WhatsAppTestimonials";
 import { ArrowRight } from "lucide-react";
 import { useMeta } from "@/hooks/useMeta";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo";
 
 const PerformanceMarketing = () => {
   useMeta({
@@ -14,7 +15,20 @@ const PerformanceMarketing = () => {
     description: "DiziGroww is a top-rated performance marketing agency managing $4M+ in Meta and Google ad spend with 350% average ROI. We engineer end-to-end conversion funnels for D2C and service brands across India, UAE & Singapore.",
     keywords: "performance marketing agency, meta ads agency, google ads agency, paid media agency, D2C marketing, ecommerce ads, ROAS, performance marketing India, performance marketing Dubai",
     canonicalUrl: "https://dizigroww.in/services/performance-marketing",
-    ogImage: "https://dizigroww.in/logo.png"
+    ogImage: "https://dizigroww.in/logo.png",
+    structuredData: [
+      serviceSchema({
+        name: "Performance Marketing",
+        description: "End-to-end Meta Ads and Google Ads management and conversion funnels for D2C and service brands.",
+        url: "https://dizigroww.in/services/performance-marketing",
+        serviceType: "Performance Marketing",
+      }),
+      breadcrumbSchema([
+        { name: "Home", url: "https://dizigroww.in/" },
+        { name: "Services", url: "https://dizigroww.in/services" },
+        { name: "Performance Marketing", url: "https://dizigroww.in/services/performance-marketing" },
+      ]),
+    ],
   });
   return (
     <>

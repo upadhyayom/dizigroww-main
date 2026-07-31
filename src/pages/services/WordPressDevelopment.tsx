@@ -5,6 +5,7 @@ import Pricing from "@/components/Pricing";
 import { motion } from "framer-motion";
 import { Globe, Server, Code, Search } from "lucide-react";
 import { useMeta } from "@/hooks/useMeta";
+import { serviceSchema, breadcrumbSchema } from "@/lib/seo";
 
 const features = [
   { icon: Code, title: "Custom Architecture", desc: "No bloated builders. Clean, custom WordPress themes engineered for speed." },
@@ -18,7 +19,20 @@ const WordPressDevelopment = () => {
     description: "Custom WordPress and WooCommerce builds engineered for speed, SEO, and conversion. Hardened security, technical SEO, and Core Web Vitals optimisations baked in.",
     keywords: "wordpress development agency, woocommerce development, custom wordpress themes, wordpress SEO, wordpress speed optimization, wordpress developer India, wordpress developer Dubai",
     canonicalUrl: "https://dizigroww.in/services/wordpress-development",
-    ogImage: "https://dizigroww.in/logo.png"
+    ogImage: "https://dizigroww.in/logo.png",
+    structuredData: [
+      serviceSchema({
+        name: "WordPress & WooCommerce Development",
+        description: "Custom WordPress and WooCommerce builds engineered for speed, technical SEO, and conversion.",
+        url: "https://dizigroww.in/services/wordpress-development",
+        serviceType: "WordPress Development",
+      }),
+      breadcrumbSchema([
+        { name: "Home", url: "https://dizigroww.in/" },
+        { name: "Services", url: "https://dizigroww.in/services" },
+        { name: "WordPress & WooCommerce Development", url: "https://dizigroww.in/services/wordpress-development" },
+      ]),
+    ],
   });
   return (
     <>

@@ -17,6 +17,7 @@ const navLinks = [
   { label: "Services", to: "/services", dropdown: serviceLinks },
   { label: "Starter Plan", to: "/starter-plan" },
   { label: "Portfolio", to: "/portfolio" },
+  { label: "Blog", to: "/blog" },
   { label: "Contact", to: "/contact" },
 ];
 
