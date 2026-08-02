@@ -107,6 +107,15 @@ const projects = [
     result: "Fashion & beauty storefront built to convert",
     image: "https://api.microlink.io/?url=https://lovely-lady.com/&screenshot=true&meta=false&embed=screenshot.url",
     link: "https://lovely-lady.com/"
+  },
+  {
+    id: 12,
+    title: "Nesiy",
+    type: "E-commerce",
+    stack: "Shopify",
+    result: "Demi-fine jewelry storefront built for discovery & conversion",
+    image: "https://api.microlink.io/?url=https://nesiy.com/&screenshot=true&meta=false&embed=screenshot.url",
+    link: "https://nesiy.com/"
   }
 ];
 
