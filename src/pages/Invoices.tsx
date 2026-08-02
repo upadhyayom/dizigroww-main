@@ -59,6 +59,7 @@ import {
   InvoiceStatus,
   addDaysIso,
   amountInIndianWords,
+  balanceDue,
   computeTaxBreakdown,
   computeTotals,
   cryptoId,
@@ -379,14 +380,22 @@ function InvoiceApp() {
         `Auto-generated ${created.length} recurring invoice${created.length > 1 ? "s" : ""}`
       );
     }
-    // Pull any invoices stored in the cloud (other devices) and merge them in.
-    hydrateFromCloud()
-      .then((ok) => {
-        if (ok) setInvoices(listInvoices());
-      })
-      .catch(() => {
-        /* offline / not configured — stay on local cache */
-      });
+    // Pull any invoices stored in the cloud (other devices) and merge them
+    // in, then silently push the merged set back up. That second step is
+    // what makes sync fully automatic: any invoice that only exists in
+    // this browser's local cache (created before cloud sync was set up, or
+    // on a device that was offline at the time) gets backed up on its own —
+    // no manual "Sync to Cloud" click required for normal use.
+    if (cloudEnabled()) {
+      hydrateFromCloud()
+        .then((ok) => {
+          if (ok) setInvoices(listInvoices());
+          return backfillToCloud();
+        })
+        .catch(() => {
+          /* offline — stay on local cache, retry silently next load */
+        });
+    }
   }, []);
 
   const refresh = () => setInvoices(listInvoices());
@@ -616,6 +625,7 @@ function InvoiceApp() {
                   <TableHead>Issued</TableHead>
                   <TableHead>Due</TableHead>
                   <TableHead>Total</TableHead>
+                  <TableHead>Balance</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Recurring</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -624,13 +634,14 @@ function InvoiceApp() {
               <TableBody>
                 {filtered.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={8} className="text-center text-slate-500 py-10">
+                    <TableCell colSpan={9} className="text-center text-slate-500 py-10">
                       No invoices yet. Click <span className="font-medium">New invoice</span> to create your first one.
                     </TableCell>
                   </TableRow>
                 )}
                 {filtered.map((inv) => {
                   const totals = computeTotals(inv);
+                  const bal = balanceDue(inv);
                   return (
                     <TableRow key={inv.id}>
                       <TableCell className="font-mono text-xs">{inv.number}</TableCell>
@@ -644,6 +655,11 @@ function InvoiceApp() {
                       <TableCell>{inv.dueDate}</TableCell>
                       <TableCell className="font-medium">
                         {formatMoney(totals.total, inv.currency)}
+                      </TableCell>
+                      <TableCell
+                        className={`font-medium ${bal > 0 ? "text-amber-700" : "text-emerald-600"}`}
+                      >
+                        {formatMoney(bal, inv.currency)}
                       </TableCell>
                       <TableCell>
                         <StatusBadge status={inv.status} />
@@ -709,10 +725,13 @@ function StatsRow({ invoices }: { invoices: Invoice[] }) {
   const stats = useMemo(() => {
     const totalsByCur: Record<string, number> = {};
     const paidByCur: Record<string, number> = {};
+    const balanceByCur: Record<string, number> = {};
     invoices.forEach((inv) => {
       const t = computeTotals(inv).total;
       totalsByCur[inv.currency] = (totalsByCur[inv.currency] || 0) + t;
       if (inv.status === "paid") paidByCur[inv.currency] = (paidByCur[inv.currency] || 0) + t;
+      const bal = balanceDue(inv);
+      if (bal > 0) balanceByCur[inv.currency] = (balanceByCur[inv.currency] || 0) + bal;
     });
     return {
       count: invoices.length,
@@ -720,6 +739,7 @@ function StatsRow({ invoices }: { invoices: Invoice[] }) {
       outstanding: invoices.filter((i) => i.status === "sent" || i.status === "overdue").length,
       totalsByCur,
       paidByCur,
+      balanceByCur,
     };
   }, [invoices]);
 
@@ -729,13 +749,17 @@ function StatsRow({ invoices }: { invoices: Invoice[] }) {
   const paidLine = Object.entries(stats.paidByCur)
     .map(([c, v]) => formatMoney(v, c as Currency))
     .join(" · ") || "—";
+  const balanceLine = Object.entries(stats.balanceByCur)
+    .map(([c, v]) => formatMoney(v, c as Currency))
+    .join(" · ") || "—";
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
       <Stat label="Invoices" value={String(stats.count)} />
       <Stat label="Recurring series" value={String(stats.recurring)} />
       <Stat label="Outstanding" value={String(stats.outstanding)} />
       <Stat label="Billed total" value={totalLine} small />
+      <Stat label="Balance remaining" value={balanceLine} small />
     </div>
   );
 }
@@ -1052,7 +1076,12 @@ function InvoiceEditor({
               </select>
             </div>
 
-            <TotalsPanel totals={totals} currency={draft.currency} />
+            <TotalsPanel
+              totals={totals}
+              currency={draft.currency}
+              balanceRemaining={draft.balanceRemaining ?? totals.total}
+              onBalanceChange={(v) => update("balanceRemaining", v)}
+            />
           </TabsContent>
 
           {/* META TAB */}
@@ -1225,9 +1254,13 @@ function Field({
 function TotalsPanel({
   totals,
   currency,
+  balanceRemaining,
+  onBalanceChange,
 }: {
   totals: ReturnType<typeof computeTotals>;
   currency: Currency;
+  balanceRemaining: number;
+  onBalanceChange: (v: number) => void;
 }) {
   return (
     <div className="ml-auto w-full md:w-72 text-sm border rounded-md p-3 bg-slate-50">
@@ -1236,6 +1269,37 @@ function TotalsPanel({
       <Row label="Tax" value={formatMoney(totals.tax, currency)} />
       <div className="border-t my-2" />
       <Row label="Total" value={formatMoney(totals.total, currency)} bold />
+      <div className="border-t my-2" />
+      <div className="flex items-center justify-between gap-2">
+        <Label htmlFor="balanceRemaining" className="text-xs text-slate-600 whitespace-nowrap">
+          Balance remaining
+        </Label>
+        <Input
+          id="balanceRemaining"
+          type="number"
+          min={0}
+          step="any"
+          value={balanceRemaining}
+          onChange={(e) => onBalanceChange(Number(e.target.value))}
+          className="w-28 h-8 text-right"
+        />
+      </div>
+      <div className="flex justify-end gap-3 mt-1.5">
+        <button
+          type="button"
+          className="text-xs text-primary underline underline-offset-2"
+          onClick={() => onBalanceChange(totals.total)}
+        >
+          Reset to total
+        </button>
+        <button
+          type="button"
+          className="text-xs text-primary underline underline-offset-2"
+          onClick={() => onBalanceChange(0)}
+        >
+          Mark fully paid
+        </button>
+      </div>
     </div>
   );
 }
@@ -1329,6 +1393,7 @@ function InvoicePreviewDialog({
 const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
   ({ invoice }, ref) => {
     const totals = computeTotals(invoice);
+    const bal = balanceDue(invoice);
     const tax = computeTaxBreakdown(invoice);
     const isTaxInvoice = !!invoice.fromTaxId;
     const isInr = invoice.currency === "INR";
@@ -1501,6 +1566,37 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
                   }}
                 >
                   {formatMoney(totals.total, invoice.currency)}
+                </td>
+              </tr>
+              {bal !== totals.total && (
+                <tr>
+                  <td style={{ padding: "6px 10px", color: "#334155" }}>Amount received</td>
+                  <td style={{ padding: "6px 10px", textAlign: "right", color: "#334155" }}>
+                    {formatMoney(totals.total - bal, invoice.currency)}
+                  </td>
+                </tr>
+              )}
+              <tr>
+                <td
+                  style={{
+                    padding: "10px",
+                    fontWeight: 700,
+                    fontSize: 14,
+                    color: bal > 0 ? "#b91c1c" : "#15803d",
+                  }}
+                >
+                  Balance due
+                </td>
+                <td
+                  style={{
+                    padding: "10px",
+                    textAlign: "right",
+                    fontWeight: 700,
+                    fontSize: 14,
+                    color: bal > 0 ? "#b91c1c" : "#15803d",
+                  }}
+                >
+                  {formatMoney(bal, invoice.currency)}
                 </td>
               </tr>
             </tbody>

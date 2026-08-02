@@ -75,6 +75,12 @@ export interface Invoice {
 
   items: InvoiceLineItem[];
 
+  // Manually-tracked balance still owed on this invoice. Undefined = treat
+  // as "nothing paid yet" (falls back to the computed total via
+  // balanceDue()). Lets you record partial payments without a separate
+  // ledger — just edit this number down as payments come in.
+  balanceRemaining?: number;
+
   recurrence: InvoiceRecurrence;
 
   createdAt: string;
@@ -273,6 +279,15 @@ export function computeTotals(invoice: Invoice) {
   return { subtotal, discount, tax, total };
 }
 
+// Balance still owed. Falls back to the full computed total when
+// balanceRemaining was never set (i.e. nothing recorded as paid yet).
+export function balanceDue(invoice: Invoice): number {
+  const total = computeTotals(invoice).total;
+  return typeof invoice.balanceRemaining === "number"
+    ? invoice.balanceRemaining
+    : total;
+}
+
 export function formatMoney(amount: number, currency: Currency): string {
   const symbol = CURRENCY_SYMBOL[currency] ?? "";
   const n = Number.isFinite(amount) ? amount : 0;
@@ -446,6 +461,14 @@ export function migrateInvoices() {
       changed = true;
       return { ...it, hsnSac: "998314" };
     });
+    // balanceRemaining backfill — older invoices predate this field.
+    // Paid invoices start at 0 owed; everything else starts owing the full
+    // total until you record a payment against it.
+    if (typeof next.balanceRemaining !== "number") {
+      next.balanceRemaining =
+        next.status === "paid" ? 0 : computeTotals(next).total;
+      changed = true;
+    }
     return next;
   });
   if (changed) writeAll(fixed);
