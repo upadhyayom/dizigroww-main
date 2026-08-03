@@ -1893,14 +1893,6 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
                   {formatMoney(totals.total, invoice.currency)}
                 </td>
               </tr>
-              {bal !== totals.total && (
-                <tr>
-                  <td style={{ padding: "6px 10px", color: "#334155" }}>Amount received</td>
-                  <td style={{ padding: "6px 10px", textAlign: "right", color: "#334155" }}>
-                    {formatMoney(totals.total - bal, invoice.currency)}
-                  </td>
-                </tr>
-              )}
               <tr>
                 <td
                   style={{
@@ -1910,7 +1902,7 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
                     color: bal > 0 ? "#b91c1c" : "#15803d",
                   }}
                 >
-                  Balance due
+                  {bal > 0 ? "Balance due (remaining to be paid)" : "Balance — paid in full"}
                 </td>
                 <td
                   style={{
