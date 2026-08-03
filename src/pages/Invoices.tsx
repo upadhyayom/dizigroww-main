@@ -80,6 +80,21 @@ import {
   stateFromGstin,
   todayIso,
 } from "@/lib/invoices";
+import { pushInvoiceToCloud, deleteInvoiceFromCloud } from "@/lib/invoicesCloud";
+import {
+  ClientProject,
+  blankClientProject,
+  backfillClientProjectsToCloud,
+  deleteClientProject,
+  hydrateClientProjectsFromCloud,
+  listClientProjects,
+  remainingFor,
+  saveClientProject,
+} from "@/lib/clientProjects";
+import {
+  pushClientProjectToCloud,
+  deleteClientProjectFromCloud,
+} from "@/lib/clientProjectsCloud";
 import { cloudEnabled, supabase } from "@/lib/supabaseClient";
 import type { Session } from "@supabase/supabase-js";
 
@@ -365,6 +380,8 @@ function InvoiceApp() {
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [editing, setEditing] = useState<Invoice | null>(null);
   const [previewing, setPreviewing] = useState<Invoice | null>(null);
+  const [clientProjects, setClientProjects] = useState<ClientProject[]>([]);
+  const [editingProject, setEditingProject] = useState<ClientProject | null>(null);
 
   // Load + run recurring scheduler on mount
   useEffect(() => {
@@ -375,6 +392,7 @@ function InvoiceApp() {
     ensureCounterFloor(NEXT_NUMBER_SEED.year, NEXT_NUMBER_SEED.nextNumber - 1);
     const created = runRecurringScheduler();
     setInvoices(listInvoices());
+    setClientProjects(listClientProjects());
     if (created.length) {
       toast.success(
         `Auto-generated ${created.length} recurring invoice${created.length > 1 ? "s" : ""}`
@@ -395,10 +413,37 @@ function InvoiceApp() {
         .catch(() => {
           /* offline — stay on local cache, retry silently next load */
         });
+      hydrateClientProjectsFromCloud()
+        .then((ok) => {
+          if (ok) setClientProjects(listClientProjects());
+          return backfillClientProjectsToCloud();
+        })
+        .catch(() => {
+          /* offline — stay on local cache, retry silently next load */
+        });
     }
   }, []);
 
+  // Re-pull from the cloud whenever this tab/window regains focus. Without
+  // this, two devices open at the same time only reconcile on a full page
+  // reload — this makes "switch back to this tab" enough to see whatever
+  // the other device just saved.
+  useEffect(() => {
+    if (!cloudEnabled()) return;
+    const onFocus = () => {
+      hydrateFromCloud()
+        .then((ok) => ok && setInvoices(listInvoices()))
+        .catch(() => {});
+      hydrateClientProjectsFromCloud()
+        .then((ok) => ok && setClientProjects(listClientProjects()))
+        .catch(() => {});
+    };
+    window.addEventListener("focus", onFocus);
+    return () => window.removeEventListener("focus", onFocus);
+  }, []);
+
   const refresh = () => setInvoices(listInvoices());
+  const refreshProjects = () => setClientProjects(listClientProjects());
 
   const handleBackfill = async () => {
     if (!cloudEnabled()) {
@@ -456,7 +501,7 @@ function InvoiceApp() {
     setEditing(inv);
   };
 
-  const handleSave = (inv: Invoice, isNew: boolean) => {
+  const handleSave = async (inv: Invoice, isNew: boolean) => {
     const toSave: Invoice = { ...inv };
     if (isNew) {
       // commit the reserved number now (peek became real)
@@ -474,13 +519,34 @@ function InvoiceApp() {
     refresh();
     setEditing(null);
     toast.success(isNew ? `Invoice ${toSave.number} created` : `Invoice ${toSave.number} updated`);
+    // Wait for the cloud write and surface it if it fails, instead of the
+    // old silent fire-and-forget — that silence is exactly what made this
+    // look "synced" on one device while other devices never got it.
+    if (cloudEnabled()) {
+      try {
+        await pushInvoiceToCloud(toSave);
+      } catch {
+        toast.error(
+          `${toSave.number} saved on this device only — cloud sync failed. It'll retry automatically; check your connection.`
+        );
+      }
+    }
   };
 
-  const handleDelete = (inv: Invoice) => {
+  const handleDelete = async (inv: Invoice) => {
     if (!window.confirm(`Delete ${inv.number}? This cannot be undone.`)) return;
     deleteInvoice(inv.id);
     refresh();
     toast.success("Invoice deleted");
+    if (cloudEnabled()) {
+      try {
+        await deleteInvoiceFromCloud(inv.id);
+      } catch {
+        toast.error(
+          `${inv.number} removed on this device only — cloud delete failed. It may reappear from the cloud until this syncs.`
+        );
+      }
+    }
   };
 
   const handleDuplicate = (inv: Invoice) => {
@@ -488,6 +554,39 @@ function InvoiceApp() {
     if (copy) {
       refresh();
       toast.success(`Duplicated as ${copy.number}`);
+    }
+  };
+
+  // --- client project ledger --------------------------------------------
+  const handleNewProject = () => setEditingProject(blankClientProject());
+
+  const handleSaveProject = async (p: ClientProject) => {
+    saveClientProject(p);
+    refreshProjects();
+    setEditingProject(null);
+    toast.success(`Saved ${p.clientName || "client"}`);
+    if (cloudEnabled()) {
+      try {
+        await pushClientProjectToCloud(p);
+      } catch {
+        toast.error(
+          `${p.clientName || "This client"} saved on this device only — cloud sync failed.`
+        );
+      }
+    }
+  };
+
+  const handleDeleteProject = async (p: ClientProject) => {
+    if (!window.confirm(`Delete the project ledger entry for ${p.clientName || "this client"}?`)) return;
+    deleteClientProject(p.id);
+    refreshProjects();
+    toast.success("Deleted");
+    if (cloudEnabled()) {
+      try {
+        await deleteClientProjectFromCloud(p.id);
+      } catch {
+        toast.error("Removed on this device only — cloud delete failed.");
+      }
     }
   };
 
@@ -586,6 +685,14 @@ function InvoiceApp() {
             </CardContent>
           </Card>
         )}
+
+        {/* Client project ledger — full project cost vs advance received */}
+        <ClientProjectsPanel
+          projects={clientProjects}
+          onAdd={handleNewProject}
+          onEdit={setEditingProject}
+          onDelete={handleDeleteProject}
+        />
 
         {/* Filters */}
         <div className="flex flex-col sm:flex-row gap-2">
@@ -716,6 +823,15 @@ function InvoiceApp() {
           onClose={() => setPreviewing(null)}
         />
       )}
+
+      {/* Client project ledger editor dialog */}
+      {editingProject && (
+        <ClientProjectEditor
+          project={editingProject}
+          onCancel={() => setEditingProject(null)}
+          onSave={handleSaveProject}
+        />
+      )}
     </div>
   );
 }
@@ -841,6 +957,186 @@ function Stat({ label, value, small }: { label: string; value: string; small?: b
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+// ----------------------------------------------------------------------------
+// Client project ledger — full project cost vs advance received per client,
+// with the remaining balance auto-calculated. Separate from per-invoice
+// balances since one client relationship often spans several invoices.
+// ----------------------------------------------------------------------------
+function ClientProjectsPanel({
+  projects,
+  onAdd,
+  onEdit,
+  onDelete,
+}: {
+  projects: ClientProject[];
+  onAdd: () => void;
+  onEdit: (p: ClientProject) => void;
+  onDelete: (p: ClientProject) => void;
+}) {
+  return (
+    <Card>
+      <CardHeader className="pb-2 flex flex-row items-center justify-between">
+        <div>
+          <CardTitle className="text-sm">Client project ledger</CardTitle>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Full project cost, advance received, and remaining — per client, auto-calculated.
+          </p>
+        </div>
+        <Button size="sm" variant="outline" onClick={onAdd}>
+          <Plus className="w-4 h-4 mr-1" /> Add client
+        </Button>
+      </CardHeader>
+      <CardContent className="p-0 overflow-x-auto">
+        {projects.length === 0 ? (
+          <div className="text-center text-slate-500 text-sm py-8">
+            No client projects tracked yet. Click <span className="font-medium">Add client</span> to record a project cost and advance.
+          </div>
+        ) : (
+          <table className="w-full text-sm">
+            <thead className="text-left text-xs text-slate-500 border-b">
+              <tr>
+                <th className="py-2 px-4 font-medium">Client</th>
+                <th className="py-2 px-4 font-medium text-right">Project cost</th>
+                <th className="py-2 px-4 font-medium text-right">Advance received</th>
+                <th className="py-2 px-4 font-medium text-right">Remaining</th>
+                <th className="py-2 px-4 font-medium text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {projects.map((p) => {
+                const remaining = remainingFor(p);
+                return (
+                  <tr key={p.id} className="border-b last:border-0 hover:bg-slate-50">
+                    <td className="py-2.5 px-4 font-medium">{p.clientName || "—"}</td>
+                    <td className="py-2.5 px-4 text-right tabular-nums">
+                      {formatMoney(p.projectCost, p.currency)}
+                    </td>
+                    <td className="py-2.5 px-4 text-right tabular-nums">
+                      {formatMoney(p.advanceReceived, p.currency)}
+                    </td>
+                    <td
+                      className={`py-2.5 px-4 text-right tabular-nums font-semibold ${
+                        remaining > 0 ? "text-amber-700" : remaining < 0 ? "text-blue-600" : "text-emerald-600"
+                      }`}
+                    >
+                      {formatMoney(remaining, p.currency)}
+                      {remaining < 0 && (
+                        <span className="block text-[10px] font-normal text-slate-400">overpaid</span>
+                      )}
+                    </td>
+                    <td className="py-2.5 px-4 text-right">
+                      <div className="inline-flex gap-1">
+                        <Button size="icon" variant="ghost" title="Edit" onClick={() => onEdit(p)}>
+                          <Pencil className="w-4 h-4" />
+                        </Button>
+                        <Button size="icon" variant="ghost" title="Delete" onClick={() => onDelete(p)}>
+                          <Trash2 className="w-4 h-4 text-red-500" />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function ClientProjectEditor({
+  project,
+  onCancel,
+  onSave,
+}: {
+  project: ClientProject;
+  onCancel: () => void;
+  onSave: (p: ClientProject) => void;
+}) {
+  const [draft, setDraft] = useState<ClientProject>({ ...project });
+  const update = <K extends keyof ClientProject>(k: K, v: ClientProject[K]) =>
+    setDraft((d) => ({ ...d, [k]: v }));
+  const remaining = remainingFor(draft);
+
+  return (
+    <Dialog open onOpenChange={(o) => !o && onCancel()}>
+      <DialogContent className="max-w-md">
+        <DialogHeader>
+          <DialogTitle>{project.clientName ? `Edit ${project.clientName}` : "Add client project"}</DialogTitle>
+          <DialogDescription>
+            Track the full agreed project cost against this client and how much advance has come in.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-3">
+          <Field label="Client name">
+            <Input
+              value={draft.clientName}
+              onChange={(e) => update("clientName", e.target.value)}
+              placeholder="Acme Pvt. Ltd."
+              autoFocus
+            />
+          </Field>
+          <div className="grid grid-cols-2 gap-3">
+            <Field label="Currency">
+              <Select value={draft.currency} onValueChange={(v) => update("currency", v as Currency)}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {Object.keys(CURRENCY_SYMBOL).map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c} ({CURRENCY_SYMBOL[c as Currency]})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </Field>
+            <Field label="Full project cost">
+              <Input
+                type="number"
+                min={0}
+                step="any"
+                value={draft.projectCost}
+                onChange={(e) => update("projectCost", Number(e.target.value))}
+              />
+            </Field>
+          </div>
+          <Field label="Advance received">
+            <Input
+              type="number"
+              min={0}
+              step="any"
+              value={draft.advanceReceived}
+              onChange={(e) => update("advanceReceived", Number(e.target.value))}
+            />
+          </Field>
+          <Field label="Notes">
+            <Textarea
+              rows={2}
+              value={draft.notes}
+              onChange={(e) => update("notes", e.target.value)}
+              placeholder="Optional — payment schedule, milestones, etc."
+            />
+          </Field>
+          <div className="border rounded-md p-3 bg-slate-50 flex items-center justify-between">
+            <span className="text-sm text-slate-600">Remaining (auto-calculated)</span>
+            <span
+              className={`text-base font-semibold ${
+                remaining > 0 ? "text-amber-700" : remaining < 0 ? "text-blue-600" : "text-emerald-600"
+              }`}
+            >
+              {formatMoney(remaining, draft.currency)}
+            </span>
+          </div>
+        </div>
+        <DialogFooter className="mt-4">
+          <Button variant="outline" onClick={onCancel}>Cancel</Button>
+          <Button onClick={() => onSave(draft)}>Save</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -1420,8 +1716,37 @@ const PrintableInvoice = React.forwardRef<HTMLDivElement, { invoice: Invoice }>(
           fontFamily: "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif",
           fontSize: "12px",
           width: "100%",
+          position: "relative",
+          overflow: "hidden",
         }}
       >
+        {/* PAID watermark — stamped diagonally across the whole document
+            whenever the invoice status is "paid". Purely visual, doesn't
+            affect layout (absolute + pointer-events none). */}
+        {invoice.status === "paid" && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%) rotate(-30deg)",
+              fontSize: 110,
+              fontWeight: 800,
+              letterSpacing: 10,
+              color: "rgba(21, 128, 61, 0.16)",
+              border: "8px solid rgba(21, 128, 61, 0.16)",
+              borderRadius: 16,
+              padding: "8px 40px",
+              whiteSpace: "nowrap",
+              pointerEvents: "none",
+              userSelect: "none",
+              zIndex: 5,
+            }}
+          >
+            PAID
+          </div>
+        )}
+
         {/* Header — single DiziGroww mention via logo + title */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 28 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
