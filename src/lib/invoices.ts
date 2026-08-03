@@ -81,6 +81,14 @@ export interface Invoice {
   // ledger — just edit this number down as payments come in.
   balanceRemaining?: number;
 
+  // Full agreed project cost and advance received so far, tracked directly
+  // on the invoice (not a separate ledger). Useful when this invoice is
+  // just one installment of a bigger project — enter the full cost once,
+  // update the advance as payments come in, and the remaining balance is
+  // always auto-calculated from the two, never stored/typed directly.
+  projectCost?: number;
+  advanceReceived?: number;
+
   recurrence: InvoiceRecurrence;
 
   createdAt: string;
@@ -173,15 +181,18 @@ export function saveInvoice(invoice: Invoice): Invoice {
   }
   writeAll(all);
   // Mirror to cloud (no-op if Supabase isn't configured). Fire-and-forget so
-  // the synchronous UI flow isn't blocked on the network.
-  void pushInvoiceToCloud(stamped);
+  // the synchronous UI flow isn't blocked on the network — failures here are
+  // silent by design; callers that need to know whether the cloud push
+  // actually succeeded (e.g. to warn the user) should await
+  // pushInvoiceToCloud() themselves, imported from ./invoicesCloud.
+  void pushInvoiceToCloud(stamped).catch(() => {});
   return stamped;
 }
 
 export function deleteInvoice(id: string) {
   const all = readAll().filter((i) => i.id !== id);
   writeAll(all);
-  void deleteInvoiceFromCloud(id);
+  void deleteInvoiceFromCloud(id).catch(() => {});
 }
 
 // --- cloud sync -----------------------------------------------------------
@@ -286,6 +297,14 @@ export function balanceDue(invoice: Invoice): number {
   return typeof invoice.balanceRemaining === "number"
     ? invoice.balanceRemaining
     : total;
+}
+
+// Remaining on the full project cost (projectCost - advanceReceived). Purely
+// derived — never stored — so it can never drift out of sync with the two
+// numbers that define it. Can go negative if more advance came in than the
+// agreed cost (overpaid); the UI is responsible for styling that.
+export function projectRemaining(invoice: Invoice): number {
+  return Number(invoice.projectCost || 0) - Number(invoice.advanceReceived || 0);
 }
 
 export function formatMoney(amount: number, currency: Currency): string {
