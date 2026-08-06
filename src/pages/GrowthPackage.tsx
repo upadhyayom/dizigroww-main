@@ -16,6 +16,10 @@ import {
   ShieldCheck,
   Zap,
   MessageCircle,
+  Wallet,
+  Paintbrush,
+  FileWarning,
+  Sparkles,
 } from "lucide-react";
 
 declare const fbq: any;
@@ -30,11 +34,11 @@ const GrowthPackage = () => {
   }, []);
 
   useMeta({
-    title: "Performance Growth Package | Pay Only For Results — DiziGroww",
+    title: "Performance Growth Package | No Retainer, Pay As You Grow — DiziGroww",
     description:
-      "No flat retainers. Our Performance Growth Package charges you based on the orders we actually generate — ₹20,000 for your first 75 orders, ₹10,000 for the next 45, then just 5% of sales after that.",
+      "Tired of flat agency retainers with no guarantee of results? The Performance Growth Package is a no-retainer, milestone-based path to your first 100+ orders — creatives and website fixes included, nothing billed extra.",
     keywords:
-      "performance marketing, pay per order, results based marketing, DiziGroww growth package, D2C ads agency",
+      "no retainer marketing agency, pay per order, results based marketing, DiziGroww growth package, D2C ads agency for startups",
     canonicalUrl: "https://dizigroww.in/growth-package",
     ogImage: "https://dizigroww.in/logo.png",
   });
@@ -42,21 +46,42 @@ const GrowthPackage = () => {
   const whatsappLink =
     "https://wa.me/919450010826?text=Hi!%20I%20have%20a%20question%20about%20the%20Performance%20Growth%20Package.";
 
-  const tiers = [
+  const painPoints = [
     {
+      icon: Wallet,
+      title: "The Retainer Trap",
+      desc: "₹20,000–₹50,000+ every single month — whether that month brings 5 orders or 50. The invoice shows up either way.",
+    },
+    {
+      icon: Paintbrush,
+      title: "Extra Costs, Extra Invoices",
+      desc: "New ad creatives, a landing page tweak, a website fix — most agencies bill every one of these separately, on top of the retainer you're already paying.",
+    },
+    {
+      icon: FileWarning,
+      title: "No Real Accountability",
+      desc: "You're locked into a monthly contract with little connection between what you pay each month and what actually comes back to your business.",
+    },
+  ];
+
+  const journey = [
+    {
+      stage: "Stage 1",
       range: "First 75 orders",
       price: "₹20,000",
-      note: "Flat fee to set up, launch & get your first wave of results.",
+      note: "One flat fee covers setup, ad creatives, tracking, and your first wave of real orders — nothing billed extra.",
     },
     {
+      stage: "Stage 2",
       range: "Next 45 orders (76–120)",
       price: "₹10,000",
-      note: "Lower fee once your funnel is proven and scaling.",
+      note: "Your funnel is proven and you've crossed 100 orders. The fee drops because scaling what already works takes less effort — and you keep that saving.",
     },
     {
-      range: "After 120 orders",
+      stage: "Stage 3",
+      range: "Beyond 120 orders",
       price: "5% of total sales",
-      note: "We only earn more when you earn a lot more.",
+      note: "No flat fee at all — just a small share of the sales we help generate. The more you sell, the more of every rupee you keep.",
       highlight: true,
     },
   ];
@@ -66,7 +91,7 @@ const GrowthPackage = () => {
       <Navbar />
 
       <main className="pt-24 lg:pt-32">
-        {/* 1. HERO */}
+        {/* 1. HERO — leads with the pain, not the price */}
         <section className="section-padding bg-gradient-to-b from-primary/5 to-background text-center relative overflow-hidden">
           <div className="container-main max-w-4xl relative z-10">
             <motion.div
@@ -75,18 +100,18 @@ const GrowthPackage = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs tracking-wider uppercase font-semibold mb-6">
-                <Zap className="w-3.5 h-3.5" /> Performance-Based Pricing
+                <Zap className="w-3.5 h-3.5" /> Built For Startups & New D2C Brands
               </div>
-              <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-6 tracking-tight leading-[1.1]">
-                The Performance Growth Package
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight leading-[1.1]">
+                Growing Your Brand Shouldn't Mean a Retainer You Can't Afford Yet
               </h1>
-              <p className="text-xl md:text-2xl text-muted-foreground mb-4 max-w-3xl mx-auto font-medium">
-                Tired of paying flat retainers regardless of results?{" "}
-                <span className="text-foreground font-bold">You pay only for results.</span>
+              <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto font-medium">
+                Most agencies charge the same monthly fee whether you get 5 orders or 500 — plus separate bills for
+                creatives and website fixes. We built something different for brands just starting out.
               </p>
 
               <div className="bg-primary/10 border border-primary/20 text-foreground px-4 py-3 md:px-6 md:py-3 rounded-2xl md:rounded-full inline-flex flex-col sm:flex-row items-center font-semibold text-sm md:text-base mb-8 shadow-sm">
-                ₹20,000 for your first 75 orders → ₹10,000 for the next 45 → just 5% of sales after that.
+                A no-retainer, milestone-based path to your first 100+ orders — creatives & website fixes included.
               </div>
 
               <div className="mb-10 flex flex-wrap items-center justify-center gap-4">
@@ -113,7 +138,7 @@ const GrowthPackage = () => {
                 onClick={openChatbot}
                 className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-primary text-white text-base md:text-xl font-bold rounded-2xl md:rounded-full shadow-xl hover:shadow-primary/50 transition-all inline-flex items-center justify-center gap-2"
               >
-                Get My Custom Quote <ArrowRight className="w-5 h-5 flex-shrink-0" />
+                Start My Growth Journey <ArrowRight className="w-5 h-5 flex-shrink-0" />
               </motion.button>
             </motion.div>
           </div>
@@ -121,62 +146,85 @@ const GrowthPackage = () => {
 
         {/* 2. PAIN AMPLIFICATION */}
         <section className="pb-16 bg-background">
-          <div className="container-main max-w-4xl">
+          <div className="container-main max-w-5xl">
+            <div className="text-center mb-10">
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">Sound Familiar?</h2>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                This is exactly why most new brands hold off on hiring an agency at all.
+              </p>
+            </div>
             <div className="grid md:grid-cols-3 gap-6">
-              {[
-                "Paying a flat retainer even in months with weak results.",
-                "No clear link between agency fees and actual orders.",
-                "Locked into contracts before trust is even built.",
-              ].map((text, i) => (
+              {painPoints.map((p, i) => (
                 <div
                   key={i}
-                  className="flex flex-col gap-3 p-6 bg-card rounded-2xl border border-border hover:shadow-md transition-shadow text-center items-center"
+                  className="flex flex-col gap-3 p-6 bg-card rounded-2xl border border-border hover:shadow-md transition-shadow"
                 >
-                  <XCircle className="w-8 h-8 text-primary/70" />
-                  <p className="text-lg text-foreground font-semibold">{text}</p>
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <p.icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-lg text-foreground font-bold">{p.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
                 </div>
               ))}
             </div>
+
+            {/* Bridge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mt-12 text-center bg-primary/5 border border-primary/20 rounded-3xl p-8 md:p-10 max-w-3xl mx-auto"
+            >
+              <Sparkles className="w-7 h-7 text-primary mx-auto mb-3" />
+              <h3 className="text-2xl md:text-3xl font-bold mb-3">There's a Better Way to Grow</h3>
+              <p className="text-muted-foreground max-w-xl mx-auto">
+                The Performance Growth Package flips the model. You only pay as real orders come in — and ad
+                creatives, tracking, and website/landing page fixes are all part of the package. No surprise
+                invoices, no monthly bill for a month that didn't perform.
+              </p>
+            </motion.div>
           </div>
         </section>
 
-        {/* 3. PRICING TIERS */}
+        {/* 3. JOURNEY / PRICING */}
         <section className="section-padding bg-card border-y border-border">
           <div className="container-main max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">
-              Simple, Milestone-Based Pricing
+              Your Journey to Your First 100+ Orders
             </h2>
             <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
-              The more orders we generate for you, the more it costs — and the rate drops the further we scale you.
-              No hidden fees.
+              Three simple stages. No retainer. No hidden creative or website fees — ever.
             </p>
 
             <div className="bg-background rounded-3xl border border-border overflow-hidden shadow-lg mb-8">
               <div className="divide-y divide-border">
-                {tiers.map((t, i) => (
+                {journey.map((t, i) => (
                   <div
                     key={i}
-                    className={`grid grid-cols-2 p-5 sm:p-6 items-center ${
-                      t.highlight ? "bg-primary/10 border-t-2 border-primary" : ""
-                    }`}
+                    className={`p-5 sm:p-6 ${t.highlight ? "bg-primary/10 border-t-2 border-primary" : ""}`}
                   >
-                    <div>
-                      <p
-                        className={`font-bold text-sm sm:text-base ${
-                          t.highlight ? "text-primary" : "text-foreground"
+                    <div className="grid grid-cols-2 items-center mb-2">
+                      <span
+                        className={`inline-block w-fit text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${
+                          t.highlight ? "bg-primary text-primary-foreground" : "bg-secondary text-muted-foreground"
                         }`}
                       >
-                        {t.range}
-                      </p>
-                      <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t.note}</p>
+                        {t.stage}
+                      </span>
+                      <div
+                        className={`text-right font-extrabold ${
+                          t.highlight ? "text-2xl sm:text-3xl text-primary" : "text-xl sm:text-2xl text-foreground"
+                        }`}
+                      >
+                        {t.price}
+                      </div>
                     </div>
-                    <div
-                      className={`text-right font-extrabold ${
-                        t.highlight ? "text-2xl sm:text-3xl text-primary" : "text-xl sm:text-2xl text-foreground"
-                      }`}
+                    <p
+                      className={`font-bold text-sm sm:text-base ${t.highlight ? "text-primary" : "text-foreground"}`}
                     >
-                      {t.price}
-                    </div>
+                      {t.range}
+                    </p>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">{t.note}</p>
                   </div>
                 ))}
               </div>
@@ -184,7 +232,7 @@ const GrowthPackage = () => {
 
             <div className="text-center">
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary font-bold text-lg px-6 py-3 rounded-full mb-8">
-                <TrendingUp className="w-5 h-5" /> You pay only for results!
+                <TrendingUp className="w-5 h-5" /> You keep the majority of every sale — always.
               </div>
               <div>
                 <motion.button
@@ -202,17 +250,23 @@ const GrowthPackage = () => {
                   <ShieldCheck className="w-4 h-4 text-green-600" /> No flat monthly retainer
                 </span>
                 <span className="flex items-center gap-1 bg-secondary/30 px-3 py-1.5 rounded-md">
-                  <CheckCircle2 className="w-4 h-4 text-primary" /> Pay as you grow
+                  <CheckCircle2 className="w-4 h-4 text-primary" /> No hidden creative or website fees
+                </span>
+                <span className="flex items-center gap-1 bg-secondary/30 px-3 py-1.5 rounded-md">
+                  <CheckCircle2 className="w-4 h-4 text-primary" /> No lock-in contract
                 </span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 4. WHAT'S INCLUDED */}
+        {/* 4. WHAT'S INCLUDED — directly answers the "extra cost" pain point */}
         <section className="section-padding bg-background">
           <div className="container-main max-w-5xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">What's Included</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">Everything Included — No Extra Invoices</h2>
+            <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
+              Every stage of the journey includes all of this. None of it shows up as a separate line item later.
+            </p>
             <div className="grid md:grid-cols-2 gap-8">
               {[
                 {
@@ -220,16 +274,16 @@ const GrowthPackage = () => {
                   desc: "Pixel installation, conversions API, and campaign structure — built correctly from day one so every order is tracked back to the ad that drove it.",
                 },
                 {
-                  title: "High-Intent Ad Campaigns",
-                  desc: "We launch and manage campaigns built to drive real, paying orders — not vanity clicks.",
+                  title: "Ad Creatives, Included",
+                  desc: "Scroll-stopping ad creatives, built and refreshed as part of the package — not quoted separately like most agencies do.",
                 },
                 {
-                  title: "Funnel & Landing Page Optimization",
-                  desc: "We continuously test and fix the pages your ad traffic lands on, so more of that traffic converts into orders.",
+                  title: "Website & Landing Page Fixes, Included",
+                  desc: "The tweaks that turn ad traffic into orders are part of the deal too — not a surprise add-on invoice halfway through the month.",
                 },
                 {
                   title: "Weekly Reporting & Order Tracking",
-                  desc: "Full visibility into exactly how many orders we've driven and what tier you're in — no surprises on the invoice.",
+                  desc: "Full visibility into exactly how many orders we've driven and what stage you're in — no surprises when it's time to pay.",
                 },
               ].map((item, i) => (
                 <div
@@ -261,10 +315,10 @@ const GrowthPackage = () => {
                 </h3>
                 <ul className="space-y-4">
                   {[
-                    "D2C / e-commerce brands with a working product and checkout flow",
-                    "Founders who want cost tied to real orders, not just ad spend",
-                    "Brands ready to scale past their first 100+ orders",
-                    "Teams willing to act on funnel & landing page fixes",
+                    "New or growing D2C / e-commerce brands with a working product and checkout flow",
+                    "Founders who don't want to commit to a flat monthly retainer this early",
+                    "Teams who want ad creatives and website fixes handled without extra invoices",
+                    "Brands aiming for their first 100+ orders and ready to keep scaling from there",
                   ].map((item, i) => (
                     <li key={i} className="flex gap-3 text-foreground font-medium items-start">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0"></div>
@@ -280,8 +334,8 @@ const GrowthPackage = () => {
                 </h3>
                 <ul className="space-y-4">
                   {[
-                    "Brand-new stores with zero traffic or sales history",
-                    "Founders expecting guaranteed overnight results",
+                    "Brand-new stores with zero traffic or sales history yet",
+                    "Founders expecting instant results with no effort on their side",
                     "Services/products with no clear per-unit \"order\"",
                     "Brands unwilling to share order/sales data for tracking",
                   ].map((item, i) => (
@@ -303,20 +357,24 @@ const GrowthPackage = () => {
             <div className="space-y-4">
               {[
                 {
-                  q: "How exactly is an \"order\" counted?",
-                  a: "Every completed, paid order that comes through your store during the campaign, tracked via your store's order data plus our ad tracking. We agree on the exact tracking method with you before we start.",
+                  q: "Why not just charge a flat retainer like other agencies?",
+                  a: "Because that model doesn't reward performance — you'd pay the same amount whether we drove 5 orders or 500. This package ties your cost directly to the orders we actually generate for you.",
                 },
                 {
-                  q: "Why does the price drop as orders increase?",
-                  a: "The heaviest lift is setup, testing, and getting the funnel to convert reliably. Once that foundation is proven, scaling further orders costs us less effort — so we pass that efficiency on to you.",
+                  q: "Are ad creatives and website fixes really included, or are those extra?",
+                  a: "They're included at every stage. Unlike most agencies, we don't send separate invoices for creatives, tracking setup, or landing page/website tweaks — it's all built into the fee.",
+                },
+                {
+                  q: "Why does the fee per order drop as I scale?",
+                  a: "The heaviest lift is the initial setup and getting your funnel to convert reliably. Once that's proven, scaling further orders takes less effort on our side — so the fee drops, and eventually becomes just a small percentage of sales.",
                 },
                 {
                   q: "What happens after 120 orders?",
-                  a: "You move to a 5% of total sales fee — so as your revenue grows, our fee scales proportionally instead of jumping to an expensive flat retainer.",
+                  a: "You move to a 5% of total sales fee, so as your revenue grows, our fee scales proportionally with it instead of jumping to an expensive flat retainer.",
                 },
                 {
-                  q: "Is there a contract or lock-in?",
-                  a: "No long-term contract. Since we only get paid as orders come in, there's no reason to lock you into anything.",
+                  q: "Is there a lock-in contract?",
+                  a: "No. Since you only pay as real orders come in, there's no reason to lock you into a long-term contract.",
                 },
               ].map((faq, i) => (
                 <div key={i} className="bg-card p-5 md:p-6 rounded-2xl border border-border shadow-sm">
@@ -331,9 +389,11 @@ const GrowthPackage = () => {
         {/* 8. FINAL CTA */}
         <div className="bg-gradient-to-br from-primary/10 to-background border-t border-primary/20 pb-24">
           <div className="py-20 text-center container-main">
-            <h2 className="text-3xl md:text-5xl font-extrabold mb-6">Ready to pay only for results?</h2>
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
+              Ready to Start Growing — Without the Retainer?
+            </h2>
             <p className="text-muted-foreground max-w-xl mx-auto mb-10 text-xl">
-              Tell us about your brand and get a custom quote in minutes.
+              Tell us about your brand and see exactly what Stage 1 looks like for you.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -341,7 +401,7 @@ const GrowthPackage = () => {
               onClick={openChatbot}
               className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-primary text-white text-base md:text-xl font-bold rounded-2xl md:rounded-full shadow-xl hover:shadow-primary/50 transition-all inline-flex items-center justify-center gap-2 mb-8"
             >
-              <MessageCircle className="w-5 h-5 flex-shrink-0" /> Get My Custom Quote
+              <MessageCircle className="w-5 h-5 flex-shrink-0" /> Start My Growth Journey
             </motion.button>
 
             <div className="flex justify-center mt-4">
@@ -375,13 +435,13 @@ const GrowthPackage = () => {
         <div className="container-main max-w-4xl flex items-center justify-between gap-4">
           <div className="hidden sm:block">
             <p className="font-bold text-lg">Performance Growth Package</p>
-            <p className="text-sm text-muted-foreground">Pay only for the orders we generate.</p>
+            <p className="text-sm text-muted-foreground">No retainer. Pay only as real orders come in.</p>
           </div>
           <button
             onClick={openChatbot}
             className="w-full sm:w-auto px-6 py-3 bg-primary text-white font-bold rounded-full shadow-lg hover:shadow-primary/50 transition-all text-sm sm:text-base flex items-center justify-center gap-2"
           >
-            Get My Custom Quote <ArrowRight className="w-4 h-4" />
+            Start My Growth Journey <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>
