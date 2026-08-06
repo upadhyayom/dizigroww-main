@@ -9,6 +9,7 @@ import Contact from "./pages/Contact.tsx";
 import Careers from "./pages/Careers.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import StarterPlan from "./pages/StarterPlan.tsx";
+import GrowthPackage from "./pages/GrowthPackage.tsx";
 import ThankYou from "./pages/ThankYou.tsx";
 import ProposalGenerator from "./pages/ProposalGenerator.tsx";
 import Invoices from "./pages/Invoices.tsx";
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
           <Route path="/starter-plan" element={<StarterPlan />} />
+          <Route path="/growth-package" element={<GrowthPackage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/thank-you" element={<ThankYou />} />
