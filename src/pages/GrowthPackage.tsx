@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DashboardResultsSection from "@/components/DashboardResultsSection";
@@ -20,6 +20,9 @@ import {
   Paintbrush,
   FileWarning,
   Sparkles,
+  Calculator,
+  Minus,
+  GraduationCap,
 } from "lucide-react";
 
 declare const fbq: any;
@@ -29,8 +32,21 @@ const openChatbot = () => {
 };
 
 const GrowthPackage = () => {
+  const [chatOpen, setChatOpen] = useState(false);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, []);
+
+  // Hide the sticky bottom CTA bar while the chatbot is open — both live in the
+  // bottom-left corner and would otherwise overlap.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ open: boolean }>).detail;
+      setChatOpen(!!detail?.open);
+    };
+    window.addEventListener("growth-chatbot-visibility", handler);
+    return () => window.removeEventListener("growth-chatbot-visibility", handler);
   }, []);
 
   useMeta({
@@ -183,6 +199,139 @@ const GrowthPackage = () => {
                 invoices, no monthly bill for a month that didn't perform.
               </p>
             </motion.div>
+          </div>
+        </section>
+
+        {/* 2.5 ROAS vs. REAL PROFIT — the math, and why the first 100 orders matter */}
+        <section className="section-padding bg-muted/20 border-y border-border">
+          <div className="container-main max-w-4xl">
+            <div className="text-center mb-12">
+              <span className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">
+                <Calculator className="w-3.5 h-3.5" /> The Math Most Agencies Skip
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">
+                ROAS Looks Great on Paper. Profit Pays Your Bills.
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                A 3x ROAS sounds impressive in a report — but ROAS alone doesn't tell you if you actually made
+                money. Here's a simplified example of why.
+              </p>
+            </div>
+
+            <div className="bg-card rounded-3xl border border-border shadow-lg overflow-hidden mb-4">
+              <div className="divide-y divide-border">
+                <div className="flex items-center justify-between p-5 sm:p-6 gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center font-bold text-sm flex-shrink-0">
+                      1
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm sm:text-base">You spend on Meta ads</p>
+                      <p className="text-xs text-muted-foreground">Ad spend</p>
+                    </div>
+                  </div>
+                  <p className="font-bold text-lg sm:text-xl flex-shrink-0">₹10</p>
+                </div>
+
+                <div className="flex items-center justify-between p-5 sm:p-6 gap-4 bg-primary/5">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm flex-shrink-0">
+                      2
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm sm:text-base">Meta reports back a 3x ROAS</p>
+                      <p className="text-xs text-muted-foreground">The number most agencies love to show you</p>
+                    </div>
+                  </div>
+                  <p className="font-bold text-lg sm:text-xl text-primary flex-shrink-0">₹30</p>
+                </div>
+
+                <div className="flex items-center justify-between p-5 sm:p-6 gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
+                      <Minus className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm sm:text-base">Marketing / management fees</p>
+                      <p className="text-xs text-muted-foreground">Example only — varies by agency</p>
+                    </div>
+                  </div>
+                  <p className="font-bold text-lg sm:text-xl text-destructive flex-shrink-0">– ₹10</p>
+                </div>
+
+                <div className="flex items-center justify-between p-5 sm:p-6 gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
+                      <Minus className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm sm:text-base">Product, shipping, warehouse & other costs</p>
+                      <p className="text-xs text-muted-foreground">This is where most brands lose track</p>
+                    </div>
+                  </div>
+                  <p className="font-bold text-lg sm:text-xl text-destructive flex-shrink-0">– varies</p>
+                </div>
+
+                <div className="flex items-center justify-between p-5 sm:p-6 gap-4 bg-primary/10 border-t-2 border-primary">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center flex-shrink-0">
+                      <TrendingUp className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="font-bold text-sm sm:text-base text-primary">Real profit</p>
+                      <p className="text-xs text-muted-foreground">What's actually left in your pocket</p>
+                    </div>
+                  </div>
+                  <p className="font-extrabold text-sm sm:text-lg text-primary flex-shrink-0 text-right">
+                    This is what matters
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p className="text-xs text-muted-foreground text-center mb-10 max-w-xl mx-auto">
+              Simplified example for illustration — your exact numbers depend on your product margins, category,
+              and current stage. The point stands regardless: ROAS is a media metric, not a profit metric.
+            </p>
+
+            <div className="bg-card rounded-3xl border border-border shadow-sm p-8 md:p-10 mb-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <ShieldCheck className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Why We Don't Charge a Fixed Fee</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    A typical agency takes its fee first, before any of this math plays out for you. Whether that
+                    month's ROAS actually turned into real profit after your product, shipping, and warehouse
+                    costs — that's your problem, not theirs. We built the Growth Package so our fee only grows
+                    alongside your actual orders, not against your profit regardless of them.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card rounded-3xl border border-border shadow-sm p-8 md:p-10">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <GraduationCap className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Why Your First 100 Orders Matter So Much</h3>
+                  <p className="text-muted-foreground leading-relaxed mb-3">
+                    Meta's ad algorithm runs a "learning phase" on every new campaign — it needs a meaningful
+                    number of real conversions before it figures out exactly who's likely to buy from you. Early
+                    on, that usually means a higher cost per order and less predictable results, no matter how good
+                    the creative is.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    That's exactly why Stage 1 of the journey (your first 75 orders) is priced as one flat fee — it
+                    covers the heavier setup, testing, and creative iteration needed to get through that early
+                    phase efficiently. Once you're past it and the algorithm has enough data, cost per order
+                    typically drops — which is why our fee drops too, at Stage 2.
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -430,7 +579,8 @@ const GrowthPackage = () => {
 
       <Footer />
 
-      {/* Sticky Bottom CTA Banner for Mobile & Desktop */}
+      {/* Sticky Bottom CTA Banner for Mobile & Desktop — hidden while the chatbot is open so they don't overlap */}
+      {!chatOpen && (
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/90 backdrop-blur-md border-t border-border shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)] z-[100] flex justify-center items-center">
         <div className="container-main max-w-4xl flex items-center justify-between gap-4">
           <div className="hidden sm:block">
@@ -445,6 +595,7 @@ const GrowthPackage = () => {
           </button>
         </div>
       </div>
+      )}
 
       {/* Auto-opening lead-capture chatbot */}
       <GrowthPackageChatbot />
