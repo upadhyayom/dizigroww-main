@@ -764,10 +764,18 @@ function StatsRow({ invoices }: { invoices: Invoice[] }) {
     const totalsByCur: Record<string, number> = {};
     const paidByCur: Record<string, number> = {};
     const balanceByCur: Record<string, number> = {};
+    // "Collected" figures are on paid invoices only — actual cash in, not just billed.
+    const taxCollectedByCur: Record<string, number> = {};
+    const revenueCollectedByCur: Record<string, number> = {};
     invoices.forEach((inv) => {
-      const t = computeTotals(inv).total;
-      totalsByCur[inv.currency] = (totalsByCur[inv.currency] || 0) + t;
-      if (inv.status === "paid") paidByCur[inv.currency] = (paidByCur[inv.currency] || 0) + t;
+      const t = computeTotals(inv);
+      totalsByCur[inv.currency] = (totalsByCur[inv.currency] || 0) + t.total;
+      if (inv.status === "paid") {
+        paidByCur[inv.currency] = (paidByCur[inv.currency] || 0) + t.total;
+        taxCollectedByCur[inv.currency] = (taxCollectedByCur[inv.currency] || 0) + t.tax;
+        revenueCollectedByCur[inv.currency] =
+          (revenueCollectedByCur[inv.currency] || 0) + (t.total - t.tax);
+      }
       const bal = balanceDue(inv);
       if (bal > 0) balanceByCur[inv.currency] = (balanceByCur[inv.currency] || 0) + bal;
     });
@@ -778,26 +786,34 @@ function StatsRow({ invoices }: { invoices: Invoice[] }) {
       totalsByCur,
       paidByCur,
       balanceByCur,
+      taxCollectedByCur,
+      revenueCollectedByCur,
     };
   }, [invoices]);
 
-  const totalLine = Object.entries(stats.totalsByCur)
-    .map(([c, v]) => formatMoney(v, c as Currency))
-    .join(" · ") || "—";
-  const paidLine = Object.entries(stats.paidByCur)
-    .map(([c, v]) => formatMoney(v, c as Currency))
-    .join(" · ") || "—";
-  const balanceLine = Object.entries(stats.balanceByCur)
-    .map(([c, v]) => formatMoney(v, c as Currency))
-    .join(" · ") || "—";
+  const line = (byCur: Record<string, number>) =>
+    Object.entries(byCur)
+      .map(([c, v]) => formatMoney(v, c as Currency))
+      .join(" · ") || "—";
+
+  const totalLine = line(stats.totalsByCur);
+  const balanceLine = line(stats.balanceByCur);
+  const taxCollectedLine = line(stats.taxCollectedByCur);
+  const revenueCollectedLine = line(stats.revenueCollectedByCur);
+  // Revenue (excl. tax) + tax collected should always foot back to the paid total —
+  // shown together so it's a self-checking figure, not two disconnected numbers.
+  const revenuePlusTaxLine = line(stats.paidByCur);
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
       <Stat label="Invoices" value={String(stats.count)} />
       <Stat label="Recurring series" value={String(stats.recurring)} />
       <Stat label="Outstanding" value={String(stats.outstanding)} />
       <Stat label="Billed total" value={totalLine} small />
       <Stat label="Balance remaining" value={balanceLine} small />
+      <Stat label="Collected (incl. tax)" value={revenuePlusTaxLine} small />
+      <Stat label="Tax collected" value={taxCollectedLine} small />
+      <Stat label="Revenue collected (excl. tax)" value={revenueCollectedLine} small />
     </div>
   );
 }
