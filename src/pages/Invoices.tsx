@@ -914,6 +914,19 @@ function InvoiceEditor({
   const update = <K extends keyof Invoice>(k: K, v: Invoice[K]) =>
     setDraft((d) => ({ ...d, [k]: v }));
 
+  // Changing status to "paid" clears the outstanding balance by default —
+  // no need to separately click "Mark fully paid". Flipping back off "paid"
+  // restores it to the full total (only when it was sitting at 0, so we don't
+  // clobber a partial balance someone had deliberately set).
+  const updateStatus = (v: InvoiceStatus) =>
+    setDraft((d) => {
+      if (v === "paid") return { ...d, status: v, balanceRemaining: 0 };
+      if (d.status === "paid" && (d.balanceRemaining ?? 0) === 0) {
+        return { ...d, status: v, balanceRemaining: computeTotals(d).total };
+      }
+      return { ...d, status: v };
+    });
+
   const updateItem = (id: string, patch: Partial<InvoiceLineItem>) =>
     setDraft((d) => ({
       ...d,
@@ -1199,7 +1212,7 @@ function InvoiceEditor({
               <Field label="Status">
                 <Select
                   value={draft.status}
-                  onValueChange={(v) => update("status", v as InvoiceStatus)}
+                  onValueChange={(v) => updateStatus(v as InvoiceStatus)}
                 >
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>

@@ -292,7 +292,12 @@ export function computeTotals(invoice: Invoice) {
 
 // Balance still owed. Falls back to the full computed total when
 // balanceRemaining was never set (i.e. nothing recorded as paid yet).
+// An invoice marked "paid" always shows zero due, regardless of whatever
+// balanceRemaining happens to be stored — status is the source of truth,
+// so this self-corrects even on old invoices that were marked paid before
+// balanceRemaining was reset to 0.
 export function balanceDue(invoice: Invoice): number {
+  if (invoice.status === "paid") return 0;
   const total = computeTotals(invoice).total;
   return typeof invoice.balanceRemaining === "number"
     ? invoice.balanceRemaining
