@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import DashboardResultsSection from "@/components/DashboardResultsSection";
@@ -32,21 +32,8 @@ const openChatbot = () => {
 };
 
 const GrowthPackage = () => {
-  const [chatOpen, setChatOpen] = useState(false);
-
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  // Hide the sticky bottom CTA bar while the chatbot is open — both live in the
-  // bottom-left corner and would otherwise overlap.
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const detail = (e as CustomEvent<{ open: boolean }>).detail;
-      setChatOpen(!!detail?.open);
-    };
-    window.addEventListener("growth-chatbot-visibility", handler);
-    return () => window.removeEventListener("growth-chatbot-visibility", handler);
   }, []);
 
   useMeta({
@@ -65,11 +52,11 @@ const GrowthPackage = () => {
   const painPoints = [
     {
       icon: Wallet,
-      title: "Retainer Ka Jaal",
+      title: "The Retainer Trap",
       desc: (
         <>
-          <strong className="text-foreground">₹20,000–₹50,000+ har mahine</strong> — chahe 5 order aaye ya 50. Bill
-          toh aayega hi, result ho ya na ho.
+          <strong className="text-foreground">₹20,000–₹50,000+ every month</strong> — whether you get 5 orders or 50.
+          The bill shows up either way.
         </>
       ),
     },
@@ -78,18 +65,18 @@ const GrowthPackage = () => {
       title: "Extra Cost, Extra Bill",
       desc: (
         <>
-          Naya ad creative? Landing page change? Website fix? Zyada tar agencies inka{" "}
-          <strong className="text-foreground">bill alag se</strong> bhejti hain — retainer ke upar.
+          New ad creative? A small landing page tweak? A website fix? Most agencies send a{" "}
+          <strong className="text-foreground">separate bill</strong> for every one — on top of the retainer.
         </>
       ),
     },
     {
       icon: FileWarning,
-      title: "Koi Real Hisaab-Kitaab Nahi",
+      title: "No Real Accountability",
       desc: (
         <>
-          Aap ek <strong className="text-foreground">monthly contract</strong> mein bandhe hote hain, jiska
-          connection result se kam hi hota hai.
+          You're locked into a <strong className="text-foreground">monthly contract</strong> that has almost no
+          connection to the results you actually get.
         </>
       ),
     },
@@ -98,22 +85,64 @@ const GrowthPackage = () => {
   const journey = [
     {
       stage: "Stage 1",
-      range: "Pehle 75 orders",
+      range: "First 75 orders",
       price: "₹20,000",
-      note: "Ek hi flat fee mein setup, ad creatives, tracking, aur aapke pehle real orders — kuch bhi extra bill nahi.",
+      note: "One flat fee covers setup, ad creatives, tracking, and your first real orders — nothing billed extra.",
     },
     {
       stage: "Stage 2",
-      range: "Agle 45 orders (76–120)",
+      range: "Next 45 orders (76–120)",
       price: "₹10,000",
-      note: "System ab prove ho chuka hai — usko scale karna aasan hai, isliye fees kam ho jaati hai.",
+      note: "Your system is proven now — scaling what already works is easier, so the fee drops.",
     },
     {
       stage: "Stage 3",
-      range: "120 orders ke baad",
-      price: "Sales ka 5%",
-      note: "Koi flat fee nahi — sirf sales ka chhota sa hissa. Jitna zyada bikega, utna zyada aap apne paas rakhenge.",
+      range: "After 120 orders",
+      price: "5% of sales",
+      note: "No flat fee — just a small share of sales. The more you sell, the more you keep.",
       highlight: true,
+    },
+  ];
+
+  const included = [
+    {
+      title: "Full Campaign Setup & Tracking",
+      desc: "Proper tracking set up from day one, so you know exactly which ad is driving orders.",
+    },
+    {
+      title: "Ad Creatives, Included",
+      desc: "Scroll-stopping ad creatives are part of the package — not a separate quote like most agencies charge.",
+    },
+    {
+      title: "Website & Landing Page Fixes, Included",
+      desc: "The small fixes that turn ad traffic into orders are included too — no surprise mid-month bill.",
+    },
+    {
+      title: "Weekly Reporting & Order Tracking",
+      desc: "Full transparency — how many orders came in and which stage you're in, no surprises when it's time to pay.",
+    },
+  ];
+
+  const faqs = [
+    {
+      q: "Why don't you charge a fixed retainer like other agencies?",
+      a: "Because that model doesn't reward performance — whether we bring 5 orders or 500, you'd pay the same amount. This package ties your cost directly to the orders we actually deliver.",
+    },
+    {
+      q: "Are ad creatives and website fixes really included, or are they extra?",
+      a: "They're included at every stage. Unlike most agencies, we don't bill separately for creatives, tracking setup, or landing page/website tweaks — it's all part of the fee.",
+    },
+    {
+      q: "Why does the fee drop as orders increase?",
+      a: "Most of the hard work happens early on — getting the setup and system to run reliably. Once that's proven, scaling further takes less effort, so the fee drops, and eventually becomes just a small percentage of sales.",
+    },
+    {
+      q: "What happens after 120 orders?",
+      a: "You move to the 5%-of-sales model, so our fee grows proportionally with your revenue instead of turning into an expensive flat retainer.",
+    },
+    {
+      q: "Is there a lock-in contract?",
+      a: "No. Since you only pay when real orders come in, there's no reason to lock you into a long-term contract.",
     },
   ];
 
@@ -122,7 +151,7 @@ const GrowthPackage = () => {
       <Navbar />
 
       <main className="pt-24 lg:pt-32">
-        {/* 1. HERO — pain pehle, price baad mein */}
+        {/* 1. HERO — the pain, before the price */}
         <section className="section-padding bg-gradient-to-b from-primary/5 to-background text-center relative overflow-hidden">
           <div className="container-main max-w-4xl relative z-10">
             <motion.div
@@ -131,20 +160,19 @@ const GrowthPackage = () => {
               transition={{ duration: 0.5 }}
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs tracking-wider uppercase font-semibold mb-6">
-                <Zap className="w-3.5 h-3.5" /> Startups & Naye D2C Brands Ke Liye
+                <Zap className="w-3.5 h-3.5" /> For Startups & New D2C Brands
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight leading-[1.1]">
-                Growth Ke Liye Bhari Retainer Dena Zaroori Nahi Hai
+                Growing Your Brand Shouldn't Require a Big Retainer
               </h1>
               <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto font-medium">
-                Zyada tar agencies har mahine <strong className="text-foreground">fixed fees</strong> lete hain —
-                order aaye ya na aaye. Hum alag hain: <strong className="text-foreground">pay tabhi karein jab
-                aapko real orders milein.</strong>
+                Most agencies charge the same <strong className="text-foreground">fixed fee</strong> every month —
+                whether orders come in or not. We're different:{" "}
+                <strong className="text-foreground">you only pay when you get real orders.</strong>
               </p>
 
               <div className="bg-primary/10 border border-primary/20 text-foreground px-4 py-3 md:px-6 md:py-3 rounded-2xl md:rounded-full inline-flex flex-col sm:flex-row items-center font-semibold text-sm md:text-base mb-8 shadow-sm">
-                Bina retainer ke, aapke pehle 100+ orders tak ka poora plan — creatives aur website fixes sab
-                included.
+                A complete plan to your first 100+ orders, with no retainer — creatives and website fixes included.
               </div>
 
               <div className="mb-10 flex flex-wrap items-center justify-center gap-4">
@@ -171,7 +199,7 @@ const GrowthPackage = () => {
                 onClick={openChatbot}
                 className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-primary text-white text-base md:text-xl font-bold rounded-2xl md:rounded-full shadow-xl hover:shadow-primary/50 transition-all inline-flex items-center justify-center gap-2"
               >
-                Apni Growth Journey Shuru Karein <ArrowRight className="w-5 h-5 flex-shrink-0" />
+                Start Your Growth Journey <ArrowRight className="w-5 h-5 flex-shrink-0" />
               </motion.button>
             </motion.div>
           </div>
@@ -181,23 +209,27 @@ const GrowthPackage = () => {
         <section className="pb-16 bg-background">
           <div className="container-main max-w-5xl">
             <div className="text-center mb-10">
-              <h2 className="text-2xl md:text-3xl font-bold mb-2">Ye Sab Suna-Suna Lagta Hai?</h2>
+              <h2 className="text-2xl md:text-3xl font-bold mb-2">Does This Sound Familiar?</h2>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                Isi wajah se zyada tar naye brands agency hire karne se pehle hi ruk jaate hain.
+                It's exactly why most new brands hesitate before hiring an agency at all.
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               {painPoints.map((p, i) => (
-                <div
+                <motion.div
                   key={i}
-                  className="flex flex-col gap-3 p-6 bg-card rounded-2xl border border-border hover:shadow-md transition-shadow"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="flex flex-col gap-3 p-6 bg-card rounded-2xl border border-border hover:border-primary/30 hover:shadow-lg transition-all"
                 >
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                     <p.icon className="w-6 h-6 text-primary" />
                   </div>
                   <h3 className="text-lg text-foreground font-bold">{p.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
 
@@ -209,29 +241,29 @@ const GrowthPackage = () => {
               className="mt-12 text-center bg-primary/5 border border-primary/20 rounded-3xl p-8 md:p-10 max-w-3xl mx-auto"
             >
               <Sparkles className="w-7 h-7 text-primary mx-auto mb-3" />
-              <h3 className="text-2xl md:text-3xl font-bold mb-3">Growth Ka Better Tareeka Hai</h3>
+              <h3 className="text-2xl md:text-3xl font-bold mb-3">There's a Better Way to Grow</h3>
               <p className="text-muted-foreground max-w-xl mx-auto">
-                Performance Growth Package poora model badal deta hai. Aap sirf tab pay karte hain jab real orders
-                aate hain — aur ad creatives, tracking, website/landing page fixes sab package mein included hain.
-                Na koi surprise bill, na kisi kharab mahine ka bhaari invoice.
+                The Performance Growth Package changes the whole model. You only pay when real orders come in —
+                and ad creatives, tracking, and website/landing page fixes are all included. No surprise bills, no
+                heavy invoice after a bad month.
               </p>
             </motion.div>
           </div>
         </section>
 
-        {/* 2.5 ROAS vs. ASLI PROFIT — hisaab, saaf saaf */}
+        {/* 2.5 ROAS vs. REAL PROFIT — the math, made simple */}
         <section className="section-padding bg-muted/20 border-y border-border">
           <div className="container-main max-w-4xl">
             <div className="text-center mb-12">
               <span className="inline-flex items-center gap-2 bg-primary/10 text-primary text-xs font-bold px-4 py-1.5 rounded-full mb-4 uppercase tracking-wider">
-                <Calculator className="w-3.5 h-3.5" /> Wo Hisaab Jo Agencies Nahi Dikhati
+                <Calculator className="w-3.5 h-3.5" /> The Math Agencies Don't Show You
               </span>
               <h2 className="text-3xl md:text-4xl font-bold mb-3">
-                ROAS Dekhne Mein Accha Lagta Hai. Profit Se Bill Bharta Hai.
+                ROAS Looks Good on a Slide. Profit Pays the Bills.
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                3x ROAS (yani jo aapne ad pe kharcha kiya, uska 3 guna wapas) sunne mein zabardast lagta hai — lekin
-                ye ye nahi batata ki aapko actually profit hua ya nahi. Ek simple example se samajhte hain.
+                A 3x ROAS (getting back 3 times what you spent on ads) sounds impressive — but it doesn't tell you
+                whether you actually made a profit. Here's a simple example.
               </p>
             </div>
 
@@ -243,7 +275,7 @@ const GrowthPackage = () => {
                       1
                     </div>
                     <div>
-                      <p className="font-semibold text-sm sm:text-base">Aapne Meta ads pe kharch kiya</p>
+                      <p className="font-semibold text-sm sm:text-base">You spend on Meta ads</p>
                       <p className="text-xs text-muted-foreground">Ad spend</p>
                     </div>
                   </div>
@@ -256,8 +288,8 @@ const GrowthPackage = () => {
                       2
                     </div>
                     <div>
-                      <p className="font-semibold text-sm sm:text-base">Meta ne wapas dikhaya 3x ROAS</p>
-                      <p className="text-xs text-muted-foreground">Ye wahi number hai jo agencies dikhana pasand karti hain</p>
+                      <p className="font-semibold text-sm sm:text-base">Meta reports back 3x ROAS</p>
+                      <p className="text-xs text-muted-foreground">The number agencies love to show</p>
                     </div>
                   </div>
                   <div className="text-right flex-shrink-0">
@@ -273,7 +305,7 @@ const GrowthPackage = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-sm sm:text-base">Marketing / management fees</p>
-                      <p className="text-xs text-muted-foreground">Sirf example — agency ke hisaab se alag ho sakta hai</p>
+                      <p className="text-xs text-muted-foreground">Just an example — varies by agency</p>
                     </div>
                   </div>
                   <div className="text-right flex-shrink-0">
@@ -288,8 +320,8 @@ const GrowthPackage = () => {
                       <Minus className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="font-semibold text-sm sm:text-base">Product, shipping, warehouse aur baaki costs</p>
-                      <p className="text-xs text-muted-foreground">Yahi pe zyada tar brands hisaab bhool jaate hain (example: revenue ka ~40%)</p>
+                      <p className="font-semibold text-sm sm:text-base">Product, shipping, warehouse & other costs</p>
+                      <p className="text-xs text-muted-foreground">Where most brands lose track (e.g. ~40% of revenue)</p>
                     </div>
                   </div>
                   <div className="text-right flex-shrink-0">
@@ -304,8 +336,8 @@ const GrowthPackage = () => {
                       <TrendingUp className="w-5 h-5" />
                     </div>
                     <div>
-                      <p className="font-bold text-sm sm:text-base text-primary">Asli Profit</p>
-                      <p className="text-xs text-muted-foreground">₹10 ke ad spend se, jeb mein actually kitna bacha</p>
+                      <p className="font-bold text-sm sm:text-base text-primary">Real Profit</p>
+                      <p className="text-xs text-muted-foreground">What's actually left in your pocket from ₹10 of ad spend</p>
                     </div>
                   </div>
                   <p className="font-extrabold text-2xl sm:text-3xl text-primary flex-shrink-0">₹8</p>
@@ -313,8 +345,8 @@ const GrowthPackage = () => {
               </div>
             </div>
             <p className="text-xs text-muted-foreground text-center mb-10 max-w-xl mx-auto">
-              Ye ek simplified example hai — aapke actual numbers aapke product margin, category aur stage pe
-              depend karte hain. Baat wahi rehti hai: achha ROAS ka matlab achha profit nahi hota.
+              This is a simplified example — your actual numbers depend on your product margin, category, and
+              stage. The point stays the same: a good ROAS doesn't automatically mean a good profit.
             </p>
 
             <div className="bg-card rounded-3xl border border-border shadow-sm p-8 md:p-10 mb-6">
@@ -323,16 +355,17 @@ const GrowthPackage = () => {
                   <ShieldCheck className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2">Hum Fixed Fees Kyun Nahi Lete</h3>
+                  <h3 className="text-xl font-bold mb-2">Why We Don't Charge Fixed Fees</h3>
                   <p className="text-foreground font-semibold mb-2">
-                    Normal agency pehle apni fees le leti hai — profit bacha ya nahi, unki problem nahi.
+                    A typical agency takes its fee first — whether the math works out for you or not.
                   </p>
                   <ul className="text-muted-foreground leading-relaxed space-y-1.5 list-disc list-inside">
-                    <li>ROAS achha ho ya na ho, unka bill same rehta hai</li>
-                    <li>Aapke asli costs (product, shipping, warehouse) unki chinta nahi</li>
+                    <li>Good ROAS or bad, their bill stays the same</li>
+                    <li>Your real costs (product, shipping, warehouse) aren't their problem</li>
                     <li>
-                      Growth Package alag hai: <strong className="text-foreground">hamari fees sirf aapke
-                      actual orders ke saath badhti hai</strong> — aapke profit ke against nahi
+                      The Growth Package is different:{" "}
+                      <strong className="text-foreground">our fee only grows with your actual orders</strong> —
+                      never against your profit
                     </li>
                   </ul>
                 </div>
@@ -345,19 +378,19 @@ const GrowthPackage = () => {
                   <GraduationCap className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold mb-2">Pehle 100 Orders Itne Zaroori Kyun Hain</h3>
+                  <h3 className="text-xl font-bold mb-2">Why Your First 100 Orders Matter So Much</h3>
                   <p className="text-foreground font-semibold mb-2">
-                    Meta ko seekhne ke liye real orders chahiye — jitni jaldi 100 orders, utni jaldi cost kam.
+                    Meta's algorithm needs real orders to learn — the sooner you hit 100, the sooner cost drops.
                   </p>
                   <ul className="text-muted-foreground leading-relaxed space-y-1.5 list-disc list-inside">
-                    <li>Shuru mein cost per order zyada hoti hai — creative kitna bhi accha ho, ye normal hai</li>
+                    <li>Early on, cost per order is higher — that's normal, no matter how good the creative is</li>
                     <li>
-                      Isliye <strong className="text-foreground">Stage 1 (pehle 75 orders)</strong> ek flat fee
-                      pe hai — setup, testing aur creatives ka bhaari kaam yahin hota hai
+                      That's why <strong className="text-foreground">Stage 1 (first 75 orders)</strong> is a flat
+                      fee — it covers the heavy lifting of setup, testing, and creatives
                     </li>
                     <li>
-                      Ek baar Meta ke paas data ho jaaye, cost per order kam ho jaati hai — isliye{" "}
-                      <strong className="text-foreground">Stage 2 mein hamari fees bhi kam</strong> ho jaati hai
+                      Once Meta has enough data, cost per order drops — which is why{" "}
+                      <strong className="text-foreground">our Stage 2 fee drops too</strong>
                     </li>
                   </ul>
                 </div>
@@ -370,10 +403,10 @@ const GrowthPackage = () => {
         <section className="section-padding bg-card border-y border-border">
           <div className="container-main max-w-3xl">
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">
-              Aapke Pehle 100+ Orders Tak Ka Safar
+              Your Journey to Your First 100+ Orders
             </h2>
             <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
-              Teen simple stages. Koi retainer nahi. Koi chhupi hui creative ya website fees nahi — kabhi bhi.
+              Three simple stages. No retainer. No hidden creative or website fees — ever.
             </p>
 
             <div className="bg-background rounded-3xl border border-border overflow-hidden shadow-lg mb-8">
@@ -412,7 +445,7 @@ const GrowthPackage = () => {
 
             <div className="text-center">
               <div className="inline-flex items-center gap-2 bg-primary/10 text-primary font-bold text-lg px-6 py-3 rounded-full mb-8">
-                <TrendingUp className="w-5 h-5" /> Har sale ka zyada hissa hamesha aapke paas rehta hai.
+                <TrendingUp className="w-5 h-5" /> A bigger share of every sale always stays with you.
               </div>
               <div>
                 <motion.button
@@ -421,19 +454,19 @@ const GrowthPackage = () => {
                   onClick={openChatbot}
                   className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-primary text-white text-base md:text-xl font-bold rounded-2xl md:rounded-full shadow-xl hover:shadow-primary/50 transition-all inline-flex items-center justify-center gap-2 mb-6"
                 >
-                  <span className="truncate">Dekhein Kya Mera Brand Qualify Karta Hai</span>{" "}
+                  <span className="truncate">See If My Brand Qualifies</span>{" "}
                   <ArrowRight className="w-5 h-5 flex-shrink-0" />
                 </motion.button>
               </div>
               <div className="flex flex-wrap justify-center items-center gap-4 text-xs font-semibold text-muted-foreground">
                 <span className="flex items-center gap-1 bg-secondary/30 px-3 py-1.5 rounded-md">
-                  <ShieldCheck className="w-4 h-4 text-green-600" /> Koi fixed monthly retainer nahi
+                  <ShieldCheck className="w-4 h-4 text-green-600" /> No fixed monthly retainer
                 </span>
                 <span className="flex items-center gap-1 bg-secondary/30 px-3 py-1.5 rounded-md">
-                  <CheckCircle2 className="w-4 h-4 text-primary" /> Koi chhupi hui creative/website fees nahi
+                  <CheckCircle2 className="w-4 h-4 text-primary" /> No hidden creative/website fees
                 </span>
                 <span className="flex items-center gap-1 bg-secondary/30 px-3 py-1.5 rounded-md">
-                  <CheckCircle2 className="w-4 h-4 text-primary" /> Koi lock-in contract nahi
+                  <CheckCircle2 className="w-4 h-4 text-primary" /> No lock-in contract
                 </span>
               </div>
             </div>
@@ -443,37 +476,24 @@ const GrowthPackage = () => {
         {/* 4. WHAT'S INCLUDED */}
         <section className="section-padding bg-background">
           <div className="container-main max-w-5xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">Sab Kuch Included — Koi Extra Bill Nahi</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-3">Everything Included — No Extra Bills</h2>
             <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
-              Journey ke har stage mein ye sab included hai. Baad mein kabhi alag se line item nahi aayega.
+              All of this is included at every stage of the journey. No surprise line items later.
             </p>
             <div className="grid md:grid-cols-2 gap-8">
-              {[
-                {
-                  title: "Poora Campaign Setup & Tracking",
-                  desc: "Sahi tracking setup taaki pehle din se hi pata chale kaunsa ad order la raha hai.",
-                },
-                {
-                  title: "Ad Creatives, Included",
-                  desc: "Scroll rukwaane wale ad creatives, package ka hi hissa — zyada tar agencies ki tarah alag se quote nahi.",
-                },
-                {
-                  title: "Website & Landing Page Fixes, Included",
-                  desc: "Wo chhote fixes jo ad traffic ko order mein badalte hain, wo bhi included hain — mahine ke beech mein achanak extra bill nahi.",
-                },
-                {
-                  title: "Weekly Reporting & Order Tracking",
-                  desc: "Poori transparency — kitne orders aaye aur aap kaunsi stage mein hain, pay karte waqt koi surprise nahi.",
-                },
-              ].map((item, i) => (
-                <div
+              {included.map((item, i) => (
+                <motion.div
                   key={i}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.06 }}
                   className="bg-card p-5 md:p-8 rounded-2xl border border-border hover:border-primary/50 transition-all shadow-sm"
                 >
                   <CheckCircle2 className="w-8 h-8 text-primary mb-4" />
                   <h3 className="text-lg md:text-xl font-bold mb-2">{item.title}</h3>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{item.desc}</p>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -486,19 +506,19 @@ const GrowthPackage = () => {
         {/* 6. QUALIFICATION */}
         <section className="section-padding bg-background border-t border-border">
           <div className="container-main max-w-5xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Kya Ye Aapke Liye Sahi Hai?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">Is This Right for You?</h2>
 
             <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
               <div className="bg-card p-8 xl:p-10 rounded-3xl border border-border shadow-sm relative overflow-hidden group hover:border-primary/30 transition-colors">
                 <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                  <CheckCircle2 className="text-primary text-xl" /> PERFECT HAI AGAR:
+                  <CheckCircle2 className="text-primary text-xl" /> IT'S A GREAT FIT IF:
                 </h3>
                 <ul className="space-y-4">
                   {[
-                    "Aapka D2C / e-commerce brand naya ya badh raha hai, aur product-checkout kaam kar raha hai",
-                    "Aap abhi flat monthly retainer commit nahi karna chahte",
-                    "Aap chahte hain ad creatives aur website fixes bina extra bill ke ho jaayein",
-                    "Aap apne pehle 100+ orders ka target rakhte hain aur aage scale karna chahte hain",
+                    "Your D2C / e-commerce brand is new or growing, and your product-to-checkout flow already works",
+                    "You don't want to commit to a flat monthly retainer right now",
+                    "You want ad creatives and website fixes handled without extra bills",
+                    "You're aiming for your first 100+ orders and want to keep scaling from there",
                   ].map((item, i) => (
                     <li key={i} className="flex gap-3 text-foreground font-medium items-start">
                       <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2.5 flex-shrink-0"></div>
@@ -510,14 +530,14 @@ const GrowthPackage = () => {
 
               <div className="bg-card p-8 xl:p-10 rounded-3xl border border-border shadow-sm relative overflow-hidden group hover:border-primary/30 transition-colors">
                 <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
-                  <XCircle className="text-muted-foreground text-xl" /> YE NAHI HAI AGAR:
+                  <XCircle className="text-muted-foreground text-xl" /> IT'S NOT A FIT IF:
                 </h3>
                 <ul className="space-y-4">
                   {[
-                    "Aapka store bilkul naya hai aur abhi tak koi traffic ya sales history nahi hai",
-                    "Aap bina kisi effort ke turant result chahte hain",
-                    "Aapke product/service ka koi clear per-unit \"order\" nahi hota",
-                    "Aap tracking ke liye apna order/sales data share nahi karna chahte",
+                    "Your store is brand new with no traffic or sales history yet",
+                    "You want instant results with no effort on your end",
+                    "Your product or service doesn't have a clear, per-unit \"order\"",
+                    "You're not comfortable sharing order/sales data for tracking",
                   ].map((item, i) => (
                     <li key={i} className="flex gap-3 text-foreground font-medium items-start">
                       <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground mt-2.5 flex-shrink-0"></div>
@@ -533,30 +553,9 @@ const GrowthPackage = () => {
         {/* 7. FAQ */}
         <section className="section-padding bg-muted/30 border-t border-border">
           <div className="container-main max-w-3xl">
-            <h2 className="text-3xl font-bold text-center mb-12">Aksar Poochhe Jaane Wale Sawaal</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
             <div className="space-y-4">
-              {[
-                {
-                  q: "Fixed retainer kyun nahi lete, jaisa doosri agencies leti hain?",
-                  a: "Kyunki us model mein performance ka koi reward nahi hota — chahe hum 5 order laayein ya 500, aap same amount pay karte. Ye package aapki cost seedhe un orders se jodta hai jo hum actually laate hain.",
-                },
-                {
-                  q: "Kya ad creatives aur website fixes sach mein included hain, ya wo extra hain?",
-                  a: "Har stage mein included hain. Zyada tar agencies ki tarah hum creatives, tracking setup, ya landing page/website tweaks ka alag bill nahi bhejte — sab fees mein hi shaamil hai.",
-                },
-                {
-                  q: "Orders badhne pe fees kam kyun ho jaati hai?",
-                  a: "Sabse zyada mehnat shuruaat mein lagti hai — setup aur system ko reliably kaam karwana. Ek baar wo prove ho jaaye, aage orders badhana kam effort leta hai — isliye fees kam hoti hai, aur eventually sirf sales ka ek chhota percentage reh jaati hai.",
-                },
-                {
-                  q: "120 orders ke baad kya hota hai?",
-                  a: "Aap total sales ke 5% wale model mein chale jaate hain, taaki aapka revenue badhne ke saath hamari fees bhi proportionally badhe, na ki achanak ek mehenga flat retainer ban jaaye.",
-                },
-                {
-                  q: "Koi lock-in contract hai?",
-                  a: "Nahi. Kyunki aap sirf real orders aane pe pay karte hain, aapko kisi long-term contract mein bandhne ki koi wajah nahi hai.",
-                },
-              ].map((faq, i) => (
+              {faqs.map((faq, i) => (
                 <div key={i} className="bg-card p-5 md:p-6 rounded-2xl border border-border shadow-sm">
                   <h3 className="font-bold text-base md:text-lg mb-2">{faq.q}</h3>
                   <p className="text-sm md:text-base text-muted-foreground leading-relaxed">{faq.a}</p>
@@ -570,10 +569,10 @@ const GrowthPackage = () => {
         <div className="bg-gradient-to-br from-primary/10 to-background border-t border-primary/20 pb-24">
           <div className="py-20 text-center container-main">
             <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
-              Retainer Ke Bina Growth Shuru Karne Ke Liye Ready Hain?
+              Ready to Start Growing Without a Retainer?
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto mb-10 text-xl">
-              Apne brand ke baare mein batayein aur dekhein Stage 1 aapke liye kaisa dikhta hai.
+              Tell us about your brand and see what Stage 1 looks like for you.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -581,7 +580,7 @@ const GrowthPackage = () => {
               onClick={openChatbot}
               className="w-full sm:w-auto px-6 py-4 md:px-10 md:py-5 bg-primary text-white text-base md:text-xl font-bold rounded-2xl md:rounded-full shadow-xl hover:shadow-primary/50 transition-all inline-flex items-center justify-center gap-2 mb-8"
             >
-              <MessageCircle className="w-5 h-5 flex-shrink-0" /> Apni Growth Journey Shuru Karein
+              <MessageCircle className="w-5 h-5 flex-shrink-0" /> Start Your Growth Journey
             </motion.button>
 
             <div className="flex justify-center mt-4">
@@ -601,7 +600,7 @@ const GrowthPackage = () => {
                 >
                   <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
                 </svg>
-                Sawaal Hai? WhatsApp Pe Poochein
+                Questions? Chat on WhatsApp
               </a>
             </div>
           </div>
@@ -609,24 +608,6 @@ const GrowthPackage = () => {
       </main>
 
       <Footer />
-
-      {/* Sticky Bottom CTA Banner — chatbot khula ho toh chhupa dete hain taaki overlap na ho */}
-      {!chatOpen && (
-      <div className="fixed bottom-0 left-0 right-0 p-4 bg-background/90 backdrop-blur-md border-t border-border shadow-[0_-4px_20px_-10px_rgba(0,0,0,0.1)] z-[100] flex justify-center items-center">
-        <div className="container-main max-w-4xl flex items-center justify-between gap-4">
-          <div className="hidden sm:block">
-            <p className="font-bold text-lg">Performance Growth Package</p>
-            <p className="text-sm text-muted-foreground">Koi retainer nahi. Sirf real orders aane pe pay karein.</p>
-          </div>
-          <button
-            onClick={openChatbot}
-            className="w-full sm:w-auto px-6 py-3 bg-primary text-white font-bold rounded-full shadow-lg hover:shadow-primary/50 transition-all text-sm sm:text-base flex items-center justify-center gap-2"
-          >
-            Growth Journey Shuru Karein <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
-      </div>
-      )}
 
       {/* Auto-opening lead-capture chatbot */}
       <GrowthPackageChatbot />

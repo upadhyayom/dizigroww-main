@@ -15,11 +15,11 @@ const STORAGE_KEY = "dizi_gp_chatbot_dismissed_v1";
 const TYPING_DELAY = 600;
 
 const BUDGET_OPTIONS = [
-  "₹10,000/month se kam",
+  "Under ₹10,000/month",
   "₹10,000 – ₹30,000/month",
   "₹30,000 – ₹1,00,000/month",
   "₹1,00,000+/month",
-  "Abhi ads nahi chala rahe",
+  "Not running ads yet",
 ];
 
 // Steps in order — used for the progress dots during data collection.
@@ -77,7 +77,7 @@ const TypingBubble = () => (
   </motion.div>
 );
 
-// Small "2 of 4" progress dots shown in the header while collecting the lead's info.
+// Small progress dots shown in the header while collecting the lead's info.
 const ProgressDots = ({ step }: { step: Step }) => {
   const idx = QUESTION_STEPS.indexOf(step as (typeof QUESTION_STEPS)[number]);
   if (idx === -1) return null;
@@ -115,7 +115,7 @@ const GrowthPackageChatbot = () => {
     const t = setTimeout(() => {
       setOpen(true);
       hasAutoOpenedRef.current = true;
-    }, 4500);
+    }, 4000);
     return () => clearTimeout(t);
   }, []);
 
@@ -132,12 +132,6 @@ const GrowthPackageChatbot = () => {
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [step, open, typing]);
-
-  // Let the page know when the chat is open so it can hide the sticky bottom CTA
-  // bar (they'd otherwise overlap in the bottom-left corner).
-  useEffect(() => {
-    window.dispatchEvent(new CustomEvent("growth-chatbot-visibility", { detail: { open } }));
-  }, [open]);
 
   // Clear any pending typing-indicator timer on unmount.
   useEffect(() => {
@@ -171,7 +165,7 @@ const GrowthPackageChatbot = () => {
     e.preventDefault();
     const clean = nameInput.trim();
     if (clean.length < 2) {
-      setError("Apna naam bata dijiye, taaki hum aapse sahi tarike se baat kar sakein.");
+      setError("Please tell us your name so we can address you properly.");
       return;
     }
     setError("");
@@ -183,7 +177,7 @@ const GrowthPackageChatbot = () => {
     e.preventDefault();
     const clean = whatsappInput.replace(/[^\d+]/g, "");
     if (clean.replace(/\D/g, "").length < 10) {
-      setError("Please ek valid WhatsApp number daalein (India ke bahar hain toh country code ke saath).");
+      setError("Please enter a valid WhatsApp number (with country code if you're outside India).");
       return;
     }
     setError("");
@@ -231,7 +225,7 @@ const GrowthPackageChatbot = () => {
   const submitProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!productInput.trim()) {
-      setError("Bataiye aap kya bechte hain, taaki hum help kar sakein.");
+      setError("Let us know what you sell so we can help.");
       return;
     }
     setError("");
@@ -261,11 +255,11 @@ const GrowthPackageChatbot = () => {
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.94 }}
             onClick={() => setOpen(true)}
-            className="fixed bottom-6 left-6 z-[110] flex items-center gap-2 bg-primary text-primary-foreground rounded-full shadow-xl px-4 py-3.5 font-semibold text-sm"
-            aria-label="Custom quote paayein"
+            className="fixed bottom-6 right-6 z-[110] flex items-center gap-2 bg-primary text-primary-foreground rounded-full shadow-xl px-4 py-3.5 font-semibold text-sm"
+            aria-label="Get a custom quote"
           >
             <MessageCircle className="w-5 h-5" />
-            <span className="hidden sm:inline">Custom quote paayein</span>
+            <span className="hidden sm:inline">Get a custom quote</span>
           </motion.button>
         )}
       </AnimatePresence>
@@ -278,7 +272,7 @@ const GrowthPackageChatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.95 }}
             transition={{ type: "spring", damping: 26, stiffness: 300 }}
-            className="fixed bottom-0 left-0 sm:bottom-6 sm:left-6 z-[110] w-full sm:w-[380px] h-[80vh] sm:h-[540px] max-h-[600px] bg-card border border-border rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="fixed bottom-0 right-0 sm:bottom-6 sm:right-6 z-[110] w-full sm:w-[380px] h-[80vh] sm:h-[540px] max-h-[600px] bg-card border border-border rounded-t-2xl sm:rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="bg-primary text-primary-foreground px-4 py-3.5 flex items-center justify-between flex-shrink-0">
@@ -290,7 +284,7 @@ const GrowthPackageChatbot = () => {
                   <p className="font-semibold text-sm leading-tight">DiziGroww Assistant</p>
                   {step === "intro" || step === "done" ? (
                     <p className="text-[11px] text-primary-foreground/80 flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-300 inline-block" /> Turant reply karte hain
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-300 inline-block" /> Usually replies instantly
                     </p>
                   ) : (
                     <ProgressDots step={step} />
@@ -309,34 +303,34 @@ const GrowthPackageChatbot = () => {
             {/* Messages */}
             <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-3 bg-background/40">
               <BotBubble>
-                👋 Hey! <strong>Free custom quote</strong> chahiye? Bas 4 chhote sawaal — 20 second lagenge, no spam.
+                👋 Hey! Want a <strong>free custom quote</strong>? Just 4 quick questions — takes 20 seconds, no spam.
               </BotBubble>
 
-              {step !== "intro" && <UserBubble>Haan, chalo shuru karein 👍</UserBubble>}
+              {step !== "intro" && <UserBubble>Sure, let's go 👍</UserBubble>}
 
               {/* Name */}
               {(step === "name" || (step !== "intro" && data.name)) && (
-                <BotBubble>Sabse pehle — aapka naam kya hai?</BotBubble>
+                <BotBubble>First — what's your name?</BotBubble>
               )}
               {data.name && <UserBubble>{data.name}</UserBubble>}
 
               {/* WhatsApp */}
               {(step === "whatsapp" || (data.name && data.whatsapp) || (step !== "intro" && step !== "name" && data.whatsapp)) && (
                 <BotBubble>
-                  {firstName ? `Nice to meet you, ${firstName}! ` : ""}Aapse WhatsApp pe baat karne ke liye best number kaunsa hai?
+                  {firstName ? `Nice to meet you, ${firstName}! ` : ""}What's the best WhatsApp number to reach you on?
                 </BotBubble>
               )}
               {data.whatsapp && <UserBubble>{data.whatsapp}</UserBubble>}
 
               {/* Budget */}
               {(step === "budget" || (data.whatsapp && data.budget)) && (
-                <BotBubble>Theek hai. Aapka current (ya planned) monthly ad budget kitna hai?</BotBubble>
+                <BotBubble>Got it. What's your current (or planned) monthly ad budget?</BotBubble>
               )}
               {data.budget && <UserBubble>{data.budget}</UserBubble>}
 
               {/* Product */}
               {(step === "product" || step === "sending" || step === "done") && (
-                <BotBubble>Last sawaal — aap kaunsa product ya service bechte hain?</BotBubble>
+                <BotBubble>Last question — what product or service do you sell?</BotBubble>
               )}
               {step !== "product" && data.product && <UserBubble>{data.product}</UserBubble>}
 
@@ -345,8 +339,8 @@ const GrowthPackageChatbot = () => {
               {step === "done" && (
                 <>
                   <BotBubble>
-                    🎉 Shukriya, {firstName || "dost"}! Aapki details mil gayi — hamari team jaldi hi WhatsApp pe aapka
-                    Growth Package custom quote bhejegi.
+                    🎉 Thanks, {firstName || "there"}! We've got your details — our team will send your Growth
+                    Package quote on WhatsApp shortly.
                   </BotBubble>
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
@@ -355,10 +349,10 @@ const GrowthPackageChatbot = () => {
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <Sparkles className="w-4 h-4 text-primary" />
-                      <p className="text-sm font-semibold">Wait skip karna hai? (optional)</p>
+                      <p className="text-sm font-semibold">Want to skip the wait? (optional)</p>
                     </div>
                     <p className="text-xs text-muted-foreground mb-3">
-                      Seedhe hamare calendar se ek free 30-min strategy call book karein — bilkul optional hai.
+                      Book a free 30-minute strategy call directly on our calendar — totally optional.
                     </p>
                     <div className="flex gap-2">
                       <a
@@ -367,13 +361,13 @@ const GrowthPackageChatbot = () => {
                         rel="noopener noreferrer"
                         className="flex-1 inline-flex items-center justify-center gap-1.5 bg-primary text-primary-foreground text-xs font-semibold rounded-full px-3 py-2.5 hover:opacity-90 transition-opacity"
                       >
-                        <CalendarCheck className="w-3.5 h-3.5" /> Call Book Karein
+                        <CalendarCheck className="w-3.5 h-3.5" /> Book a Call
                       </a>
                       <button
                         onClick={closeChat}
                         className="flex-1 text-xs font-semibold rounded-full px-3 py-2.5 border border-border hover:bg-secondary transition-colors"
                       >
-                        Baad Mein
+                        Maybe Later
                       </button>
                     </div>
                   </motion.div>
@@ -391,13 +385,13 @@ const GrowthPackageChatbot = () => {
                     onClick={() => goTo("name", 350)}
                     className="flex-1 bg-primary text-primary-foreground text-sm font-semibold rounded-full py-2.5 hover:opacity-90 transition-opacity"
                   >
-                    Haan, chalo shuru karein
+                    Sure, let's go
                   </button>
                   <button
                     onClick={closeChat}
                     className="px-4 text-sm font-medium rounded-full border border-border hover:bg-secondary transition-colors"
                   >
-                    Nahi, shukriya
+                    No thanks
                   </button>
                 </div>
               )}
@@ -407,7 +401,7 @@ const GrowthPackageChatbot = () => {
                   <input
                     autoFocus
                     type="text"
-                    placeholder="e.g. Rahul Sharma"
+                    placeholder="e.g. Alex Smith"
                     value={nameInput}
                     onChange={(e) => setNameInput(e.target.value)}
                     className="flex-1 px-4 py-2.5 rounded-full border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
@@ -462,7 +456,7 @@ const GrowthPackageChatbot = () => {
                   <input
                     autoFocus
                     type="text"
-                    placeholder="jaise: Skincare brand, SaaS tool..."
+                    placeholder="e.g. Skincare brand, SaaS tool..."
                     value={productInput}
                     onChange={(e) => setProductInput(e.target.value)}
                     className="flex-1 px-4 py-2.5 rounded-full border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
@@ -479,7 +473,7 @@ const GrowthPackageChatbot = () => {
 
               {(step === "sending" || step === "done") && (
                 <p className="text-center text-[11px] text-muted-foreground py-1">
-                  Hum generally kuch business hours mein reply karte hain.
+                  We typically reply within business hours.
                 </p>
               )}
             </div>
