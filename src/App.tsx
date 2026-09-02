@@ -13,6 +13,8 @@ import GrowthPackage from "./pages/GrowthPackage.tsx";
 import ThankYou from "./pages/ThankYou.tsx";
 import ProposalGenerator from "./pages/ProposalGenerator.tsx";
 import Invoices from "./pages/Invoices.tsx";
+import OfferLetters from "./pages/OfferLetters.tsx";
+import InternshipLetters from "./pages/InternshipLetters.tsx";
 import Internships from "./pages/Internships.tsx";
 import WebDevDubai from "./pages/WebDevDubai.tsx";
 import WebDevSingapore from "./pages/WebDevSingapore.tsx";
@@ -50,6 +52,8 @@ const App = () => (
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/proposal-generator" element={<ProposalGenerator />} />
           <Route path="/invoices" element={<Invoices />} />
+          <Route path="/offer-letters" element={<OfferLetters />} />
+          <Route path="/internship-letters" element={<InternshipLetters />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />

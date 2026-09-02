@@ -44,10 +44,11 @@ import {
   Search,
   Trash2,
   Upload,
-  Lock,
   Copy,
   LogOut,
 } from "lucide-react";
+import { AdminAuthGate } from "@/components/admin/AdminAuthGate";
+import { AdminNav } from "@/components/admin/AdminNav";
 
 import {
   CURRENCY_SYMBOL,
@@ -83,7 +84,6 @@ import {
 } from "@/lib/invoices";
 import { pushInvoiceToCloud, deleteInvoiceFromCloud } from "@/lib/invoicesCloud";
 import { cloudEnabled, supabase } from "@/lib/supabaseClient";
-import type { Session } from "@supabase/supabase-js";
 
 // ----------------------------------------------------------------------------
 // Brand defaults (DiziGroww). Change here once if you rebrand.
@@ -113,12 +113,6 @@ const BRAND = {
 // Seed: the very next invoice number for the current year. Set once so the
 // counter floor is bumped on app boot without rolling back any later numbers.
 const NEXT_NUMBER_SEED = { year: 2026, nextNumber: 273 };
-
-// Password gate. Set VITE_INVOICE_PASSWORD in .env to override.
-const INVOICE_PASSWORD =
-  (import.meta as any).env?.VITE_INVOICE_PASSWORD || "dizi-admin";
-
-const PASS_STORAGE_KEY = "dizi_invoice_auth_v1";
 
 // ----------------------------------------------------------------------------
 // Preset services — quick-add common line items instead of typing them.
@@ -184,177 +178,10 @@ function blankInvoice(): Invoice {
 // Page
 // ============================================================================
 export default function Invoices() {
-  // Keep this admin page out of search engines regardless of auth outcome.
-  useEffect(() => {
-    const meta = document.createElement("meta");
-    meta.name = "robots";
-    meta.content = "noindex, nofollow";
-    document.head.appendChild(meta);
-    return () => {
-      document.head.removeChild(meta);
-    };
-  }, []);
-
-  // When Supabase is configured, require a real logged-in session (data is
-  // locked to authenticated users at the database level). Otherwise fall back
-  // to the local password gate so local dev without Supabase still works.
-  if (cloudEnabled()) return <SupabaseAuthGate />;
-  return <LocalPasswordGate />;
-}
-
-// ----------------------------------------------------------------------------
-// Supabase auth gate — real server-side authentication
-// ----------------------------------------------------------------------------
-function SupabaseAuthGate() {
-  const [session, setSession] = useState<Session | null | undefined>(undefined);
-
-  useEffect(() => {
-    supabase!.auth.getSession().then(({ data }) => setSession(data.session));
-    const { data: sub } = supabase!.auth.onAuthStateChange((_evt, s) => setSession(s));
-    return () => sub.subscription.unsubscribe();
-  }, []);
-
-  if (session === undefined) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-500 text-sm">
-        Loading…
-      </div>
-    );
-  }
-  if (!session) return <LoginForm />;
-  return <InvoiceApp />;
-}
-
-function LoginForm() {
-  const [email, setEmail] = useState("");
-  const [pw, setPw] = useState("");
-  const [err, setErr] = useState("");
-  const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    document.title = "Invoices · DiziGroww";
-  }, []);
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setBusy(true);
-    setErr("");
-    const { error } = await supabase!.auth.signInWithPassword({ email, password: pw });
-    setBusy(false);
-    if (error) setErr(error.message);
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-2 w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
-            <Lock className="w-5 h-5 text-slate-600" />
-          </div>
-          <CardTitle>Invoice Admin</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={submit} className="space-y-3">
-            <div>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                autoFocus
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@dizigroww.in"
-                required
-              />
-            </div>
-            <div>
-              <Label htmlFor="pw">Password</Label>
-              <Input
-                id="pw"
-                type="password"
-                value={pw}
-                onChange={(e) => setPw(e.target.value)}
-                placeholder="Enter password"
-                required
-              />
-            </div>
-            {err && <p className="text-sm text-red-600">{err}</p>}
-            <Button type="submit" className="w-full" disabled={busy}>
-              {busy ? "Signing in…" : "Sign in"}
-            </Button>
-            <p className="text-xs text-slate-500 text-center">
-              Access is restricted to authorized DiziGroww accounts.
-            </p>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
-
-// ----------------------------------------------------------------------------
-// Local password gate — fallback only when Supabase isn't configured
-// ----------------------------------------------------------------------------
-function LocalPasswordGate() {
-  const [authed, setAuthed] = useState<boolean>(
-    typeof window !== "undefined" &&
-      localStorage.getItem(PASS_STORAGE_KEY) === "yes"
-  );
-
-  if (!authed) return <PasswordGate onPass={() => setAuthed(true)} />;
-  return <InvoiceApp />;
-}
-
-// ----------------------------------------------------------------------------
-// Password gate
-// ----------------------------------------------------------------------------
-function PasswordGate({ onPass }: { onPass: () => void }) {
-  const [pw, setPw] = useState("");
-  const [err, setErr] = useState("");
-
-  useEffect(() => {
-    document.title = "Invoices · DiziGroww";
-  }, []);
-
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (pw === INVOICE_PASSWORD) {
-      localStorage.setItem(PASS_STORAGE_KEY, "yes");
-      onPass();
-    } else {
-      setErr("Wrong password");
-    }
-  };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
-      <Card className="w-full max-w-sm">
-        <CardHeader className="text-center">
-          <div className="mx-auto mb-2 w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center">
-            <Lock className="w-5 h-5 text-slate-600" />
-          </div>
-          <CardTitle>Invoice Admin</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={submit} className="space-y-3">
-            <Label htmlFor="pw">Password</Label>
-            <Input
-              id="pw"
-              type="password"
-              autoFocus
-              value={pw}
-              onChange={(e) => setPw(e.target.value)}
-              placeholder="Enter password"
-            />
-            {err && <p className="text-sm text-red-600">{err}</p>}
-            <Button type="submit" className="w-full">Unlock</Button>
-            <p className="text-xs text-slate-500 text-center">
-              Default password is set in code. Override with VITE_INVOICE_PASSWORD.
-            </p>
-          </form>
-        </CardContent>
-      </Card>
-    </div>
+    <AdminAuthGate title="Invoices">
+      <InvoiceApp />
+    </AdminAuthGate>
   );
 }
 
@@ -555,6 +382,7 @@ function InvoiceApp() {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      <AdminNav />
       {/* Top bar */}
       <header className="bg-white border-b sticky top-0 z-30">
         <div className="max-w-7xl mx-auto px-4 py-3 flex items-center gap-3">
@@ -764,18 +592,10 @@ function StatsRow({ invoices }: { invoices: Invoice[] }) {
     const totalsByCur: Record<string, number> = {};
     const paidByCur: Record<string, number> = {};
     const balanceByCur: Record<string, number> = {};
-    // "Collected" figures are on paid invoices only — actual cash in, not just billed.
-    const taxCollectedByCur: Record<string, number> = {};
-    const revenueCollectedByCur: Record<string, number> = {};
     invoices.forEach((inv) => {
-      const t = computeTotals(inv);
-      totalsByCur[inv.currency] = (totalsByCur[inv.currency] || 0) + t.total;
-      if (inv.status === "paid") {
-        paidByCur[inv.currency] = (paidByCur[inv.currency] || 0) + t.total;
-        taxCollectedByCur[inv.currency] = (taxCollectedByCur[inv.currency] || 0) + t.tax;
-        revenueCollectedByCur[inv.currency] =
-          (revenueCollectedByCur[inv.currency] || 0) + (t.total - t.tax);
-      }
+      const t = computeTotals(inv).total;
+      totalsByCur[inv.currency] = (totalsByCur[inv.currency] || 0) + t;
+      if (inv.status === "paid") paidByCur[inv.currency] = (paidByCur[inv.currency] || 0) + t;
       const bal = balanceDue(inv);
       if (bal > 0) balanceByCur[inv.currency] = (balanceByCur[inv.currency] || 0) + bal;
     });
@@ -786,34 +606,26 @@ function StatsRow({ invoices }: { invoices: Invoice[] }) {
       totalsByCur,
       paidByCur,
       balanceByCur,
-      taxCollectedByCur,
-      revenueCollectedByCur,
     };
   }, [invoices]);
 
-  const line = (byCur: Record<string, number>) =>
-    Object.entries(byCur)
-      .map(([c, v]) => formatMoney(v, c as Currency))
-      .join(" · ") || "—";
-
-  const totalLine = line(stats.totalsByCur);
-  const balanceLine = line(stats.balanceByCur);
-  const taxCollectedLine = line(stats.taxCollectedByCur);
-  const revenueCollectedLine = line(stats.revenueCollectedByCur);
-  // Revenue (excl. tax) + tax collected should always foot back to the paid total —
-  // shown together so it's a self-checking figure, not two disconnected numbers.
-  const revenuePlusTaxLine = line(stats.paidByCur);
+  const totalLine = Object.entries(stats.totalsByCur)
+    .map(([c, v]) => formatMoney(v, c as Currency))
+    .join(" · ") || "—";
+  const paidLine = Object.entries(stats.paidByCur)
+    .map(([c, v]) => formatMoney(v, c as Currency))
+    .join(" · ") || "—";
+  const balanceLine = Object.entries(stats.balanceByCur)
+    .map(([c, v]) => formatMoney(v, c as Currency))
+    .join(" · ") || "—";
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
+    <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
       <Stat label="Invoices" value={String(stats.count)} />
       <Stat label="Recurring series" value={String(stats.recurring)} />
       <Stat label="Outstanding" value={String(stats.outstanding)} />
       <Stat label="Billed total" value={totalLine} small />
       <Stat label="Balance remaining" value={balanceLine} small />
-      <Stat label="Collected (incl. tax)" value={revenuePlusTaxLine} small />
-      <Stat label="Tax collected" value={taxCollectedLine} small />
-      <Stat label="Revenue collected (excl. tax)" value={revenueCollectedLine} small />
     </div>
   );
 }
@@ -929,19 +741,6 @@ function InvoiceEditor({
 
   const update = <K extends keyof Invoice>(k: K, v: Invoice[K]) =>
     setDraft((d) => ({ ...d, [k]: v }));
-
-  // Changing status to "paid" clears the outstanding balance by default —
-  // no need to separately click "Mark fully paid". Flipping back off "paid"
-  // restores it to the full total (only when it was sitting at 0, so we don't
-  // clobber a partial balance someone had deliberately set).
-  const updateStatus = (v: InvoiceStatus) =>
-    setDraft((d) => {
-      if (v === "paid") return { ...d, status: v, balanceRemaining: 0 };
-      if (d.status === "paid" && (d.balanceRemaining ?? 0) === 0) {
-        return { ...d, status: v, balanceRemaining: computeTotals(d).total };
-      }
-      return { ...d, status: v };
-    });
 
   const updateItem = (id: string, patch: Partial<InvoiceLineItem>) =>
     setDraft((d) => ({
@@ -1228,7 +1027,7 @@ function InvoiceEditor({
               <Field label="Status">
                 <Select
                   value={draft.status}
-                  onValueChange={(v) => updateStatus(v as InvoiceStatus)}
+                  onValueChange={(v) => update("status", v as InvoiceStatus)}
                 >
                   <SelectTrigger><SelectValue /></SelectTrigger>
                   <SelectContent>
