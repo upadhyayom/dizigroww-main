@@ -529,10 +529,44 @@ function OfferLetterPreviewDialog({ letter, onClose }: { letter: OfferLetterData
   const [busy, setBusy] = useState(false);
 
   const downloadPdf = async () => {
-    if (!printRef.current) return;
+    const container = printRef.current;
+    if (!container) return;
     setBusy(true);
+    const pageBreakEl = container.querySelector('[data-pdf-page-break="true"]') as HTMLElement | null;
+    const spacerEl = container.querySelector('[data-pdf-spacer="closing"]') as HTMLElement | null;
+    const closingEl = container.querySelector('[data-pdf-block="closing"]') as HTMLElement | null;
     try {
-      const canvas = await html2canvas(printRef.current, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
+      // The PDF is a single rasterized image sliced into A4-height pages by
+      // pure pixel position — it has no idea where paragraphs or the
+      // signature block are. So before rasterizing, insert invisible
+      // spacers to (1) force "Terms and Conditions" to start at the top of
+      // page 2, and (2) push the closing/signature block past whatever
+      // page boundary it would otherwise be sliced across.
+      if (pageBreakEl) pageBreakEl.style.height = "0px";
+      if (spacerEl) spacerEl.style.height = "0px";
+
+      const A4_RATIO = 297 / 210; // mm height / width, matches jsPDF's "a4"
+      const pageHeightPx = container.offsetWidth * A4_RATIO;
+      const containerTop = () => container.getBoundingClientRect().top;
+
+      if (pageBreakEl) {
+        const markerTop = pageBreakEl.getBoundingClientRect().top - containerTop();
+        const nextBoundary = Math.ceil(markerTop / pageHeightPx) * pageHeightPx;
+        pageBreakEl.style.height = `${Math.max(0, Math.ceil(nextBoundary - markerTop))}px`;
+      }
+
+      if (spacerEl && closingEl) {
+        const blockTop = closingEl.getBoundingClientRect().top - containerTop();
+        const blockBottom = closingEl.getBoundingClientRect().bottom - containerTop();
+        const startPage = Math.floor(blockTop / pageHeightPx);
+        const endPage = Math.floor((blockBottom - 1) / pageHeightPx);
+        if (startPage !== endPage) {
+          const nextPageStart = (startPage + 1) * pageHeightPx;
+          spacerEl.style.height = `${Math.ceil(nextPageStart - blockTop)}px`;
+        }
+      }
+
+      const canvas = await html2canvas(container, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -554,6 +588,8 @@ function OfferLetterPreviewDialog({ letter, onClose }: { letter: OfferLetterData
       console.error(err);
       toast.error("PDF generation failed");
     } finally {
+      if (pageBreakEl) pageBreakEl.style.height = "0px";
+      if (spacerEl) spacerEl.style.height = "0px";
       setBusy(false);
     }
   };
@@ -583,8 +619,56 @@ function OfferLetterPreviewDialog({ letter, onClose }: { letter: OfferLetterData
 }
 
 // ----------------------------------------------------------------------------
-// Printable letter — a standard, formal offer-letter layout on DiziGroww
-// letterhead. Also what gets rasterized into the PDF.
+// Standard terms & conditions — page 2 of the offer letter, generic
+// boilerplate (not tied to any one candidate's entered values).
+// ----------------------------------------------------------------------------
+const STANDARD_CLAUSES: { title: string; body: string }[] = [
+  {
+    title: "1. Probation & Confirmation",
+    body: "You will be on probation from your date of joining for the probation period specified above. During this period, your performance, conduct and suitability for the role will be reviewed, and your employment may be confirmed, the probation period extended, or your services discontinued, at the sole discretion of the Company.",
+  },
+  {
+    title: "2. Working Hours & Attendance",
+    body: "You will be required to observe the working hours, holidays, and attendance and leave policies of the Company as communicated to you and as amended from time to time.",
+  },
+  {
+    title: "3. Compensation & Statutory Deductions",
+    body: "Your compensation will be paid on a monthly basis and is subject to applicable statutory deductions, including but not limited to Income Tax (TDS), Provident Fund and Professional Tax, as per prevailing law. Compensation is subject to periodic review at the Company's discretion.",
+  },
+  {
+    title: "4. Confidentiality",
+    body: "You shall not, either during your employment or after its cessation, disclose to any third party any confidential, proprietary or business-sensitive information belonging to the Company, its clients, partners or employees, except as required in the ordinary course of your duties or by law.",
+  },
+  {
+    title: "5. Code of Conduct",
+    body: "You are expected to maintain the highest standards of integrity, professionalism and discipline, and to comply with all Company policies, rules and codes of conduct in force from time to time.",
+  },
+  {
+    title: "6. Notice Period & Termination",
+    body: "This employment may be terminated by either party by providing written notice for the notice period specified above, or payment/recovery of salary in lieu thereof. The Company reserves the right to terminate your employment without notice in cases of proven misconduct, breach of policy, or unsatisfactory performance.",
+  },
+  {
+    title: "7. Non-Solicitation",
+    body: "During your employment with the Company and for a reasonable period thereafter, you agree not to solicit, for competing business purposes, any employee, client or vendor of the Company with whom you had contact during your employment.",
+  },
+  {
+    title: "8. Leave Policy",
+    body: "You will be entitled to leave in accordance with the Company's leave policy applicable to your role and location, details of which will be shared to you separately.",
+  },
+  {
+    title: "9. Background Verification",
+    body: "This offer of employment is extended on the basis of the information and documents provided by you, and remains subject to satisfactory verification of your credentials, employment history, and references.",
+  },
+  {
+    title: "10. Governing Law",
+    body: "This offer letter and your employment shall be governed by and construed in accordance with the applicable laws of India, and shall be subject to the exclusive jurisdiction of the courts having jurisdiction over the Company's registered office.",
+  },
+];
+
+// ----------------------------------------------------------------------------
+// Printable letter — a standard, formal two-page offer-letter layout on
+// DiziGroww letterhead (page 1: role & compensation terms; page 2: terms &
+// conditions and signatures). Also what gets rasterized into the PDF.
 // ----------------------------------------------------------------------------
 const PrintableOfferLetter = React.forwardRef<HTMLDivElement, { letter: OfferLetterData }>(
   ({ letter }, ref) => {
@@ -673,30 +757,69 @@ const PrintableOfferLetter = React.forwardRef<HTMLDivElement, { letter: OfferLet
           <div style={{ marginBottom: 14, whiteSpace: "pre-line" }}>{letter.additionalTerms}</div>
         )}
 
-        <div style={{ marginBottom: 14 }}>
-          We look forward to welcoming you to the {BRAND.name} team. Please sign and return a copy of this
-          letter as confirmation of your acceptance of the above terms.
+        {/* Forces everything below (Terms & Conditions onward) onto a
+            fresh page — see the measurement pass in downloadPdf(). */}
+        <div data-pdf-page-break="true" style={{ height: 0 }} />
+
+        <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 6 }}>TERMS AND CONDITIONS</div>
+        <div style={{ marginBottom: 16, color: "#64748b" }}>
+          This offer of employment is subject to the following standard terms and conditions:
         </div>
 
-        <div style={{ marginBottom: 32 }}>Congratulations, and welcome aboard!</div>
+        {STANDARD_CLAUSES.map((c) => (
+          <div key={c.title} style={{ marginBottom: 12 }}>
+            <div style={{ fontWeight: 600, marginBottom: 2 }}>{c.title}</div>
+            <div style={{ color: "#334155" }}>{c.body}</div>
+          </div>
+        ))}
 
-        <div style={{ marginBottom: 40 }}>Sincerely,</div>
+        {/* Kept together on one page — see the measurement pass in
+            downloadPdf(), which pushes this whole block past a page break
+            rather than letting the signature get sliced across two pages. */}
+        <div data-pdf-spacer="closing" style={{ height: 0 }} />
+        <div data-pdf-block="closing">
+          <div style={{ marginTop: 8, marginBottom: 14 }}>
+            We look forward to welcoming you to the {BRAND.name} team. Please sign and return a copy of
+            this letter, along with the acceptance section below, as confirmation of your acceptance of
+            the above terms and conditions.
+          </div>
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", minHeight: 100 }}>
-          {BRAND.signatureImage && (
-            <img
-              src={BRAND.signatureImage}
-              alt="Signature"
-              style={{ height: 60, width: "auto", maxWidth: 180, objectFit: "contain", marginBottom: -6 }}
-              crossOrigin="anonymous"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).style.display = "none";
-              }}
-            />
-          )}
-          <div style={{ borderTop: "1px solid #0f172a", paddingTop: 6, minWidth: 200 }}>
-            <div style={{ fontWeight: 600 }}>{BRAND.signatoryLabel}</div>
-            <div style={{ color: "#64748b", fontSize: 10 }}>Authorised Signatory</div>
+          <div style={{ marginBottom: 32 }}>Congratulations, and welcome aboard!</div>
+
+          <div style={{ marginBottom: 40 }}>Sincerely,</div>
+
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", minHeight: 100, marginBottom: 28 }}>
+            {BRAND.signatureImage && (
+              <img
+                src={BRAND.signatureImage}
+                alt="Signature"
+                style={{ height: 60, width: "auto", maxWidth: 180, objectFit: "contain", marginBottom: -6 }}
+                crossOrigin="anonymous"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = "none";
+                }}
+              />
+            )}
+            <div style={{ borderTop: "1px solid #0f172a", paddingTop: 6, minWidth: 200 }}>
+              <div style={{ fontWeight: 600 }}>{BRAND.signatoryLabel}</div>
+              <div style={{ color: "#64748b", fontSize: 10 }}>Authorised Signatory</div>
+            </div>
+          </div>
+
+          <div style={{ borderTop: "1px dashed #cbd5e1", paddingTop: 16 }}>
+            <div style={{ fontWeight: 600, marginBottom: 10 }}>Acceptance of Offer</div>
+            <div style={{ marginBottom: 24, color: "#334155" }}>
+              I, {letter.candidateName || "____________________"}, have read and understood the above
+              terms and conditions of employment and hereby accept this offer.
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 40 }}>
+              <div style={{ flex: 1, borderTop: "1px solid #0f172a", paddingTop: 6 }}>
+                <div style={{ fontSize: 10, color: "#64748b" }}>Candidate Signature</div>
+              </div>
+              <div style={{ flex: 1, borderTop: "1px solid #0f172a", paddingTop: 6 }}>
+                <div style={{ fontSize: 10, color: "#64748b" }}>Date</div>
+              </div>
+            </div>
           </div>
         </div>
 

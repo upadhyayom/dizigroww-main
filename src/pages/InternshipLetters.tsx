@@ -523,10 +523,35 @@ function InternshipLetterPreviewDialog({ letter, onClose }: { letter: Internship
   const [busy, setBusy] = useState(false);
 
   const downloadPdf = async () => {
-    if (!printRef.current) return;
+    const container = printRef.current;
+    if (!container) return;
     setBusy(true);
+    const spacerEl = container.querySelector('[data-pdf-spacer="closing"]') as HTMLElement | null;
+    const closingEl = container.querySelector('[data-pdf-block="closing"]') as HTMLElement | null;
     try {
-      const canvas = await html2canvas(printRef.current, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
+      // The PDF is a single rasterized image sliced into A4-height pages by
+      // pure pixel position — it has no idea where the signature block is.
+      // Before rasterizing, insert an invisible spacer to push the closing
+      // block past whatever page boundary it would otherwise be sliced
+      // across, so "For DiziGroww / Authorised Signatory" never gets cut
+      // in half between two pages.
+      if (spacerEl) spacerEl.style.height = "0px";
+
+      if (spacerEl && closingEl) {
+        const A4_RATIO = 297 / 210; // mm height / width, matches jsPDF's "a4"
+        const pageHeightPx = container.offsetWidth * A4_RATIO;
+        const containerTop = container.getBoundingClientRect().top;
+        const blockTop = closingEl.getBoundingClientRect().top - containerTop;
+        const blockBottom = closingEl.getBoundingClientRect().bottom - containerTop;
+        const startPage = Math.floor(blockTop / pageHeightPx);
+        const endPage = Math.floor((blockBottom - 1) / pageHeightPx);
+        if (startPage !== endPage) {
+          const nextPageStart = (startPage + 1) * pageHeightPx;
+          spacerEl.style.height = `${Math.ceil(nextPageStart - blockTop)}px`;
+        }
+      }
+
+      const canvas = await html2canvas(container, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -548,6 +573,7 @@ function InternshipLetterPreviewDialog({ letter, onClose }: { letter: Internship
       console.error(err);
       toast.error("PDF generation failed");
     } finally {
+      if (spacerEl) spacerEl.style.height = "0px";
       setBusy(false);
     }
   };
@@ -665,25 +691,31 @@ const PrintableInternshipLetter = React.forwardRef<HTMLDivElement, { letter: Int
           letter as confirmation of your acceptance of the above terms.
         </div>
 
-        <div style={{ marginBottom: 32 }}>Congratulations, and welcome aboard!</div>
+        {/* Kept together on one page — see the measurement pass in
+            downloadPdf(), which pushes this whole block past a page break
+            rather than letting the signature get sliced across two pages. */}
+        <div data-pdf-spacer="closing" style={{ height: 0 }} />
+        <div data-pdf-block="closing">
+          <div style={{ marginBottom: 32 }}>Congratulations, and welcome aboard!</div>
 
-        <div style={{ marginBottom: 40 }}>Sincerely,</div>
+          <div style={{ marginBottom: 40 }}>Sincerely,</div>
 
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", minHeight: 100 }}>
-          {BRAND.signatureImage && (
-            <img
-              src={BRAND.signatureImage}
-              alt="Signature"
-              style={{ height: 60, width: "auto", maxWidth: 180, objectFit: "contain", marginBottom: -6 }}
-              crossOrigin="anonymous"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).style.display = "none";
-              }}
-            />
-          )}
-          <div style={{ borderTop: "1px solid #0f172a", paddingTop: 6, minWidth: 200 }}>
-            <div style={{ fontWeight: 600 }}>{BRAND.signatoryLabel}</div>
-            <div style={{ color: "#64748b", fontSize: 10 }}>Authorised Signatory</div>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", minHeight: 100 }}>
+            {BRAND.signatureImage && (
+              <img
+                src={BRAND.signatureImage}
+                alt="Signature"
+                style={{ height: 60, width: "auto", maxWidth: 180, objectFit: "contain", marginBottom: -6 }}
+                crossOrigin="anonymous"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.display = "none";
+                }}
+              />
+            )}
+            <div style={{ borderTop: "1px solid #0f172a", paddingTop: 6, minWidth: 200 }}>
+              <div style={{ fontWeight: 600 }}>{BRAND.signatoryLabel}</div>
+              <div style={{ color: "#64748b", fontSize: 10 }}>Authorised Signatory</div>
+            </div>
           </div>
         </div>
 
