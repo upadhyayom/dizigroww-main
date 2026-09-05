@@ -192,6 +192,10 @@ function InvoiceApp() {
   const [invoices, setInvoices] = useState<Invoice[]>([]);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
+  // "all" | "18" | "notax" | "other" — lets you pull up just the invoices
+  // billed with 18% GST vs. the ones with no tax charged at all (e.g.
+  // export invoices, or a client billed at a different/custom rate).
+  const [taxFilter, setTaxFilter] = useState<string>("all");
   const [editing, setEditing] = useState<Invoice | null>(null);
   const [previewing, setPreviewing] = useState<Invoice | null>(null);
 
@@ -266,6 +270,9 @@ function InvoiceApp() {
     const q = search.trim().toLowerCase();
     return invoices.filter((inv) => {
       if (statusFilter !== "all" && inv.status !== statusFilter) return false;
+      if (taxFilter === "18" && inv.taxPercent !== 18) return false;
+      if (taxFilter === "notax" && inv.taxPercent !== 0) return false;
+      if (taxFilter === "other" && (inv.taxPercent === 0 || inv.taxPercent === 18)) return false;
       if (!q) return true;
       return (
         inv.number.toLowerCase().includes(q) ||
@@ -274,7 +281,7 @@ function InvoiceApp() {
         inv.toEmail.toLowerCase().includes(q)
       );
     });
-  }, [invoices, search, statusFilter]);
+  }, [invoices, search, statusFilter, taxFilter]);
 
   // unique client list for quick re-use across multiple invoices
   const recentClients = useMemo(() => {
@@ -475,6 +482,17 @@ function InvoiceApp() {
               <SelectItem value="overdue">Overdue</SelectItem>
             </SelectContent>
           </Select>
+          <Select value={taxFilter} onValueChange={setTaxFilter}>
+            <SelectTrigger className="w-full sm:w-48" title="Filter by whether tax was charged">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All tax rates</SelectItem>
+              <SelectItem value="18">18% GST charged</SelectItem>
+              <SelectItem value="notax">No tax (0%)</SelectItem>
+              <SelectItem value="other">Other rate</SelectItem>
+            </SelectContent>
+          </Select>
           <Button variant="outline" onClick={refresh} title="Refresh">
             <RefreshCw className="w-4 h-4" />
           </Button>
@@ -492,6 +510,7 @@ function InvoiceApp() {
                   <TableHead>Due</TableHead>
                   <TableHead>Total</TableHead>
                   <TableHead>Balance</TableHead>
+                  <TableHead>Tax</TableHead>
                   <TableHead>Status</TableHead>
                   <TableHead>Recurring</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -500,7 +519,7 @@ function InvoiceApp() {
               <TableBody>
                 {filtered.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={9} className="text-center text-slate-500 py-10">
+                    <TableCell colSpan={10} className="text-center text-slate-500 py-10">
                       No invoices yet. Click <span className="font-medium">New invoice</span> to create your first one.
                     </TableCell>
                   </TableRow>
@@ -526,6 +545,9 @@ function InvoiceApp() {
                         className={`font-medium ${bal > 0 ? "text-amber-700" : "text-emerald-600"}`}
                       >
                         {formatMoney(bal, inv.currency)}
+                      </TableCell>
+                      <TableCell>
+                        <TaxBadge taxPercent={inv.taxPercent} />
                       </TableCell>
                       <TableCell>
                         <StatusBadge status={inv.status} />
@@ -707,6 +729,26 @@ function Stat({ label, value, small }: { label: string; value: string; small?: b
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function TaxBadge({ taxPercent }: { taxPercent: number }) {
+  if (taxPercent === 0) {
+    return (
+      <span className="inline-block px-2 py-0.5 rounded text-xs font-medium bg-slate-200 text-slate-600">
+        No tax
+      </span>
+    );
+  }
+  const isStandardGst = taxPercent === 18;
+  return (
+    <span
+      className={`inline-block px-2 py-0.5 rounded text-xs font-medium ${
+        isStandardGst ? "bg-indigo-100 text-indigo-700" : "bg-amber-100 text-amber-800"
+      }`}
+    >
+      {taxPercent}% tax
+    </span>
   );
 }
 

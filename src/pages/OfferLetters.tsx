@@ -546,42 +546,59 @@ function OfferLetterPreviewDialog({ letter, onClose }: { letter: OfferLetterData
       if (spacerEl) spacerEl.style.height = "0px";
 
       const A4_RATIO = 297 / 210; // mm height / width, matches jsPDF's "a4"
-      const pageHeightPx = container.offsetWidth * A4_RATIO;
+      const domPageHeightPx = container.offsetWidth * A4_RATIO;
       const containerTop = () => container.getBoundingClientRect().top;
 
       if (pageBreakEl) {
         const markerTop = pageBreakEl.getBoundingClientRect().top - containerTop();
-        const nextBoundary = Math.ceil(markerTop / pageHeightPx) * pageHeightPx;
+        const nextBoundary = Math.ceil(markerTop / domPageHeightPx) * domPageHeightPx;
         pageBreakEl.style.height = `${Math.max(0, Math.ceil(nextBoundary - markerTop))}px`;
       }
 
       if (spacerEl && closingEl) {
         const blockTop = closingEl.getBoundingClientRect().top - containerTop();
         const blockBottom = closingEl.getBoundingClientRect().bottom - containerTop();
-        const startPage = Math.floor(blockTop / pageHeightPx);
-        const endPage = Math.floor((blockBottom - 1) / pageHeightPx);
+        const startPage = Math.floor(blockTop / domPageHeightPx);
+        const endPage = Math.floor((blockBottom - 1) / domPageHeightPx);
         if (startPage !== endPage) {
-          const nextPageStart = (startPage + 1) * pageHeightPx;
+          const nextPageStart = (startPage + 1) * domPageHeightPx;
           spacerEl.style.height = `${Math.ceil(nextPageStart - blockTop)}px`;
         }
       }
 
       const canvas = await html2canvas(container, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
-      const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+      const pageWidthMm = pdf.internal.pageSize.getWidth();
+      const pageHeightMm = pdf.internal.pageSize.getHeight();
+
+      // Crop a fresh canvas per page and paste each at y=0 on its own page,
+      // instead of re-pasting the same full-height image at a negative
+      // offset on every page. The negative-offset approach is what caused
+      // the hairline black seam across the page break in the exported
+      // PDF — each page reused the identical image, and sub-pixel
+      // rounding at the overlap rendered as a dark line in some PDF
+      // viewers. Cropping means every page's image data physically ends
+      // exactly where that page ends, so there's nothing left to seam.
+      const pxPerMm = canvas.width / pageWidthMm;
+      const canvasPageHeightPx = Math.max(1, Math.floor(pageHeightMm * pxPerMm));
+      let renderedPx = 0;
+      let pageIndex = 0;
+      while (renderedPx < canvas.height) {
+        const sliceHeightPx = Math.min(canvasPageHeightPx, canvas.height - renderedPx);
+        const pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceHeightPx;
+        const ctx = pageCanvas.getContext("2d");
+        if (!ctx) break;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.drawImage(canvas, 0, renderedPx, canvas.width, sliceHeightPx, 0, 0, canvas.width, sliceHeightPx);
+        const sliceImgData = pageCanvas.toDataURL("image/png");
+        if (pageIndex > 0) pdf.addPage();
+        const sliceHeightMm = sliceHeightPx / pxPerMm;
+        pdf.addImage(sliceImgData, "PNG", 0, 0, pageWidthMm, sliceHeightMm);
+        renderedPx += sliceHeightPx;
+        pageIndex++;
       }
       pdf.save(`${letter.number}-${(letter.candidateName || "offer-letter").replace(/\s+/g, "_")}.pdf`);
     } catch (err) {

@@ -552,21 +552,36 @@ function InternshipLetterPreviewDialog({ letter, onClose }: { letter: Internship
       }
 
       const canvas = await html2canvas(container, { scale: 2, backgroundColor: "#ffffff", useCORS: true });
-      const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pageWidth;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-      let heightLeft = imgHeight;
-      let position = 0;
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+      const pageWidthMm = pdf.internal.pageSize.getWidth();
+      const pageHeightMm = pdf.internal.pageSize.getHeight();
+
+      // Crop a fresh canvas per page and paste each at y=0 on its own page,
+      // instead of re-pasting the same full-height image at a negative
+      // offset on every page — that approach is what caused a hairline
+      // black seam across the page break in the exported PDF. Cropping
+      // means every page's image data physically ends exactly where that
+      // page ends, so there's nothing left to seam.
+      const pxPerMm = canvas.width / pageWidthMm;
+      const canvasPageHeightPx = Math.max(1, Math.floor(pageHeightMm * pxPerMm));
+      let renderedPx = 0;
+      let pageIndex = 0;
+      while (renderedPx < canvas.height) {
+        const sliceHeightPx = Math.min(canvasPageHeightPx, canvas.height - renderedPx);
+        const pageCanvas = document.createElement("canvas");
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceHeightPx;
+        const ctx = pageCanvas.getContext("2d");
+        if (!ctx) break;
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+        ctx.drawImage(canvas, 0, renderedPx, canvas.width, sliceHeightPx, 0, 0, canvas.width, sliceHeightPx);
+        const sliceImgData = pageCanvas.toDataURL("image/png");
+        if (pageIndex > 0) pdf.addPage();
+        const sliceHeightMm = sliceHeightPx / pxPerMm;
+        pdf.addImage(sliceImgData, "PNG", 0, 0, pageWidthMm, sliceHeightMm);
+        renderedPx += sliceHeightPx;
+        pageIndex++;
       }
       pdf.save(`${letter.number}-${(letter.candidateName || "internship-letter").replace(/\s+/g, "_")}.pdf`);
     } catch (err) {
