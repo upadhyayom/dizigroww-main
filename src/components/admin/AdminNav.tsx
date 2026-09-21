@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { FileText, FileSignature, GraduationCap, LogOut } from "lucide-react";
+import { FileText, FileSignature, GraduationCap, Briefcase, LogOut } from "lucide-react";
 
 import { cloudEnabled, supabase } from "@/lib/supabaseClient";
 import { ADMIN_PASS_STORAGE_KEY } from "@/components/admin/AdminAuthGate";
@@ -8,6 +8,7 @@ const TABS = [
   { to: "/invoices", label: "Invoices", icon: FileText },
   { to: "/offer-letters", label: "Offer Letters", icon: FileSignature },
   { to: "/internship-letters", label: "Internship Letters", icon: GraduationCap },
+  { to: "/portfolio-admin", label: "Portfolio", icon: Briefcase },
 ];
 
 // Sticky top strip shared by every admin page — keeps the same login and the

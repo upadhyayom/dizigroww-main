@@ -21,6 +21,7 @@ import WebDevSingapore from "./pages/WebDevSingapore.tsx";
 import WebDevPhilippines from "./pages/WebDevPhilippines.tsx";
 import WebDevelopment from "./pages/WebDevelopment.tsx";
 import Portfolio from "./pages/Portfolio.tsx";
+import AdminPortfolio from "./pages/AdminPortfolio.tsx";
 import Blog from "./pages/Blog.tsx";
 import BlogPost from "./pages/BlogPost.tsx";
 import PrivacyPolicy from "./pages/PrivacyPolicy.tsx";
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="/offer-letters" element={<OfferLetters />} />
           <Route path="/internship-letters" element={<InternshipLetters />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/portfolio-admin" element={<AdminPortfolio />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

@@ -6,12 +6,14 @@ Allow: /
 Disallow: /thank-you
 Disallow: /proposal-generator
 Disallow: /invoices
+Disallow: /portfolio-admin
 
 User-agent: Bingbot
 Allow: /
 Disallow: /thank-you
 Disallow: /proposal-generator
 Disallow: /invoices
+Disallow: /portfolio-admin
 
 User-agent: Twitterbot
 Allow: /
@@ -45,6 +47,7 @@ Allow: /
 Disallow: /thank-you
 Disallow: /proposal-generator
 Disallow: /invoices
+Disallow: /portfolio-admin
 Disallow: /api/
 
 Sitemap: https://dizigroww.in/sitemap.xml

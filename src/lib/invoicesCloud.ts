@@ -29,13 +29,19 @@ function toRow(inv: Invoice) {
 export async function pushInvoiceToCloud(inv: Invoice): Promise<void> {
   if (!supabase) return;
   const { error } = await supabase.from(TABLE).upsert(toRow(inv), { onConflict: "id" });
-  if (error) console.warn("[invoices] cloud upsert failed:", error.message);
+  if (error) {
+    console.warn("[invoices] cloud upsert failed:", error.message);
+    throw error;
+  }
 }
 
 export async function deleteInvoiceFromCloud(id: string): Promise<void> {
   if (!supabase) return;
   const { error } = await supabase.from(TABLE).delete().eq("id", id);
-  if (error) console.warn("[invoices] cloud delete failed:", error.message);
+  if (error) {
+    console.warn("[invoices] cloud delete failed:", error.message);
+    throw error;
+  }
 }
 
 export async function fetchAllFromCloud(): Promise<Invoice[] | null> {
@@ -46,7 +52,7 @@ export async function fetchAllFromCloud(): Promise<Invoice[] | null> {
     .order("created_at", { ascending: false });
   if (error) {
     console.warn("[invoices] cloud fetch failed:", error.message);
-    return null;
+    throw error;
   }
   return (data || []).map((r: { data: Invoice }) => r.data);
 }
@@ -64,7 +70,7 @@ export async function pushManyToCloud(local: Invoice[]): Promise<number> {
     const { error } = await supabase.from(TABLE).upsert(slice, { onConflict: "id" });
     if (error) {
       console.warn("[invoices] backfill chunk failed:", error.message);
-      break;
+      throw error;
     }
     pushed += slice.length;
   }

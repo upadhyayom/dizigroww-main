@@ -225,8 +225,10 @@ function InvoiceApp() {
           if (ok) setInvoices(listInvoices());
           return backfillToCloud();
         })
-        .catch(() => {
-          /* offline — stay on local cache, retry silently next load */
+        .catch((e: { message?: string }) => {
+          toast.error(
+            `Cloud sync failed: ${e?.message || "unknown error"}. Invoices are only on this browser until fixed (check you're signed in and the invoices table exists).`
+          );
         });
     }
   }, []);
@@ -261,8 +263,8 @@ function InvoiceApp() {
     try {
       const n = await backfillToCloud();
       toast.success(`Synced ${n} invoice${n > 1 ? "s" : ""} to the cloud database`);
-    } catch {
-      toast.error("Cloud sync failed — check the table exists and RLS policy is set");
+    } catch (e) {
+      toast.error(`Cloud sync failed: ${(e as { message?: string })?.message || "check table + RLS policy"}`);
     }
   };
 
@@ -331,9 +333,9 @@ function InvoiceApp() {
     if (cloudEnabled()) {
       try {
         await pushInvoiceToCloud(toSave);
-      } catch {
+      } catch (e) {
         toast.error(
-          `${toSave.number} saved on this device only — cloud sync failed. It'll retry automatically; check your connection.`
+          `${toSave.number} saved on this device only — cloud sync failed: ${(e as { message?: string })?.message || "unknown error"}`
         );
       }
     }

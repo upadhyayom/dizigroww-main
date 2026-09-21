@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import TrustSection from "@/components/TrustSection";
@@ -6,118 +6,10 @@ import { useMeta } from "@/hooks/useMeta";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ExternalLink } from "lucide-react";
 
-type ProjectType = "All" | "E-commerce" | "Landing Pages" | "Corporate";
+import { DEFAULT_PROJECTS, type PortfolioProject } from "@/data/portfolio";
+import { fetchPortfolioFromCloud } from "@/lib/portfolioCloud";
 
-const projects = [
-  {
-    id: 1,
-    title: "Varak Edible Luxury",
-    type: "E-commerce",
-    stack: "Shopify",
-    result: "Premium UI/UX Increased AOV by 24%",
-    image: "https://api.microlink.io/?url=https://www.varakedibleluxury.com/&screenshot=true&meta=false&embed=screenshot.url",
-    link: "https://www.varakedibleluxury.com/"
-  },
-  {
-    id: 2,
-    title: "Prince Jewellers",
-    type: "E-commerce",
-    stack: "Shopify",
-    result: "Scaling international cross-border sales",
-    image: "https://api.microlink.io/?url=https://www.princejewellers.com.au&screenshot=true&meta=false&embed=screenshot.url",
-    link: "https://www.princejewellers.com.au"
-  },
-  {
-    id: 3,
-    title: "EVO Labs",
-    type: "Corporate",
-    stack: "Next.js",
-    result: "Launched high-performance research platform",
-    image: "https://api.microlink.io/?url=https://www.evolabsresearch.co/&screenshot=true&meta=false&embed=screenshot.url",
-    link: "https://www.evolabsresearch.co/"
-  },
-  {
-    id: 4,
-    title: "EvoVera",
-    type: "E-commerce",
-    stack: "React",
-    result: "Increased conversion rate by 2.8%",
-    image: "https://api.microlink.io/?url=https://evovera.store/&screenshot=true&meta=false&embed=screenshot.url",
-    link: "https://evovera.store/"
-  },
-  {
-    id: 5,
-    title: "MotoBlox",
-    type: "Corporate",
-    stack: "WordPress",
-    result: "Automotive portal redesigned for speed",
-    image: "https://motoblox.com/cdn/shop/files/Screenshot_2025-01-08_171555.png?v=1736702496",
-    link: "https://motoblox.com/"
-  },
-  {
-    id: 6,
-    title: "Nexpept",
-    type: "E-commerce",
-    stack: "Shopify Plus",
-    result: "Health brand scaled to Canada market",
-    image: "https://api.microlink.io/?url=https://www.nexpept.ca/&screenshot=true&meta=false&embed=screenshot.url",
-    link: "https://www.nexpept.ca/"
-  },
-  {
-    id: 7,
-    title: "Toy Collectors India",
-    type: "E-commerce",
-    stack: "Shopify",
-    result: "Retail store UI overhaul boosting retention",
-    image: "https://api.microlink.io/?url=https://www.toycollectorsindia.com/&screenshot=true&meta=false&embed=screenshot.url",
-    link: "https://www.toycollectorsindia.com/"
-  },
-  {
-    id: 8,
-    title: "Sanduk",
-    type: "E-commerce",
-    stack: "WooCommerce",
-    result: "Modernized traditional fashion retail frontend",
-    image: "https://cdn.shopify.com/s/files/1/0601/7961/1856/files/jpeg_shop_0c426d75-af5a-4e38-b90b-ddd05849ea5a.jpg",
-    link: "https://sanduk.co"
-  },
-  {
-    id: 9,
-    title: "The Fragrance Empire",
-    type: "E-commerce",
-    stack: "Shopify",
-    result: "Boosted cosmetic cart conversions",
-    image: "https://thefragranceempire.com/cdn/shop/files/TFE_GOLDEN_LOGO_Print_File_Updated_3.pdf.png",
-    link: "https://thefragranceempire.com/"
-  },
-  {
-    id: 10,
-    title: "Stikrly",
-    type: "E-commerce",
-    stack: "Shopify & Web",
-    result: "Optimized storefront & seamless user flow",
-    image: "https://api.microlink.io/?url=https://stikrly.in&screenshot=true&meta=false&embed=screenshot.url",
-    link: "https://stikrly.in"
-  },
-  {
-    id: 11,
-    title: "Lovely Lady",
-    type: "E-commerce",
-    stack: "Shopify",
-    result: "Fashion & beauty storefront built to convert",
-    image: "https://api.microlink.io/?url=https://lovely-lady.com/&screenshot=true&meta=false&embed=screenshot.url",
-    link: "https://lovely-lady.com/"
-  },
-  {
-    id: 12,
-    title: "Nesiy",
-    type: "E-commerce",
-    stack: "Shopify",
-    result: "Demi-fine jewelry storefront built for discovery & conversion",
-    image: "https://api.microlink.io/?url=https://nesiy.com/&screenshot=true&meta=false&embed=screenshot.url",
-    link: "https://nesiy.com/"
-  }
-];
+type ProjectType = "All" | "E-commerce" | "Landing Pages" | "Corporate";
 
 const filters: ProjectType[] = ["All", "E-commerce", "Landing Pages", "Corporate"];
 
@@ -129,6 +21,15 @@ const Portfolio = () => {
   });
 
   const [activeFilter, setActiveFilter] = useState<ProjectType>("All");
+  const [projects, setProjects] = useState<PortfolioProject[]>(DEFAULT_PROJECTS);
+
+  // If projects have been added/edited from the admin panel, they live in the
+  // database and replace the built-in list. Any failure keeps the defaults.
+  useEffect(() => {
+    fetchPortfolioFromCloud()
+      .then((rows) => rows && rows.length > 0 && setProjects(rows))
+      .catch(() => {});
+  }, []);
 
   const filteredProjects = projects.filter(p => activeFilter === "All" || p.type === activeFilter);
 

@@ -131,10 +131,21 @@ function writeCounter(c: Record<string, number>) {
   localStorage.setItem(COUNTER_KEY, JSON.stringify(c));
 }
 
+// Highest sequence already used in `year` across all stored invoices. The
+// counter itself is per-browser, so without this a second device (or a fresh
+// browser) would re-issue numbers that already exist in the database.
+function maxUsedNumber(year: number): number {
+  const re = new RegExp(`^INV-${year}-(\\d+)$`);
+  return readAll().reduce((m, i) => {
+    const hit = re.exec(i.number || "");
+    return hit ? Math.max(m, parseInt(hit[1], 10)) : m;
+  }, 0);
+}
+
 export function nextInvoiceNumber(date = new Date()): string {
   const year = date.getFullYear();
   const counter = readCounter();
-  const next = (counter[String(year)] ?? 0) + 1;
+  const next = Math.max(counter[String(year)] ?? 0, maxUsedNumber(year)) + 1;
   counter[String(year)] = next;
   writeCounter(counter);
   return `INV-${year}-${String(next).padStart(4, "0")}`;
@@ -144,7 +155,7 @@ export function nextInvoiceNumber(date = new Date()): string {
 export function peekNextInvoiceNumber(date = new Date()): string {
   const year = date.getFullYear();
   const counter = readCounter();
-  const next = (counter[String(year)] ?? 0) + 1;
+  const next = Math.max(counter[String(year)] ?? 0, maxUsedNumber(year)) + 1;
   return `INV-${year}-${String(next).padStart(4, "0")}`;
 }
 
@@ -223,7 +234,7 @@ export function duplicateInvoice(id: string): Invoice | undefined {
     number: nextInvoiceNumber(),
     issueDate: todayIso(),
     dueDate: addDaysIso(todayIso(), 14),
-    status: "draft",
+    status: "due",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     recurrence: { interval: "none", nextRunAt: null },
