@@ -54,8 +54,8 @@ export const DEFAULT_PROJECTS: PortfolioProject[] = [
   {
     id: "default-5",
     title: "MotoBlox",
-    type: "Corporate",
-    stack: "WordPress",
+    type: "E-com",
+    stack: "Shopify",
     result: "Automotive portal redesigned for speed",
     image: "https://motoblox.com/cdn/shop/files/Screenshot_2025-01-08_171555.png?v=1736702496",
     link: "https://motoblox.com/"
