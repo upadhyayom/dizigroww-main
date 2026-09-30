@@ -122,6 +122,15 @@ export const DEFAULT_PROJECTS: PortfolioProject[] = [
     result: "Demi-fine jewelry storefront built for discovery & conversion",
     image: "https://api.microlink.io/?url=https://nesiy.com/&screenshot=true&meta=false&embed=screenshot.url",
     link: "https://nesiy.com/"
+  },
+  {
+    id: "default-13",
+    title: "Mirenne",
+    type: "E-commerce",
+    stack: "Online Store",
+    result: "Made-to-order Indian luxury womenswear storefront",
+    image: "https://api.microlink.io/?url=https://mirenne.in/&screenshot=true&meta=false&embed=screenshot.url",
+    link: "https://mirenne.in/"
   }
 ];
 
